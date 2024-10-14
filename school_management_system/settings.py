@@ -46,9 +46,12 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     #! common
-    'apps.common',
+    # 'apps.common',
      'tailwind',
-     'theme'
+     'theme',
+     #! main app
+     'app.student',
+     
 ]
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
