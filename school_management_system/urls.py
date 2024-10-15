@@ -29,7 +29,6 @@ urlpatterns = [
     path('inventory/',include('app.inventory.urls')),
     path('finance/',include('app.finance.urls')),
     path('attendance/',include('app.attendance.urls')),
-    path('employee/', include('app.employee.urls')),
 ]
 if settings.DEBUG:
     import debug_toolbar
