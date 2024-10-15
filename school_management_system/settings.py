@@ -59,6 +59,7 @@ INSTALLED_APPS = [
      'app.finance',
      'app.attendance',
      
+     
 ]
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
