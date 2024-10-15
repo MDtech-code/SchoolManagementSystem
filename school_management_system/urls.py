@@ -30,6 +30,7 @@ urlpatterns = [
     path('finance/',include('app.finance.urls')),
     path('attendance/',include('app.attendance.urls')),
     path('employee/', include('app.employee.urls')),
+    path('payroll/', include('app.payroll.urls')),
 ]
 if settings.DEBUG:
     import debug_toolbar
