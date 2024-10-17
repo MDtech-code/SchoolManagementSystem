@@ -1,5 +1,33 @@
 '''
 from django.db import models
+from app.common.models import TimeStampedModel
+
+class Bank(TimeStampedModel,models.Model):
+    id = models.BigAutoField(primary_key=True)
+    bank_account_no = models.CharField(max_length=255)
+    bank_address = models.CharField(max_length=255)
+    bank_code = models.CharField(max_length=255)
+    bank_contact = models.IntegerField()
+    bank_for_security = models.BooleanField()
+    bank_manager = models.CharField(max_length=255)
+    bank_name = models.CharField(max_length=255)
+    show_on_voucher = models.BooleanField()
+
+    def __str__(self):
+        return self.bank_name
+
+
+class Expense(TimeStampedModel,models.Model):
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField()
+    description = models.TextField()
+    title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+'''
+'''
+from django.db import models
 from employee.models import Employee
 
 class Loan(models.Model):

@@ -58,6 +58,8 @@ INSTALLED_APPS = [
      'app.inventory',
      'app.finance',
      'app.attendance',
+     'app.academic',
+     'app.common',
 
 ]
 TAILWIND_APP_NAME = 'theme'
