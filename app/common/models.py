@@ -8,3 +8,25 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+
+class Religion(TimeStampedModel,models.Model):
+    name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return f"{self.name}"
+    
+
+class Nationality(models.Model):
+    title = models.CharField(max_length=128)
+
+    def __str__(self):
+        return f"{self.title}"
+    
+
+class Province(models.Model):
+    title = models.CharField(max_length=128)
+
+    def __str__(self):
+        return f"{self.title}"
