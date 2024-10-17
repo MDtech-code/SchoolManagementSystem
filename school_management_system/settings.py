@@ -51,7 +51,7 @@ INSTALLED_APPS = [
      'theme',
      #! main app
      'app.student',
-     "app.admission",
+    #  "app.admission",
      "app.fee",
      'app.employee',
      'app.payroll',
