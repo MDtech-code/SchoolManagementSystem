@@ -1,4 +1,4 @@
-
+'''
 from django.db import models
 from app.common.models import TimeStampedModel
 
@@ -29,3 +29,4 @@ class Subjects(models.Model):
 
     def __str__(self):
         return self.name
+'''

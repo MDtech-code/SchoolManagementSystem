@@ -1,4 +1,5 @@
 # academic/admin.py
+'''
 from django.contrib import admin
 from .models import Class, Section, Subjects
 from app.common.models import Religion, Nationality, Province
@@ -28,3 +29,5 @@ admin.site.register(Subjects, SubjectAdmin)
 admin.site.register(Religion)
 admin.site.register(Nationality)
 admin.site.register(Province)
+
+'''

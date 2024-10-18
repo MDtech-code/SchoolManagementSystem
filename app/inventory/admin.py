@@ -1,3 +1,4 @@
+'''
 from django.contrib import admin
 from .models import (
     Category, Vendor, Item, ItemsInStock, ReturnToVendor,
@@ -39,3 +40,4 @@ class IssuanceAdmin(admin.ModelAdmin):
 @admin.register(ReturnFromDepartment)
 class ReturnFromDepartmentAdmin(admin.ModelAdmin):
     list_display = ['id', 'department', 'stock_item', 'quantity', 'return_date']
+'''

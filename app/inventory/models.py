@@ -1,3 +1,4 @@
+'''
 # models.py
 from django.db import models
 
@@ -97,3 +98,4 @@ class ReturnFromDepartment(models.Model):
 
     def __str__(self):
         return f"{self.quantity} of {self.stock_item.item.name} returned from {self.department.name} on {self.return_date}"
+'''

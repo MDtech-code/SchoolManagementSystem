@@ -1,3 +1,4 @@
+'''
 from django.db import models
 from app.common.models import TimeStampedModel
 class Category(TimeStampedModel,models.Model):
@@ -5,6 +6,7 @@ class Category(TimeStampedModel,models.Model):
 
     def __str__(self):
         return self.name
+'''
 '''
 from django.utils import timezone
 from django.utils.html import format_html

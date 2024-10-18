@@ -1,4 +1,5 @@
 # admission/admin.py
+'''
 from django.contrib import admin
 from .models import (
     PersonalInfo,
@@ -51,3 +52,4 @@ admin.site.register(Admission, AdmissionAdmin)
 # If these models are in your common app
 # admin.site.register(Religion)
 # admin.site.register(Nationality)
+'''

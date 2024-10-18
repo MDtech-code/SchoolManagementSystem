@@ -1,5 +1,5 @@
 
-
+'''
 # Register your models here.
 from django.contrib import admin
 from .models import (
@@ -35,3 +35,4 @@ class EmployeeAnnualIncrementAdmin(admin.ModelAdmin):
 class QualificationAdmin(admin.ModelAdmin):
     list_display = ('employee', 'discipline', 'institution', 'year_obtained')
 
+'''

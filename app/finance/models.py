@@ -1,6 +1,9 @@
 '''
 from django.db import models
 from app.common.models import TimeStampedModel
+from app.employee.models import Employee
+from django.contrib.auth.models import User
+
 
 class Bank(TimeStampedModel,models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -27,8 +30,7 @@ class Expense(TimeStampedModel,models.Model):
         return self.title
 '''
 '''
-from django.db import models
-from employee.models import Employee
+
 
 class Loan(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -71,4 +73,53 @@ class LeaveType(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CPFund(models.Model):
+    # The BigAutoField is automatically the primary key in Django, so no need to explicitly define `id`
+    
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_funds")
+    employee = models.OneToOneField(User, on_delete=models.CASCADE, related_name="cpfund")
+    deposited_cp_fund = models.PositiveIntegerField()
+    last_date_submitted = models.DateField()
+
+    def __str__(self):
+        return f"CPFund for {self.employee.username} - {self.deposited_cp_fund}"
+
+
+class EOBIPaid(models.Model):
+    # The BigAutoField is automatically the primary key, no need to explicitly define `id`
+    
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="eobi_created_by")
+    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="eobi_employee")
+    eobi_date_of_joining = models.DateField()
+    month = models.DateField()
+    total_deposit = models.FloatField()
+
+    def __str__(self):
+        return f"EOBI Payment for {self.employee.username} - {self.total_deposit}"
+    
+class CPFundDeposits(models.Model):
+    # The BigAutoField is automatically the primary key, no need to explicitly define `id`
+    
+    cp_fund = models.ForeignKey(CPFund, on_delete=models.CASCADE, related_name="deposits")
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cpfund_deposits_created_by")
+    amount = models.PositiveIntegerField()
+    date_paid = models.DateField()
+    note = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"CPFund Deposit of {self.amount} by {self.created_by.username} on {self.date_paid}"
+    
+
+class EmployeeArrears(models.Model):
+    # The BigAutoField is automatically the primary key, no need to explicitly define `id`
+    
+    employee = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee_arrears")
+    arrears_amount = models.IntegerField()
+    arrears_note = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"Arrears for {self.employee.username} - {self.arrears_amount}"
+
 '''

@@ -1,4 +1,4 @@
-
+'''
 from django.db import models
 from app.common.models import TimeStampedModel
 from app.fee.models import Category
@@ -119,7 +119,7 @@ class Admission(TimeStampedModel,models.Model):
     def __str__(self):
         return self.personal_info.full_name
 
-
+'''
 
 '''
 class Admission(models.Model):

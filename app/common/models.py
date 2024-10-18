@@ -10,7 +10,7 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
-
+'''
 class Religion(TimeStampedModel,models.Model):
     name = models.CharField(max_length=128)
 
@@ -30,3 +30,4 @@ class Province(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+'''

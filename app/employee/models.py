@@ -30,8 +30,58 @@ class Qualification(models.Model):
         return f"{self.employee.employee_name} - {self.discipline}"
 
 '''
+'''
 from django.db import models
 from app.common.models import TimeStampedModel
+from django.contrib.auth.models import User
+
+
+
+class Qualification(models.Model):
+    # The BigAutoField is automatically the primary key, no need to explicitly define `id`
+
+    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="qualifications")
+    discipline = models.CharField(max_length=255)
+    institution = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    year_obtained = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.name} - {self.employee.username} ({self.year_obtained})"
+    
+class Leaves(models.Model):
+    # The BigAutoField is automatically the primary key, no need to explicitly define `id`
+
+    deducted_in_payroll = models.ForeignKey('Payroll', on_delete=models.SET_NULL, null=True, related_name="leaves_deducted")
+    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="employee_leaves")
+    leave_type = models.ForeignKey('LeaveType', on_delete=models.CASCADE, related_name="leave_type_leaves")
+    deductions = models.PositiveIntegerField()
+    executive_approval = models.BooleanField(default=False)
+    leave_date = models.DateField()
+    leave_end_date = models.DateField()
+    note = models.TextField(blank=True)
+    principal_approval = models.BooleanField(default=False)
+    reason = models.TextField()
+    request_date = models.DateField(auto_now_add=True)
+    secretary_approval = models.BooleanField(default=False)
+    status = models.CharField(max_length=50)
+    vc_approval = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Leave for {self.employee.username} - {self.status}"
+    
+
+class LeaveType(models.Model):
+    # The BigAutoField is automatically the primary key, no need to explicitly define `id`
+
+    name = models.CharField(max_length=100)
+    days_paid = models.PositiveIntegerField()
+    department = models.CharField(max_length=100)
+    granted_times_in_service = models.PositiveIntegerField()
+    granted_times_interval = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.name
 class EmployeeDesignation(TimeStampedModel,models.Model):
     department = models.CharField(max_length=255)
     description = models.TextField()
@@ -99,23 +149,6 @@ class EmployeePayStructure(models.Model):
         return f"{self.employee.employee_name} - Pay Structure"
 
 
-class EmployeeAnnualIncrement(models.Model):
-    employee_structure = models.ForeignKey(EmployeePayStructure, on_delete=models.CASCADE)
-    annual_inc_no = models.PositiveIntegerField()
-    date_awarded = models.DateField()
-    rate_of_annual_inc = models.CharField(max_length=50)
-    total_annual_inc = models.PositiveIntegerField()
-
-    def _str_(self):
-        return f"Annual Increment {self.annual_inc_no} for {self.employee_structure.employee.employee_name}"
 
 
-class Qualification(models.Model):
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    discipline = models.CharField(max_length=255)
-    institution = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    year_obtained = models.PositiveIntegerField()
-
-    def _str_(self):
-        return f"{self.employee.employee_name} - {self.name}"
+'''
