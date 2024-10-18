@@ -1,32 +1,20 @@
-'''
-from django.db import models
-from app.common.models import TimeStampedModel
-class Category(TimeStampedModel,models.Model):
-    name = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
-'''
-'''
+from django.db import models
+from app.common.models import TimeStampedModel,Category
+from app.academic.models import Class
 from django.utils import timezone
 from django.utils.html import format_html
-# from app.student.models import Student
-# from app.admission.models import Class
-# from app.finance.models import Bank
-# from app.admission.models import Admission
+from app.admission.models import Admission
 from django.contrib.auth.models import User
-
-class Category(TimeStampedModel,models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
+from app.student.models import Student
+from app.finance.models import Bank
 
 
 
-class FeeStructure(models.Model):
+
+class FeeStructure(TimeStampedModel,models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE,null=True)
-    class_s = models.ForeignKey('Class', on_delete=models.CASCADE, verbose_name="Class" ,null=True)
+    class_s = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name="Class" ,null=True)
     child_status = models.CharField(max_length=64)#choices=CHILD_CHOICES
     admission_type = models.CharField(max_length=64 )#choices=ADMISSION_TYPE_CHOICES
     tuition_fee = models.PositiveIntegerField(default=0)
@@ -48,24 +36,6 @@ class FeeStructure(models.Model):
         return f"{self.total} | {self.category.name} - {self.child_status} - {self.admission_type} - {self.class_s}"
     
 
-
-
-
-class StudentFee(TimeStampedModel,models.Model):
-    
-    bank = models.ForeignKey('Bank', on_delete=models.CASCADE,null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
-    voucher = models.ForeignKey('StudentFeeVoucher', on_delete=models.CASCADE,null=True)
-    amount_paid = models.PositiveIntegerField()
-    date_submitted = models.DateField()
-    paid_full = models.BooleanField()
-    paid_full_after_due_date = models.BooleanField()
-    paid_full_after_due_date_waive_fine = models.BooleanField()
-    paid_full_after_due_date_without_fine = models.BooleanField()
-
-    def __str__(self):
-        return f"StudentFee {self.id} - Amount Paid: {self.amount_paid}"
-
 class VoucherGenerationRule(TimeStampedModel,models.Model):
     
     active = models.BooleanField()
@@ -82,15 +52,11 @@ class VoucherGenerationRule(TimeStampedModel,models.Model):
         return self.name
     
 
-
-
 def get_due_date():
     return timezone.now().date() + timezone.timedelta(days=10)
-
-
-class StudentFeeVoucher(models.Model):
+class StudentFeeVoucher(TimeStampedModel,models.Model):
     voucher_number = models.CharField(max_length=12)
-    student = models.ForeignKey('Student', on_delete=models.PROTECT)
+    student = models.ForeignKey(Student, on_delete=models.PROTECT)
     class_section = models.CharField(max_length=12, null=True, blank=True)
     time_generated = models.DateTimeField(auto_now_add=True)
     issue_date = models.DateField(default=timezone.now)
@@ -128,7 +94,7 @@ class StudentFeeVoucher(models.Model):
     advance_start_month = models.DateField(null=True, blank=True)
     advance_end_month = models.DateField(null=True, blank=True)
 
-    admission = models.ForeignKey('Admission', null=True, blank=True, on_delete=models.PROTECT)
+    admission = models.ForeignKey(Admission, null=True, blank=True, on_delete=models.PROTECT)
     form_b_no = models.CharField(max_length=15, null=True, blank=True)
 
     previous_voucher = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
@@ -165,12 +131,31 @@ class StudentFeeVoucher(models.Model):
     class Meta:
         ordering = ['-issue_date']
 
+
+
+
+class StudentFee(TimeStampedModel,models.Model):
+    
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE,null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    voucher = models.ForeignKey(StudentFeeVoucher, on_delete=models.CASCADE,null=True)
+    amount_paid = models.PositiveIntegerField()
+    date_submitted = models.DateField()
+    paid_full = models.BooleanField()
+    paid_full_after_due_date = models.BooleanField()
+    paid_full_after_due_date_waive_fine = models.BooleanField()
+    paid_full_after_due_date_without_fine = models.BooleanField()
+
+    def __str__(self):
+        return f"StudentFee {self.id} - Amount Paid: {self.amount_paid}"
+    
+
 class SecurityFee(TimeStampedModel,models.Model):
     
-    bank = models.ForeignKey('Bank', on_delete=models.CASCADE,null=True)
-    created_by = models.ForeignKey('User', on_delete=models.CASCADE,null=True)
-    student = models.ForeignKey('Student', on_delete=models.CASCADE,null=True)
-    student_fee = models.ForeignKey('StudentFee', on_delete=models.CASCADE,null=True)
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE,null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    student_fee = models.ForeignKey(StudentFee, on_delete=models.CASCADE,null=True)
     amount_paid = models.PositiveIntegerField()
     created = models.DateTimeField()
     date_submitted = models.DateField()
@@ -180,4 +165,3 @@ class SecurityFee(TimeStampedModel,models.Model):
 
     def __str__(self):
         return f"SecurityFee {self.id} - Amount Paid: {self.amount_paid}"
-'''

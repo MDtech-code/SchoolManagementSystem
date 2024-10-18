@@ -1,4 +1,4 @@
-'''
+
 from django.db import models
 from app.admission.models import Admission
 from app.common.models import TimeStampedModel
@@ -13,5 +13,3 @@ class Student(TimeStampedModel,models.Model):
 
     def __str__(self):
         return self.admission.personal_info.full_name  
-
-'''

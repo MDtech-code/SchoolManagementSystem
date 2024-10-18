@@ -1,5 +1,5 @@
 # admission/admin.py
-'''
+
 from django.contrib import admin
 from .models import (
     PersonalInfo,
@@ -8,8 +8,7 @@ from .models import (
     FinancialInfo,
     AdditionalInfo,
     Admission,
-    Religion,  # Ensure these are imported if used in models
-    Nationality,
+    
 )
 
 # Admin classes for better presentation and functionality
@@ -49,7 +48,4 @@ admin.site.register(FinancialInfo, FinancialInfoAdmin)
 admin.site.register(AdditionalInfo, AdditionalInfoAdmin)
 admin.site.register(Admission, AdmissionAdmin)
 
-# If these models are in your common app
-# admin.site.register(Religion)
-# admin.site.register(Nationality)
-'''
+
