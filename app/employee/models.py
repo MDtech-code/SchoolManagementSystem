@@ -2,7 +2,7 @@ from django.db import models
 from app.common.models import TimeStampedModel
 from django.contrib.auth.models import User
 
-class EmployeeDesignation(TimeStampedModel,models.Model):
+class EmployeeDesignation(TimeStampedModel):
     department = models.CharField(max_length=255)
     description = models.TextField()
     name = models.CharField(max_length=255)
@@ -11,7 +11,7 @@ class EmployeeDesignation(TimeStampedModel,models.Model):
         return self.name
 
 
-class Employee(TimeStampedModel,models.Model):
+class Employee(TimeStampedModel):
     designation = models.ForeignKey(EmployeeDesignation, on_delete=models.CASCADE)
     employee_pay_structure = models.ForeignKey('payroll.PayStructure', on_delete=models.CASCADE)
     account_no = models.CharField(max_length=100)
@@ -43,7 +43,7 @@ class Employee(TimeStampedModel,models.Model):
         return self.employee_name
 
 
-class StaffPerformance(TimeStampedModel,models.Model):
+class StaffPerformance(TimeStampedModel):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     comments = models.TextField()
     rating = models.PositiveSmallIntegerField()
@@ -52,7 +52,7 @@ class StaffPerformance(TimeStampedModel,models.Model):
     def __str__(self):
         return f"Performance Evaluation for {self.employee.employee_name} on {self.date_evaluated}"
 
-class Qualification(TimeStampedModel,models.Model):
+class Qualification(TimeStampedModel):
     employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="qualifications")
     discipline = models.CharField(max_length=255)
     institution = models.CharField(max_length=255)

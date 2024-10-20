@@ -7,7 +7,7 @@ from app.academic.models import Class,Section
 
 #! Stores personal information about the student
 
-class PersonalInfo(TimeStampedModel,models.Model):
+class PersonalInfo(TimeStampedModel):
     full_name = models.CharField(max_length=100)
     date_of_birth = models.DateField()
     gender = models.CharField(max_length=10)
@@ -23,7 +23,7 @@ class PersonalInfo(TimeStampedModel,models.Model):
     mark_of_identification = models.CharField(max_length=255)
 
 #! Stores parent/guardian information
-class ParentInfo(TimeStampedModel,models.Model):
+class ParentInfo(TimeStampedModel):
     father_full_name = models.CharField(max_length=100)
     father_cnic = models.CharField(max_length=15)
     father_occupation = models.ForeignKey(Category, related_name='parentinfo_father_occupation', on_delete=models.CASCADE)
@@ -44,7 +44,7 @@ class ParentInfo(TimeStampedModel,models.Model):
 
 
 #! Stores admission-related academic details like the class and section the student is admitted into.
-class AcademicInfo(TimeStampedModel,models.Model):
+class AcademicInfo(TimeStampedModel):
     admission_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     admission_section = models.ForeignKey(Section, on_delete=models.CASCADE)
     admission_no = models.CharField(max_length=20)
@@ -56,7 +56,7 @@ class AcademicInfo(TimeStampedModel,models.Model):
     test_passed = models.BooleanField(default=False)
 
 #! Tracks any admission fees and initial payments.
-class FinancialInfo(TimeStampedModel,models.Model):
+class FinancialInfo(TimeStampedModel):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     fee_remaining_for_months = models.PositiveIntegerField()
     monthly_income = models.PositiveIntegerField()
@@ -64,7 +64,7 @@ class FinancialInfo(TimeStampedModel,models.Model):
 
 
 #! Handles miscellaneous data like religion, nationality, etc.
-class AdditionalInfo(TimeStampedModel,models.Model):
+class AdditionalInfo(TimeStampedModel):
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE)
     nationality = models.ForeignKey(Nationality, on_delete=models.CASCADE)
     extra_act = models.CharField(max_length=255)
@@ -77,7 +77,7 @@ class AdditionalInfo(TimeStampedModel,models.Model):
 
 
 #! The central model that ties all the other models together for the admission process.
-class Admission(TimeStampedModel,models.Model):
+class Admission(TimeStampedModel):
     personal_info = models.OneToOneField(PersonalInfo, on_delete=models.CASCADE)
     parent_info = models.OneToOneField(ParentInfo, on_delete=models.CASCADE)
     academic_info = models.OneToOneField(AcademicInfo, on_delete=models.CASCADE)

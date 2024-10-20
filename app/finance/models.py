@@ -2,7 +2,7 @@ from django.db import models
 from app.common.models import TimeStampedModel
 from django.contrib.auth.models import User
 from app.employee.models import Employee
-class Bank(TimeStampedModel,models.Model):
+class Bank(TimeStampedModel):
     id = models.BigAutoField(primary_key=True)
     bank_account_no = models.CharField(max_length=255)
     bank_address = models.CharField(max_length=255)
@@ -17,7 +17,7 @@ class Bank(TimeStampedModel,models.Model):
         return self.bank_name
 
 
-class Expense(TimeStampedModel,models.Model):
+class Expense(TimeStampedModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
     description = models.TextField()
@@ -29,7 +29,7 @@ class Expense(TimeStampedModel,models.Model):
 
 
 
-class Loan(TimeStampedModel,models.Model):
+class Loan(TimeStampedModel):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     loan_amount = models.FloatField()
     remaining_amount = models.FloatField()
@@ -38,7 +38,7 @@ class Loan(TimeStampedModel,models.Model):
     def __str__(self):
         return f"Loan for {self.employee.employee_name}"
 
-class InstallmentPaid(TimeStampedModel,models.Model):
+class InstallmentPaid(TimeStampedModel):
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     amount_paid = models.FloatField()
     date_paid = models.DateField()
@@ -46,14 +46,14 @@ class InstallmentPaid(TimeStampedModel,models.Model):
     def __str__(self):
         return f"Installment Paid for {self.loan.employee.employee_name}"
 
-class IncomeTaxSession(TimeStampedModel,models.Model):
+class IncomeTaxSession(TimeStampedModel):
     starting_year = models.DateField()
     ending_year = models.DateField()
 
     def __str__(self):
         return f"Income Tax Session {self.starting_year} - {self.ending_year}"
 
-class IncomeTaxRates(TimeStampedModel,models.Model):
+class IncomeTaxRates(TimeStampedModel):
     session = models.ForeignKey(IncomeTaxSession, on_delete=models.CASCADE)
     initial_taxable_income = models.PositiveIntegerField()
     to_taxable_income = models.PositiveIntegerField()
@@ -65,7 +65,7 @@ class IncomeTaxRates(TimeStampedModel,models.Model):
 
 
 
-class CPFund(TimeStampedModel,models.Model):
+class CPFund(TimeStampedModel):
     # The BigAutoField is automatically the primary key in Django, so no need to explicitly define `id`
     
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_funds")
@@ -77,7 +77,7 @@ class CPFund(TimeStampedModel,models.Model):
         return f"CPFund for {self.employee.username} - {self.deposited_cp_fund}"
 
 
-class EOBIPaid(TimeStampedModel,models.Model):
+class EOBIPaid(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
     
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="eobi_created_by")
@@ -89,7 +89,7 @@ class EOBIPaid(TimeStampedModel,models.Model):
     def __str__(self):
         return f"EOBI Payment for {self.employee.username} - {self.total_deposit}"
     
-class CPFundDeposits(TimeStampedModel,models.Model):
+class CPFundDeposits(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
     
     cp_fund = models.ForeignKey(CPFund, on_delete=models.CASCADE, related_name="deposits")
@@ -102,7 +102,7 @@ class CPFundDeposits(TimeStampedModel,models.Model):
         return f"CPFund Deposit of {self.amount} by {self.created_by.username} on {self.date_paid}"
     
 
-class EmployeeArrears(TimeStampedModel,models.Model):
+class EmployeeArrears(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
     
     employee = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee_arrears")
@@ -113,7 +113,7 @@ class EmployeeArrears(TimeStampedModel,models.Model):
         return f"Arrears for {self.employee.username} - {self.arrears_amount}"
 
 
-class Security(TimeStampedModel,models.Model):
+class Security(TimeStampedModel):
     created_by = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='created_security')
     employee = models.OneToOneField(Employee, on_delete=models.CASCADE, related_name='employee_security')
     deposited_security = models.PositiveIntegerField()
@@ -123,7 +123,7 @@ class Security(TimeStampedModel,models.Model):
     def __str__(self):
         return f"Security for {self.employee}"
     
-class SecurityDeposits(TimeStampedModel,models.Model):
+class SecurityDeposits(TimeStampedModel):
     created_by = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='created_security_deposits')
     security = models.ForeignKey(Security, on_delete=models.CASCADE, related_name='security_deposits')
     amount = models.PositiveIntegerField()
@@ -134,7 +134,7 @@ class SecurityDeposits(TimeStampedModel,models.Model):
         return f"Security Deposit for {self.security} by {self.created_by}"
     
 
-class OtherDeposits(TimeStampedModel,models.Model):
+class OtherDeposits(TimeStampedModel):
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE, related_name='other_deposits')
     amount = models.PositiveIntegerField()
     date = models.DateField()
@@ -144,7 +144,7 @@ class OtherDeposits(TimeStampedModel,models.Model):
         return f"Other Deposit to {self.bank} on {self.date}"
     
 
-class MonthClosing(TimeStampedModel,models.Model):
+class MonthClosing(TimeStampedModel):
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE, related_name='month_closings')
     month = models.DateField()
     profit_by_bank = models.PositiveIntegerField()

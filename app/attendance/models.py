@@ -2,7 +2,7 @@ from django.db import models
 from app.student.models import Student
 from app.common.models import TimeStampedModel
 
-class Attendance(TimeStampedModel,models.Model):
+class Attendance(TimeStampedModel):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date = models.DateField()
     is_present = models.BooleanField()

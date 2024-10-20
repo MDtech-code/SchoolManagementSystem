@@ -12,7 +12,7 @@ from app.finance.models import Bank
 
 
 
-class FeeStructure(TimeStampedModel,models.Model):
+class FeeStructure(TimeStampedModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE,null=True)
     class_s = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name="Class" ,null=True)
     child_status = models.CharField(max_length=64)#choices=CHILD_CHOICES
@@ -36,7 +36,7 @@ class FeeStructure(TimeStampedModel,models.Model):
         return f"{self.total} | {self.category.name} - {self.child_status} - {self.admission_type} - {self.class_s}"
     
 
-class VoucherGenerationRule(TimeStampedModel,models.Model):
+class VoucherGenerationRule(TimeStampedModel):
     
     active = models.BooleanField()
     apply_arrears = models.BooleanField()
@@ -54,7 +54,7 @@ class VoucherGenerationRule(TimeStampedModel,models.Model):
 
 def get_due_date():
     return timezone.now().date() + timezone.timedelta(days=10)
-class StudentFeeVoucher(TimeStampedModel,models.Model):
+class StudentFeeVoucher(TimeStampedModel):
     voucher_number = models.CharField(max_length=12)
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
     class_section = models.CharField(max_length=12, null=True, blank=True)
@@ -134,7 +134,7 @@ class StudentFeeVoucher(TimeStampedModel,models.Model):
 
 
 
-class StudentFee(TimeStampedModel,models.Model):
+class StudentFee(TimeStampedModel):
     
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE,null=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
@@ -150,7 +150,7 @@ class StudentFee(TimeStampedModel,models.Model):
         return f"StudentFee {self.id} - Amount Paid: {self.amount_paid}"
     
 
-class SecurityFee(TimeStampedModel,models.Model):
+class SecurityFee(TimeStampedModel):
     
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE,null=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True)

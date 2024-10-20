@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 
-class PayStructure(TimeStampedModel,models.Model):
+class PayStructure(TimeStampedModel):
     employee_designation = models.ForeignKey('employee.EmployeeDesignation', on_delete=models.CASCADE)
     annual_increment = models.IntegerField()
     basic_pay = models.IntegerField()
@@ -17,7 +17,7 @@ class PayStructure(TimeStampedModel,models.Model):
     def _str_(self):
         return f"{self.employee_designation.name} - Pay Structure"
     
-class EmployeePayStructure(TimeStampedModel,models.Model):
+class EmployeePayStructure(TimeStampedModel):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     employee_pay_structure = models.ForeignKey(PayStructure, on_delete=models.CASCADE)
     inc_aug_15_allowance = models.PositiveIntegerField()
@@ -31,7 +31,7 @@ class EmployeePayStructure(TimeStampedModel,models.Model):
         return f"{self.employee.employee_name} - Pay Structure"
 
 
-class Payroll(TimeStampedModel,models.Model):
+class Payroll(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
 
     employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="payrolls")
@@ -68,7 +68,7 @@ class Payroll(TimeStampedModel,models.Model):
         return f"Payroll for {self.employee.username} - {self.total_amount}"
     
 
-class EmployeeAnnualIncrement(TimeStampedModel,models.Model):
+class EmployeeAnnualIncrement(TimeStampedModel):
     employee_structure = models.ForeignKey('EmployeePayStructure', on_delete=models.CASCADE, related_name="annual_increments")
     annual_inc_no = models.PositiveIntegerField()
     date_awarded = models.DateField()
@@ -78,14 +78,14 @@ class EmployeeAnnualIncrement(TimeStampedModel,models.Model):
     def __str__(self):
         return f"Annual Increment #{self.annual_inc_no} for {self.employee_structure} - {self.total_annual_inc}"
     
-class IncrementOrder(TimeStampedModel,models.Model):
+class IncrementOrder(TimeStampedModel):
     created = models.DateTimeField(auto_now_add=True)
     note = models.CharField(max_length=255)
     percentage_increment = models.FloatField()
 
     def __str__(self):
         return f"Increment Order - {self.percentage_increment}%"
-class Increment(TimeStampedModel,models.Model):
+class Increment(TimeStampedModel):
     order = models.ForeignKey(IncrementOrder, on_delete=models.CASCADE, related_name="increments")
     pay_structure = models.ForeignKey(EmployeePayStructure, on_delete=models.CASCADE, related_name="increments")
     amount = models.PositiveIntegerField()
@@ -93,7 +93,7 @@ class Increment(TimeStampedModel,models.Model):
 
     def __str__(self):
         return f"Increment for {self.pay_structure} - {self.amount}"
-class LeaveType(TimeStampedModel,models.Model):
+class LeaveType(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
 
     name = models.CharField(max_length=100)
@@ -104,7 +104,7 @@ class LeaveType(TimeStampedModel,models.Model):
 
     def __str__(self):
         return self.name
-class Leaves(TimeStampedModel,models.Model):
+class Leaves(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
 
     deducted_in_payroll = models.ForeignKey(Payroll, on_delete=models.SET_NULL, null=True, related_name="leaves_deducted")

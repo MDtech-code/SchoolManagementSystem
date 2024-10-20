@@ -8,9 +8,10 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['-created_at']
 
 
-class Religion(TimeStampedModel,models.Model):
+class Religion(TimeStampedModel):
     name = models.CharField(max_length=128)
 
     def __str__(self):
@@ -24,7 +25,7 @@ class Nationality(models.Model):
         return f"{self.title}"
     
 
-class Province(TimeStampedModel,models.Model):
+class Province(TimeStampedModel):
     title = models.CharField(max_length=128)
 
     def __str__(self):
@@ -32,7 +33,7 @@ class Province(TimeStampedModel,models.Model):
 
 
 
-class Category(TimeStampedModel,models.Model):
+class Category(TimeStampedModel):
     name = models.CharField(max_length=100)
 
     def __str__(self):
