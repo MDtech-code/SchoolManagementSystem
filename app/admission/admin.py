@@ -7,7 +7,7 @@ from .models import (
     AcademicInfo,
     FinancialInfo,
     AdditionalInfo,
-    Admission,
+    Admission,Occupation
     
 )
 
@@ -40,6 +40,11 @@ class AdmissionAdmin(admin.ModelAdmin):
     search_fields = ('admission_no', 'personal_info__full_name')
     list_filter = ('admission_type', 'admission_confirmation_date')
 
+class OccupationAdmin(admin.ModelAdmin):
+    list_display=('name',)
+    search_fields=('name',)
+    list_filter=('name',)
+
 # Registering the models with the admin site
 admin.site.register(PersonalInfo, PersonalInfoAdmin)
 admin.site.register(ParentInfo, ParentInfoAdmin)
@@ -47,5 +52,6 @@ admin.site.register(AcademicInfo, AcademicInfoAdmin)
 admin.site.register(FinancialInfo, FinancialInfoAdmin)
 admin.site.register(AdditionalInfo, AdditionalInfoAdmin)
 admin.site.register(Admission, AdmissionAdmin)
+admin.site.register(Occupation,OccupationAdmin)
 
 

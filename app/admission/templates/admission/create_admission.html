@@ -1,0 +1,42 @@
+<!-- templates/admission/create_admission.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Create New Admission</h1>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-section">
+            <h2>Personal Information</h2>
+            {{ personal_info_form.as_p }}
+        </div>
+
+        <div class="form-section">
+            <h2>Parent/Guardian Information</h2>
+            {{ parent_info_form.as_p }}
+        </div>
+
+        <div class="form-section">
+            <h2>Academic Information</h2>
+            {{ academic_info_form.as_p }}
+        </div>
+
+        <div class="form-section">
+            <h2>Financial Information</h2>
+            {{ financial_info_form.as_p }}
+        </div>
+
+        <div class="form-section">
+            <h2>Additional Information</h2>
+            {{ additional_info_form.as_p }}
+        </div>
+
+        <div class="form-section">
+            <h2>Admission Details</h2>
+            {{ admission_form.as_p }}
+        </div>
+
+        <button type="submit">Submit Admission</button>
+    </form>
+{% endblock content %}
