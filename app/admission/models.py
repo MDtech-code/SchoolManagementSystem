@@ -3,7 +3,7 @@ from django.db import models
 from app.common.models import TimeStampedModel,Category,Religion,Nationality
 from app.academic.models import Class,Section
 from django.core.exceptions import ValidationError
-from school_management_system.utils.choices import GENDER_CHOICES, BLOOD_GROUP_CHOICES, PICK_N_DROP_CHOICES, CHILD_CHOICES, \
+from core.utils.choices import GENDER_CHOICES, BLOOD_GROUP_CHOICES, PICK_N_DROP_CHOICES, CHILD_CHOICES, \
     HEALTH_CHOICES, IMMUNIZATION_CHOICES, GUARDIAN_RELATION_CHOICES, ENROLLMENT_CHOICES, \
     STUDENT_STATUS_CHOICES, ADMISSION_TYPE_CHOICES, VOUCHER_TYPE_CHOICES, SUBJECT_CHOICE
 
