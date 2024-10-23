@@ -3,6 +3,12 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from .models import Item, ItemsInStock, Vendor, PurchaseRecord, ReturnToVendor, Issuance
 from .forms import ItemForm, VendorForm, IssuanceForm, PurchaseRecordForm, ReturnToVendorForm, ItemsInStockForm
 
+from django.shortcuts import render
+from django.views import View
+class InventoryView(View): 
+    def get(self,request):
+        return render(request, 'inventory.html')
+
 # Item Views
 class ItemListView(ListView):
     model = Item

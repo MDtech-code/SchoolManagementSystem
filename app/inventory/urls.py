@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.urls import path
+from . import views
 from .views import (
     ItemListView, ItemDetailView, ItemCreateView, ItemUpdateView, ItemDeleteView,
     ItemsInStockListView, ItemsInStockDetailView, ItemsInStockCreateView, ItemsInStockUpdateView, ItemsInStockDeleteView,
@@ -8,6 +10,8 @@ from .views import (
 )
 
 urlpatterns = [
+    path('inventory/', views.InventoryView.as_view(), name='inventory'),
+    
     # Item URLs
     path('items/', ItemListView.as_view(), name='item-list'),
     path('items/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
