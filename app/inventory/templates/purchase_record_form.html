@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Create Purchase Record</h2>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success">Create</button>
+                    <a href="{% url 'purchase-record-list' %}" class="btn btn-secondary ml-2">Back to Purchase Records</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

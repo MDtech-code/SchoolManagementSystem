@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h4 class="text-center">Stock Item Detail</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Item:</strong> {{ stock_item.item.name }}</p>
+                    <p><strong>Quantity:</strong> {{ stock_item.quantity }}</p>
+                    <p><strong>Reorder Level:</strong> {{ stock_item.reorder_level }}</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'items-in-stock-list' %}" class="btn btn-secondary">Back to Stock List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
