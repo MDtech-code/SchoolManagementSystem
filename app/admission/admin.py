@@ -36,9 +36,8 @@ class AdditionalInfoAdmin(admin.ModelAdmin):
     search_fields = ('sibling', 'other_information')
 
 class AdmissionAdmin(admin.ModelAdmin):
-    list_display = ('admission_no', 'personal_info', 'admission_confirmation_date', 'admission_type')
-    search_fields = ('admission_no', 'personal_info__full_name')
-    list_filter = ('admission_type', 'admission_confirmation_date')
+    list_display = ( 'personal_info', )
+    search_fields = ( 'personal_info__full_name',)
 
 class OccupationAdmin(admin.ModelAdmin):
     list_display=('name',)
