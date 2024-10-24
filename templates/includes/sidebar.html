@@ -1,0 +1,272 @@
+<div class="sidebar show" id="sidebar">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="#" class="simple-text logo-normal">APS LOGO</a>
+                {% comment %} {% url 'employee_index' %} {% endcomment %}
+            </div>
+            <ul class="nav">
+                <li class="nav-links nav-items no-arrow">
+                    <a class="mt-0" href="#">
+                        {% comment %} {% url 'employee_index' %} {% endcomment %}
+                        <i class="bi bi-bar-chart-line-fill fa-xs"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-links nav-items no-arrow ">
+                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-person-gear"></i>
+                        <p style="margin-left: 18;">Accounts</p>
+                    </div>
+                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
+                </a>
+                    <div class="dropdown-content">
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-bank"></i> Banks
+                        </a>
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-currency-dollar"></i> Expenses
+                        </a>
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-calendar2-check"></i> Month Closings
+                        </a>
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-piggy-bank"></i> Other Deposits
+                        </a>
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-file-earmark-excel"></i> School Leaving Certificates
+                        </a>
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-shield-lock"></i> Security Fees
+                        </a>
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-cash-stack"></i> student_fee
+                        </a>
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-card-checklist"></i> Voucher Generation Rules
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-links nav-items no-arrow">
+                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-person-fill-lock"></i>
+                        <p style="margin-left: 18;">Authentication</p>
+                    </div>
+                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
+                </a>
+                    <div class="dropdown-content">
+                        <a onclick="location.href='#'">
+                            <i class="fas fa-users"></i>Groups
+                        </a>
+                        <a onclick="location.href='#'">
+                            <i class="fas fa-user"></i>User
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-links nav-items no-arrow">
+                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-gear-fill"></i>
+                        <p style="margin-left: 18;">Config</p>
+                    </div>
+                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
+                </a>
+                    <div class="dropdown-content">
+                        <a onclick="location.href=''">
+                            <i class="fas fa-info-circle"></i>Site details
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-links nav-items no-arrow">
+                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-person"></i>
+                        <p style="margin-left: 18;">Employee Management</p>
+                    </div>
+                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
+                </a>
+                    <div class="dropdown-content">
+                        <a onclick="location.href='#'">
+                            <i class="bi bi-briefcase"></i> Employee designation
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-people"></i> Employees
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-arrow-up-right-circle"></i> Increment orders
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-cash"></i> Installment paid
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-calendar-x"></i> Leave types
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-calendar-event"></i> Leaves
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-currency-exchange"></i> Loans
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-cash-stack"></i> Pay Structure
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-cash-coin"></i> Payroll
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-shield-lock"></i> Security deposit paid
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-calendar-check"></i> Staff attendance
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-bar-chart-line"></i> Staff performance
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-links nav-items no-arrow">
+                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-building-check"></i>
+                        <p style="margin-left: 18;">Inventory Management</p>
+                    </div>
+                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
+                </a>
+                    <div class="dropdown-content">
+                        <a onclick="location.href=''">
+                            <i class="bi bi-grid"></i> Category
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-diagram-3"></i> Department
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-graph-up-arrow"></i> Issuances
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-box"></i> Item
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-cart4"></i> Item in stocks
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-journal"></i> Purchase records
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-arrow-counterclockwise"></i> Return from departments
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-arrow-repeat"></i> Return to vendors
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-people"></i> Vendors
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-links nav-items no-arrow ">
+                    <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center;">
+                            <i class="bi bi-person-up"></i>
+                            <p style="margin-left: 18;">Reporting</p>
+                        </div>
+                        <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
+                    </a>
+                     <div class="dropdown-content">
+                        <a onclick="location.href=''">
+                            <i class="fas fa-chart-bar"></i>Reports
+                        </a>
+                         <a onclick="location.href=''">
+                            <i class="fa fa-book"></i>Student Ledger
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-links nav-items no-arrow ">
+                    <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center;">
+                            <i class="bi bi-person-up"></i>
+                            <p style="margin-left: 18;">Student Management</p>
+                        </div>
+                        <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
+                    </a>
+                     <div class="dropdown-content">
+                        <a onclick="location.href=''">
+                            <i class="fa fa-university"></i>Admission
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-list"></i>Categories
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-journal"></i>Class
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-cash-stack"></i>Fee Structure
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-flag"></i>Nationalities
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-calendar-event"></i>Provinces
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-flag-fill"></i>Religion
+                        </a>
+                        <a onclick="location.href='">
+                            <i class="bi bi-collection"></i>Sections
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-credit-card"></i>Student Fee Vouchers
+                        </a>
+                        <a onclick="location.href=''">
+                            <i class="bi bi-person-badge"></i>Students
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-links nav-items no-arrow">
+                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-robot"></i>
+                        <p style="margin-left: 18;">AI Features</p>
+                    </div>
+                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
+                </a>
+                    <div class="dropdown-content">
+                        <a onclick="location.href=''">
+                            <i class="bi bi-bar-chart-line"></i>Admission Prediction
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-links nav-items no-arrow">
+                    <a class="mt-0" href="#">
+                        {% comment %} {% url 'employee_index' %} {% endcomment %}
+                        <i class="bi bi-globe2"></i>
+                        <p>Teacher Portal</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+<script>
+function toggleDropdown(element) {
+    // Get the parent <li> of the clicked <a>
+    const parentLi = element.parentElement;
+
+    // Check if the clicked element is already active
+    const isActive = parentLi.classList.contains('active');
+
+    // Toggle the active state (open/close dropdown)
+    if (isActive) {
+        parentLi.classList.remove('active');
+    } else {
+        parentLi.classList.add('active');
+    }
+}
+
+function handleItemClick(event) {
+    // Prevent the dropdown from closing when clicking on an item
+    event.stopPropagation();
+
+    // You can add any logic you want here, e.g., handling the click
+    console.log("Item clicked:", event.target.innerText);
+}
+
+</script>
