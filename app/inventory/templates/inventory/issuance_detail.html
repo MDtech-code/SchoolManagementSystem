@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h1>Issuance of {{ issuance.stock_item.item.name }}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Department:</strong> {{ issuance.department.name }}</p>
+            <p><strong>Quantity:</strong> {{ issuance.quantity }}</p>
+            <p><strong>Issue Date:</strong> {{ issuance.issue_date }}</p>
+            <p><strong>Recipient:</strong> {{ issuance.recipient }}</p>
+
+            <a href="{% url 'issuance-update' issuance.pk %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'issuance-list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

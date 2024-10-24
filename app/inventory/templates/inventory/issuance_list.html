@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Issuances</h1>
+        <a href="{% url 'issuance-create' %}" class="btn btn-primary">Add New Issuance</a>
+    </div>
+    
+    <ul class="list-group">
+        {% for issuance in issuances %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'issuance-detail' issuance.pk %}">
+                {{ issuance.stock_item.item.name }}
+            </a>
+            <span>
+                <a href="{% url 'issuance-update' issuance.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'issuance-delete' issuance.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </span>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No issuances available.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
