@@ -1,0 +1,101 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock title %}</title>
+    
+    <!-- Tailwind CSS -->
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-100"> <!-- Example of Tailwind utility classes -->
+
+    <!-- Header -->
+    {% block header %}
+        {% include "includes/header.html" %}
+    {% endblock header %}
+    
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                {% block sidebar %}
+                    {% include "includes/sidebar.html" %}
+                {% endblock sidebar %}
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="col-md-9">
+                {% block content %}
+                <!-- Placeholder for content -->
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% block footer %}
+        {% include "includes/footer.html" %}
+    {% endblock footer %}
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock title %}</title>
+    
+    <!-- Tailwind CSS -->
+    {% tailwind_css %}
+    
+    
+</head>
+<body>
+    <!-- Header Include -->
+    <header>
+        {% include "includes/header.html" %}
+    </header>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                {% include "includes/sidebar.html" %}
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="col-md-9">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Footer Include -->
+    <footer>
+        {% include "includes/footer.html" %}
+    </footer>
+
+    
+
+   
+    
+</body>
+</html>
+ {% endcomment %}
