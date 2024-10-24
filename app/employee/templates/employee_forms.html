@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% comment %} {% extends "base.html" %}
 {% block content %}
 
     <div class="container mt-5">
@@ -19,4 +19,262 @@
         </div>
     </div>
 
-{% endblock content %}
+{% endblock content %} {% endcomment %}
+<!-- Include Bootstrap CSS -->
+ 
+ 
+<!-- Include Bootstrap CSS -->
+{% comment %} <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container d-flex justify-content-center mt-5">
+    <form method="POST" class="p-5 bg-light rounded shadow-lg" style="max-width: 800px; width: 100%;">
+        {% csrf_token %}
+        
+        <h3 class="text-center mb-4">Employee Create Form</h3>
+        
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="employee_name">Employee Name</label>
+                {{ form.employee_name }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="employee_id">Employee ID</label>
+                {{ form.employee_id }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="designation">Designation</label>
+                {{ form.designation }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="employee_pay_structure">Pay Structure</label>
+                {{ form.employee_pay_structure }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="account_no">Account No</label>
+                {{ form.account_no }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="bank">Bank</label>
+                {{ form.bank }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="city">City</label>
+                {{ form.city }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="cnic">CNIC</label>
+                {{ form.cnic }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="contact_no">Contact No</label>
+                {{ form.contact_no }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="email">Email</label>
+                {{ form.email }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="date_of_birth">Date of Birth</label>
+                {{ form.date_of_birth }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="date_of_joining">Date of Joining</label>
+                {{ form.date_of_joining }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="address">Address</label>
+            {{ form.address }}
+        </div>
+
+        <div class="mb-3">
+            <label for="country">Country</label>
+            {{ form.country }}
+        </div>
+
+        <div class="form-check mb-3">
+            {{ form.covid_vaccinated }}
+            <label class="form-check-label" for="covid_vaccinated">COVID Vaccinated</label>
+        </div>
+
+        <div class="mb-3">
+            <label for="employee_status">Employee Status</label>
+            {{ form.employee_status }}
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg px-5">Create Employee</button>
+        </div>
+    </form>
+</div> {% endcomment %}
+
+<!-- Include Bootstrap CSS -->
+ 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container d-flex justify-content-center mt-5">
+    <form method="POST" class="p-5 bg-light rounded shadow-lg" style="max-width: 800px; width: 100%;">
+        {% csrf_token %}
+        
+        <h3 class="text-center mb-4">Employee Create Form</h3>
+        
+        <!-- First Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="employee_name">Employee Name</label>
+                {{ form.employee_name }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="employee_id">Employee ID</label>
+                {{ form.employee_id }}
+            </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="designation">Designation</label>
+                {{ form.designation }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="employee_pay_structure">Pay Structure</label>
+                {{ form.employee_pay_structure }}
+            </div>
+        </div>
+
+        <!-- Third Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="account_no">Account No</label>
+                {{ form.account_no }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="bank">Bank</label>
+                {{ form.bank }}
+            </div>
+        </div>
+
+        <!-- Fourth Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="city">City</label>
+                {{ form.city }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="cnic">CNIC</label>
+                {{ form.cnic }}
+            </div>
+        </div>
+
+        <!-- Fifth Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="contact_no">Contact No</label>
+                {{ form.contact_no }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="email">Email</label>
+                {{ form.email }}
+            </div>
+        </div>
+
+        <!-- Sixth Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="date_of_birth">Date of Birth</label>
+                {{ form.date_of_birth }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="date_of_joining">Date of Joining</label>
+                {{ form.date_of_joining }}
+            </div>
+        </div>
+
+        <!-- Father Details Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="father_cnic">Father CNIC</label>
+                {{ form.father_cnic }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="father_name">Father Name</label>
+                {{ form.father_name }}
+            </div>
+        </div>
+
+        <!-- Gender and Marital Status Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="gender">Gender</label>
+                {{ form.gender }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="martial_status">Marital Status</label>
+                {{ form.martial_status }}
+            </div>
+        </div>
+
+        <!-- Province and Wing Row -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="province">Province</label>
+                {{ form.province }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="wing">Wing</label>
+                {{ form.wing }}
+            </div>
+        </div>
+
+        <!-- Address Field -->
+        <div class="mb-3">
+            <label for="address">Address</label>
+            {{ form.address }}
+        </div>
+
+        <!-- Country Field -->
+        <div class="mb-3">
+            <label for="country">Country</label>
+            {{ form.country }}
+        </div>
+
+        <!-- COVID Vaccinated Checkbox -->
+        <div class="form-check mb-3">
+            {{ form.covid_vaccinated }}
+            <label class="form-check-label" for="covid_vaccinated">COVID Vaccinated</label>
+        </div>
+
+        <!-- Employee Status -->
+        <div class="mb-3">
+            <label for="employee_status">Employee Status</label>
+            {{ form.employee_status }}
+        </div>
+
+        <!-- Verified Checkbox -->
+        <div class="form-check mb-3">
+            {{ form.is_verified }}
+            <label class="form-check-label" for="is_verified">Verified</label>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg px-5">Create Employee</button>
+        </div>
+    </form>
+</div>
