@@ -10,8 +10,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path('inventory/', views.InventoryView.as_view(), name='inventory'),
-
+    
     # Item URLs
     path('items/', ItemListView.as_view(), name='item-list'),
     path('items/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
