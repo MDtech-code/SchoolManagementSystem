@@ -52,8 +52,6 @@ class ReturnToVendor(TimeStampedModel):
 
     def __str__(self):
         return f"Return {self.quantity} of {self.stock_item.item.name} to {self.vendor.name}"
-    
-
 
 class Issuance(TimeStampedModel):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
