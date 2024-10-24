@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0">{% if form.instance.pk %}Update Employee{% else %}Create Employee{% endif %}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success btn-lg mt-3">{% if form.instance.pk %}Update{% else %}Create{% endif %} Employee</button>
+                </form>
+            </div>
+            <div class="card-footer text-right">
+                <a href="{% url 'employee_list' %}" class="btn btn-secondary">Back to Employee List</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
