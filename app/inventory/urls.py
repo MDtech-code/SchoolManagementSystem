@@ -1,5 +1,14 @@
 from django.urls import path
-from . import views
+from .views import (
+    ItemListView, ItemDetailView, ItemCreateView, ItemUpdateView, ItemDeleteView
+)
+
 urlpatterns = [
-    path('inventory/', views.InventoryView.as_view(), name='inventory'),
+    
+    # Item URLs
+    path('items/', ItemListView.as_view(), name='item-list'),
+    path('items/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
+    path('items/create/', ItemCreateView.as_view(), name='item-create'),
+    path('items/<int:pk>/update/', ItemUpdateView.as_view(), name='item-update'),
+    path('items/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
 ]

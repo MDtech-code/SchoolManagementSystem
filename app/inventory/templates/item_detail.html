@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="text-center">Item Detail</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ item.name }}</p>
+                    <p><strong>Category:</strong> {{ item.category.name }}</p>
+                    <p><strong>Description:</strong> {{ item.description }}</p>
+                    <p><strong>Unit Price:</strong> ${{ item.unit_price }}</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'item-list' %}" class="btn btn-secondary">Back to Item List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
