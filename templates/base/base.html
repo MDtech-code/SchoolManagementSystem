@@ -1,41 +1,42 @@
 {% load static tailwind_tags %}
+{% load bootstrap5 %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MD</title>
-    <!-- Bootstrap CSS (Local) -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    {% tailwind_css %}
-    {% comment %} <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KE6QPm0k4Suh3BvFmWOVfma9euMwGZcGO1E6n97Mx8weJH4JYrtuBsUIB+G5ExdM" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous"> {% endcomment %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}MD Dashboard{% endblock title %}</title>
 
+    <!-- Tailwind CSS (using django-tailwind) -->
+    {% tailwind_css %}
+
+    <!-- Bootstrap CSS -->
+    {% bootstrap_css %}
 </head>
-<body class="bg-gray-100"> <!-- Example of Tailwind utility classes -->
+
+<body class="bg-gray-100">
 
     <!-- Header -->
     {% block header %}
         {% include "includes/header.html" %}
     {% endblock header %}
-    
+
+    <!-- Main Layout -->
     <div class="container-fluid">
         <div class="row">
-            {% comment %} <!-- Sidebar -->
+            <!-- Sidebar -->
             <div class="col-md-3">
                 {% block sidebar %}
                     {% include "includes/sidebar.html" %}
                 {% endblock sidebar %}
-            </div> {% endcomment %}
+            </div>
             
             <!-- Main Content Area -->
             <div class="col-md-9">
                 {% block content %}
-                <!-- Placeholder for content -->
+                    <!-- Placeholder for main content -->
                 {% endblock content %}
             </div>
         </div>
@@ -46,78 +47,7 @@
         {% include "includes/footer.html" %}
     {% endblock footer %}
 
-
-
-     <!-- Bootstrap JS Bundle (Local, includes Popper.js) -->
-     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-     <script src="{% static 'js/jquery.min.js' %}"></script>
-     <script src="{% static 'js/popper.min.js' %}"></script>
-
-     {% comment %} <!-- Bootstrap Bundle JS (includes Popper.js) -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-HoA56vYYR2Xp1xORQW6p69wLVhmlhqIYBlEqc/fzvBHEP8O+U29Q5j8bORrD28wg" crossorigin="anonymous"></script>
-
-     <!-- Optional jQuery (if needed) -->
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7ie2TevWe9ExD6g7r7KFn0yZBpmQ9ujXbrF" crossorigin="anonymous"></script>
-     <!-- optional popper -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.5/umd/popper.min.js" crossorigin="anonymous"></script> {% endcomment %}
-
+    <!-- Bootstrap JavaScript -->
+    {% bootstrap_javascript %}
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-{% comment %} 
-{% load static tailwind_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dashboard{% endblock title %}</title>
-    
-    <!-- Tailwind CSS -->
-    {% tailwind_css %}
-    
-    
-</head>
-<body>
-    <!-- Header Include -->
-    <header>
-        {% include "includes/header.html" %}
-    </header>
-    
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3">
-                {% include "includes/sidebar.html" %}
-            </div>
-            
-            <!-- Main Content Area -->
-            <div class="col-md-9">
-                {% block content %}
-                {% endblock content %}
-            </div>
-        </div>
-    </div>
-    
-
-    <!-- Footer Include -->
-    <footer>
-        {% include "includes/footer.html" %}
-    </footer>
-
-    
-
-   
-    
-</body>
-</html>
- {% endcomment %}
