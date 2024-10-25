@@ -3,11 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dashboard{% endblock title %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MD</title>
     
     <!-- Tailwind CSS -->
     {% tailwind_css %}
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KE6QPm0k4Suh3BvFmWOVfma9euMwGZcGO1E6n97Mx8weJH4JYrtuBsUIB+G5ExdM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous">
+
 </head>
 <body class="bg-gray-100"> <!-- Example of Tailwind utility classes -->
 
@@ -18,12 +23,12 @@
     
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
+            {% comment %} <!-- Sidebar -->
             <div class="col-md-3">
                 {% block sidebar %}
                     {% include "includes/sidebar.html" %}
                 {% endblock sidebar %}
-            </div>
+            </div> {% endcomment %}
             
             <!-- Main Content Area -->
             <div class="col-md-9">
@@ -38,7 +43,16 @@
     {% block footer %}
         {% include "includes/footer.html" %}
     {% endblock footer %}
-    
+
+
+     <!-- Bootstrap Bundle JS (includes Popper.js) -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-HoA56vYYR2Xp1xORQW6p69wLVhmlhqIYBlEqc/fzvBHEP8O+U29Q5j8bORrD28wg" crossorigin="anonymous"></script>
+
+     <!-- Optional jQuery (if needed) -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7ie2TevWe9ExD6g7r7KFn0yZBpmQ9ujXbrF" crossorigin="anonymous"></script>
+     <!-- optional popper -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.5/umd/popper.min.js" crossorigin="anonymous"></script>
+
 </body>
 </html>
 
