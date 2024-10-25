@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 
 from .views import (
     ItemListView, ItemDetailView, ItemCreateView, ItemUpdateView, ItemDeleteView, ItemsInStockListView, ItemsInStockDetailView, ItemsInStockCreateView, ItemsInStockUpdateView, ItemsInStockDeleteView,
@@ -11,13 +11,8 @@ from .views import (
 
 urlpatterns = [
     
-    # Item URLs
-    path('items/', ItemListView.as_view(), name='item-list'),
-    path('items/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
-    path('items/create/', ItemCreateView.as_view(), name='item-create'),
-    path('items/<int:pk>/update/', ItemUpdateView.as_view(), name='item-update'),
-    path('items/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
-
+ 
+   path('',include('inventory.urls.items')),
 
     # ItemsInStock URLs
     path('items-in-stock/', ItemsInStockListView.as_view(), name='items-in-stock-list'),
@@ -68,3 +63,11 @@ urlpatterns = [
     path('category/<int:pk>/delete/', CategoryDeleteView.as_view(), name='category-delete'),
 
 ]
+
+
+   # Item URLs
+    # path('items/', ItemListView.as_view(), name='item-list'),
+    # path('items/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
+    # path('items/create/', ItemCreateView.as_view(), name='item-create'),
+    # path('items/<int:pk>/update/', ItemUpdateView.as_view(), name='item-update'),
+    # path('items/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
