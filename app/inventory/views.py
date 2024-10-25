@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from .models import Item, ItemsInStock
-from .forms import ItemForm,ItemsInStockForm, Vendor, VendorForm, PurchaseRecord, PurchaseRecordForm, ReturnToVendor, ReturnToVendorForm, Issuance, IssuanceForm, ReturnFromDepartment, ReturnFromDepartmentForm
+from .models import Item, ItemsInStock, Category
+from .forms import ItemForm,ItemsInStockForm, Vendor, VendorForm, PurchaseRecord, PurchaseRecordForm, ReturnToVendor, ReturnToVendorForm, Issuance, IssuanceForm, ReturnFromDepartment, ReturnFromDepartmentForm, CategoryForm
 # Item Views
 class ItemListView(ListView):
     model = Item
@@ -197,3 +197,26 @@ class ReturnFromDepartmentDeleteView(DeleteView):
     model = ReturnFromDepartment
     template_name = 'inventory/return_from_department_confirm_delete.html'
     success_url = reverse_lazy('return-from-department-list')
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'inventory/category_list.html'
+    context_object_name = 'categories'
+
+
+class CategoryCreateView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'inventory/category_create.html'
+    success_url = reverse_lazy('category-list')
+
+class CategoryUpdateView(UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'inventory/category_create.html'
+    success_url = reverse_lazy('category-list')
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    template_name = 'inventory/category_confirm_delete.html'
+    success_url = reverse_lazy('category-list')

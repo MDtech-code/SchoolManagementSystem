@@ -7,13 +7,13 @@
     <a href="{% url 'vendor-create' %}" class="btn btn-success mb-3">Add New Vendor</a>
     <div class="list-group">
         {% for vendor in vendors %}
-            <a href="{% url 'vendor-detail' vendor.pk %}" class="list-group-item list-group-item-action">
-                {{ vendor.name }}
-                <span class="float-end">
-                    <a href="{% url 'vendor-update' vendor.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                    <a href="{% url 'vendor-delete' vendor.pk %}" class="btn btn-sm btn-danger">Delete</a>
-                </span>
-            </a>
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'vendor-detail' vendor.pk %}" class="text-decoration-none">{{ vendor.name }}</a>
+                <div>
+                    <a href="{% url 'vendor-update' vendor.pk %}" class="btn btn-sm btn-warning me-1" title="Edit">Edit</a>
+                    <a href="{% url 'vendor-delete' vendor.pk %}" class="btn btn-sm btn-danger" title="Delete">Delete</a>
+                </div>
+            </div>
         {% endfor %}
     </div>
 </div>

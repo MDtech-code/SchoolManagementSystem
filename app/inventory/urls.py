@@ -6,7 +6,7 @@ from .views import (
     PurchaseRecordListView, PurchaseRecordDetailView, PurchaseRecordCreateView, PurchaseRecordUpdateView, PurchaseRecordDeleteView,
     ReturnToVendorListView, ReturnToVendorDetailView, ReturnToVendorCreateView, ReturnToVendorUpdateView, ReturnToVendorDeleteView,
     IssuanceListView, IssuanceDetailView, IssuanceCreateView, IssuanceUpdateView, IssuanceDeleteView,
-    ReturnFromDepartmentListView, ReturnFromDepartmentDetailView, ReturnFromDepartmentCreateView, ReturnFromDepartmentUpdateView, ReturnFromDepartmentDeleteView
+    ReturnFromDepartmentListView, ReturnFromDepartmentDetailView, ReturnFromDepartmentCreateView, ReturnFromDepartmentUpdateView, ReturnFromDepartmentDeleteView, CategoryListView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView
 )
 
 urlpatterns = [
@@ -60,4 +60,11 @@ urlpatterns = [
     path('returns-from-department/create/', ReturnFromDepartmentCreateView.as_view(), name='return-from-department-create'),
     path('returns-from-department/<int:pk>/update/', ReturnFromDepartmentUpdateView.as_view(), name='return-from-department-update'),
     path('returns-from-department/<int:pk>/delete/', ReturnFromDepartmentDeleteView.as_view(), name='return-from-department-delete'),
+
+
+    path('category/', CategoryListView.as_view(), name='category-list'),
+    path('category/new/', CategoryCreateView.as_view(), name='category-create'),
+    path('category/<int:pk>/edit/', CategoryUpdateView.as_view(), name='category-update'),
+    path('category/<int:pk>/delete/', CategoryDeleteView.as_view(), name='category-delete'),
+
 ]
