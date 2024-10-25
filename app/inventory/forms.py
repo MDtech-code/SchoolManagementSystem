@@ -1,11 +1,5 @@
-
-
-
 from django import forms
-from .models import Item, ItemsInStock, Vendor, PurchaseRecord, ReturnToVendor, Issuance, ReturnFromDepartment
-
-
-
+from .models import Item, ItemsInStock, Vendor, PurchaseRecord, ReturnToVendor, Issuance, ReturnFromDepartment, Category
 
 class ItemForm(forms.ModelForm):
     class Meta:
@@ -42,6 +36,11 @@ class ReturnFromDepartmentForm(forms.ModelForm):
     class Meta:
         model = ReturnFromDepartment
         fields = '__all__'
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
 
 
 
