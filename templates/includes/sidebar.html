@@ -114,8 +114,14 @@
                     <span class="small">&#9660;</span>
                 </a>
                 <div class="dropdown-content">
-                    <a class="nav-link ms-3" href="{% url 'category-list' %}">Category</a>
+                    {% comment %} <a class="nav-link ms-3" href="{% url 'category-list' %}">Category</a> {% endcomment %}
                     <a class="nav-link ms-3" href="{% url 'item-list' %}">Items</a>
+                    <a class="nav-link ms-3" href="{% url 'items-in-stock-list' %}">items-in-stock</a>
+                    <a class="nav-link ms-3" href="{% url 'vendor-list' %}">vendors</a>
+                    <a class="nav-link ms-3" href="{% url 'purchase-record-list' %}">purchase-records</a>
+                    <a class="nav-link ms-3" href="{% url 'return-to-vendor-list' %}">returns-to-vendor</a>
+                    <a class="nav-link ms-3" href="{% url 'issuance-list' %}">issuances</a>
+                    <a class="nav-link ms-3" href="{% url 'return-from-department-list' %}">returns-from-department</a>
                 </div>
             </li>
             <!-- Add more navigation items as needed -->

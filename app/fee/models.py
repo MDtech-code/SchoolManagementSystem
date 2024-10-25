@@ -11,7 +11,6 @@ from app.finance.models import Bank
 
 
 
-
 class FeeStructure(TimeStampedModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE,null=True)
     class_s = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name="Class" ,null=True)
