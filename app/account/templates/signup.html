@@ -1,10 +1,21 @@
-
 {% extends "base/base.html" %}
+{% load static %}
+
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-  </form>
-  
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg border-0" style="width: 100%; max-width: 500px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4 alert alert-info">Sign Up</h3>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    {% for fm in form %}
+                    {{fm.label_tag}}{{fm}} <br><br>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}
