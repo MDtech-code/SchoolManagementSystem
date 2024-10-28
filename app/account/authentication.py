@@ -1,26 +1,20 @@
-'''
-from rest_framework.authentication import BaseAuthentication, SessionAuthentication
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.exceptions import AuthenticationFailed
+# from django.contrib.auth.backends import BaseBackend
+# from django.contrib.auth import get_user_model
 
-class CombinedAuthentication(BaseAuthentication):
-    def authenticate(self, request):
-        # Try session authentication first
-        session_auth = SessionAuthentication()
-        user_session = session_auth.authenticate(request)
-        
-        # If session authentication fails, raise an exception
-        if not user_session:
-            raise AuthenticationFailed("Session authentication failed.")
-        
-        # Now check JWT authentication
-        jwt_auth = JWTAuthentication()
-        user_jwt = jwt_auth.authenticate(request)
-        
-        # If JWT authentication fails, raise an exception
-        if not user_jwt:
-            raise AuthenticationFailed("JWT authentication failed.")
-        
-        # If both succeed, return the user
-        return user_session or user_jwt
-'''
+# User = get_user_model()
+
+# class EmailBackend(BaseBackend):
+#     def authenticate(self, request, username=None, password=None, **kwargs):
+#         try:
+#             # Try to get the user by email
+#             user = User.objects.get(email=username)
+#             if user.check_password(password):
+#                 return user
+#         except User.DoesNotExist:
+#             return None
+
+#     def get_user(self, user_id):
+#         try:
+#             return User.objects.get(pk=user_id)
+#         except User.DoesNotExist:
+#             return None

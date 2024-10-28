@@ -2,8 +2,9 @@ from django.db import models
 from app.common.models import TimeStampedModel
 from django.contrib.auth.models import User
 from app.employee.models import Employee
+from app.account.models import CustomUser
+
 class Bank(TimeStampedModel):
-    id = models.BigAutoField(primary_key=True)
     bank_account_no = models.CharField(max_length=255)
     bank_address = models.CharField(max_length=255)
     bank_code = models.CharField(max_length=255)
@@ -68,8 +69,8 @@ class IncomeTaxRates(TimeStampedModel):
 class CPFund(TimeStampedModel):
     # The BigAutoField is automatically the primary key in Django, so no need to explicitly define `id`
     
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_funds")
-    employee = models.OneToOneField(User, on_delete=models.CASCADE, related_name="cpfund")
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="created_funds" ,null=True)
+    employee = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="cpfund",null=True)
     deposited_cp_fund = models.PositiveIntegerField()
     last_date_submitted = models.DateField()
 
@@ -80,8 +81,8 @@ class CPFund(TimeStampedModel):
 class EOBIPaid(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
     
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="eobi_created_by")
-    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="eobi_employee")
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="eobi_created_by",null=True)
+    employee = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="eobi_employee",null=True)
     eobi_date_of_joining = models.DateField()
     month = models.DateField()
     total_deposit = models.FloatField()
@@ -93,7 +94,7 @@ class CPFundDeposits(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
     
     cp_fund = models.ForeignKey(CPFund, on_delete=models.CASCADE, related_name="deposits")
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cpfund_deposits_created_by")
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="cpfund_deposits_created_by" ,null=True)
     amount = models.PositiveIntegerField()
     date_paid = models.DateField()
     note = models.CharField(max_length=255)
@@ -105,7 +106,7 @@ class CPFundDeposits(TimeStampedModel):
 class EmployeeArrears(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
     
-    employee = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee_arrears")
+    employee = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="employee_arrears",null=True)
     arrears_amount = models.IntegerField()
     arrears_note = models.CharField(max_length=255)
 

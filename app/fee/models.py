@@ -8,6 +8,7 @@ from app.admission.models import Admission
 from django.contrib.auth.models import User
 from app.student.models import Student
 from app.finance.models import Bank
+from app.account.models import CustomUser
 
 
 
@@ -136,7 +137,7 @@ class StudentFeeVoucher(TimeStampedModel):
 class StudentFee(TimeStampedModel):
     
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE,null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True)
     voucher = models.ForeignKey(StudentFeeVoucher, on_delete=models.CASCADE,null=True)
     amount_paid = models.PositiveIntegerField()
     date_submitted = models.DateField()
@@ -152,7 +153,7 @@ class StudentFee(TimeStampedModel):
 class SecurityFee(TimeStampedModel):
     
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE,null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
     student_fee = models.ForeignKey(StudentFee, on_delete=models.CASCADE,null=True)
     amount_paid = models.PositiveIntegerField()

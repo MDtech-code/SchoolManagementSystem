@@ -12,7 +12,12 @@ from .views import (
 urlpatterns = [
     
  
-   path('',include('inventory.urls.items')),
+    #path('',include('inventory.urls.items')),
+    path('items/', ItemListView.as_view(), name='item-list'),
+    path('items/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
+    path('items/create/', ItemCreateView.as_view(), name='item-create'),
+    path('items/<int:pk>/update/', ItemUpdateView.as_view(), name='item-update'),
+    path('items/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
 
     # ItemsInStock URLs
     path('items-in-stock/', ItemsInStockListView.as_view(), name='items-in-stock-list'),
