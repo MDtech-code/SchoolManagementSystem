@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <h2 class="text-center mb-4">Qualification List</h2>
+    <a href="{% url 'qualification_create' %}" class="btn btn-primary mb-3">Add New Qualification</a>
+    <div class="row">
+        {% for qualification in object_list %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="card-title">{{ qualification.name }}</h5>
+                    <p class="card-text">{{ qualification.employee.username }} - {{ qualification.year_obtained }}</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'qualification_detail' qualification.pk %}" class="btn btn-outline-primary btn-sm">View</a>
+                        <a href="{% url 'qualification_update' qualification.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+                        <a href="{% url 'qualification_delete' qualification.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

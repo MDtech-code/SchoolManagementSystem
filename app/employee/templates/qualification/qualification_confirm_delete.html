@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <div class="card shadow p-4 text-center mx-auto" style="max-width: 500px;">
+        <h2>Delete Qualification</h2>
+        <p>Are you sure you want to delete <strong>{{ object.name }}</strong> for {{ object.employee.username }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger mt-3">Confirm Delete</button>
+            <a href="{% url 'qualification_list' %}" class="btn btn-outline-secondary mt-3">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

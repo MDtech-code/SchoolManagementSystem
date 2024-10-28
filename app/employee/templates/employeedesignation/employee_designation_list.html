@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+{% block title %}Employee Designations{% endblock %}
+{% block content %}
+    <h2 class="text-center mb-4">Employee Designations</h2>
+    <a href="{% url 'employee_designation_create' %}" class="btn btn-primary mb-3">Add New Designation</a>
+    <div class="list-group">
+        {% for designation in object_list %}
+            <a href="{% url 'employee_designation_detail' designation.pk %}" class="list-group-item list-group-item-action">
+                <h5>{{ designation.name }} - {{ designation.department }}</h5>
+                <p>{{ designation.description|truncatewords:20 }}</p>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

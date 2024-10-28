@@ -99,8 +99,10 @@
                     <span class="small">&#9660;</span>
                 </a>
                 <div class="dropdown-content">
-                    <a class="nav-link ms-3" href="#">Employee Designation</a>
-                    <a class="nav-link ms-3" href="#">Employees</a>
+                    <a class="nav-link ms-3" href="{% url 'employee_designation_list' %}">Employee Designation</a>
+                    <a class="nav-link ms-3" href="{% url 'employee_list' %}">Employees</a>
+                    <a class="nav-link ms-3" href="{% url 'qualification_list' %}">qualification</a>
+                    <a class="nav-link ms-3" href="{% url 'staffperformance_list' %}">staffperformance</a>
                 </div>
             </li>
 

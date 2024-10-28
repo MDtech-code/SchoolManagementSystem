@@ -1,6 +1,7 @@
 from django.db import models
 from app.common.models import TimeStampedModel
 from django.contrib.auth.models import User
+from django.utils import timezone
 from app.account.models import CustomUser
 
 class EmployeeDesignation(TimeStampedModel):
@@ -44,15 +45,15 @@ class Employee(TimeStampedModel):
         return self.employee_name
 
 
-class StaffPerformance(TimeStampedModel):
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+class StaffPerformance(models.Model):
+    employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
     comments = models.TextField()
     rating = models.PositiveSmallIntegerField()
     date_evaluated = models.DateField()
 
     def __str__(self):
         return f"Performance Evaluation for {self.employee.employee_name} on {self.date_evaluated}"
-
+    
 class Qualification(TimeStampedModel):
     employee = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="qualifications")
     discipline = models.CharField(max_length=100)

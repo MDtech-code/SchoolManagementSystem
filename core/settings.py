@@ -61,7 +61,8 @@ INSTALLED_APPS = [
      'app.academic',
      'app.common',
      'app.account',
-     'bootstrap5',
+     'django_bootstrap5',
+     
 
 ]
 TAILWIND_APP_NAME = 'theme'
