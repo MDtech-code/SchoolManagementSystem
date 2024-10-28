@@ -1,0 +1,23 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <h2>Confirm Delete</h2>
+        </div>
+        <div class="card-body">
+            <p class="lead">Are you sure you want to delete the issuance of 
+                <strong>"{{ issuance.stock_item.item.name }}"</strong>?
+            </p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Confirm</button>
+                <a href="{% url 'issuance-list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+

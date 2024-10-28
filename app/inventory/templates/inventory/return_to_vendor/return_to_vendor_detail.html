@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h1>Return of <strong>{{ return_to_vendor.stock_item.item.name }}</strong></h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Vendor:</strong> {{ return_to_vendor.vendor.name }}</p>
+            <p><strong>Quantity:</strong> {{ return_to_vendor.quantity }}</p>
+            <p><strong>Return Date:</strong> {{ return_to_vendor.return_date }}</p>
+            <div class="mt-4">
+                <a href="{% url 'return-to-vendor-update' return_to_vendor.pk %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'return-to-vendor-list' %}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

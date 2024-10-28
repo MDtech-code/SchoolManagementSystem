@@ -1,0 +1,53 @@
+{% load static tailwind_tags %}
+{% load bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}MD Dashboard{% endblock title %}</title>
+
+    <!-- Tailwind CSS (using django-tailwind) -->
+    {% tailwind_css %}
+
+    <!-- Bootstrap CSS -->
+    {% bootstrap_css %}
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    {% block header %}
+        {% include "includes/header.html" %}
+    {% endblock header %}
+
+    <!-- Main Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                {% block sidebar %}
+                    {% include "includes/sidebar.html" %}
+                {% endblock sidebar %}
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="col-md-9">
+                {% block content %}
+                    <!-- Placeholder for main content -->
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% block footer %}
+        {% include "includes/footer.html" %}
+    {% endblock footer %}
+
+    <!-- Bootstrap JavaScript -->
+    {% bootstrap_javascript %}
+</body>
+</html>

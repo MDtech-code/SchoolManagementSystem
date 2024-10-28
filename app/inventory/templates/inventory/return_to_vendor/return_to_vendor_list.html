@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+{% block content %}
+<h1>Returns to Vendors</h1>
+<a href="{% url 'return-to-vendor-create' %}">Add New Return</a>
+<ul>
+    {% for return in returns_to_vendor %}
+        <li>
+            <a href="{% url 'return-to-vendor-detail' return.pk %}">{{ return.stock_item.item.name }}</a> - 
+            <a href="{% url 'return-to-vendor-update' return.pk %}">Edit</a> - 
+            <a href="{% url 'return-to-vendor-delete' return.pk %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
+

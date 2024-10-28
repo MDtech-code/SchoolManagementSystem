@@ -54,13 +54,13 @@ class StaffPerformance(models.Model):
         return f"Performance Evaluation for {self.employee.employee_name} on {self.date_evaluated}"
     
 class Qualification(TimeStampedModel):
-    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="qualifications")
+    employee = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="qualifications")
     discipline = models.CharField(max_length=100)
     institution = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     year_obtained = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.name} - {self.employee.username} ({self.year_obtained})"
+         return f"{self.name} - {self.employee.username} ({self.year_obtained})"
     
 

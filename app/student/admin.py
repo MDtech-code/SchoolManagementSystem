@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 from app.admission.models import Admission
 from .models import Student

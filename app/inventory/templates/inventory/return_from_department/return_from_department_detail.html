@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h1>Return of {{ return_from_department.stock_item.item.name }}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Department:</strong> {{ return_from_department.department.name }}</p>
+            <p><strong>Quantity:</strong> {{ return_from_department.quantity }}</p>
+            <p><strong>Return Date:</strong> {{ return_from_department.return_date }}</p>
+            <div class="mt-3">
+                <a href="{% url 'return-from-department-update' return_from_department.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'return-from-department-list' %}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

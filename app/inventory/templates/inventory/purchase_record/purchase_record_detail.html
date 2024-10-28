@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h1>Purchase Record for {{ purchase_record.stock_item.item.name }}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Vendor:</strong> {{ purchase_record.vendor.name }}</p>
+            <p><strong>Amount:</strong> {{ purchase_record.amount }}</p>
+            <p><strong>Quantity:</strong> {{ purchase_record.quantity }}</p>
+            <p><strong>Purchase Date:</strong> {{ purchase_record.purchase_date }}</p>
+
+            <div class="d-flex">
+                <a href="{% url 'purchase-record-update' purchase_record.pk %}" class="btn btn-warning me-2">Edit</a>
+                <a href="{% url 'purchase-record-list' %}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

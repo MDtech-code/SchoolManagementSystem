@@ -2,6 +2,7 @@ from django.db import models
 from app.common.models import TimeStampedModel
 from app.employee.models import Employee
 from django.contrib.auth.models import User
+from app.account.models import CustomUser
 
 
 
@@ -34,7 +35,7 @@ class EmployeePayStructure(TimeStampedModel):
 class Payroll(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
 
-    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="payrolls")
+    employee = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="payrolls",null=True)
     employee_pay_structure = models.ForeignKey(EmployeePayStructure, on_delete=models.CASCADE, related_name="payrolls")
     
     annual_increments = models.FloatField()
@@ -108,7 +109,7 @@ class Leaves(TimeStampedModel):
     # The BigAutoField is automatically the primary key, no need to explicitly define `id`
 
     deducted_in_payroll = models.ForeignKey(Payroll, on_delete=models.SET_NULL, null=True, related_name="leaves_deducted")
-    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="employee_leaves")
+    employee = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="employee_leaves",null=True)
     leave_type = models.ForeignKey(LeaveType, on_delete=models.CASCADE, related_name="leave_type_leaves")
     deductions = models.PositiveIntegerField()
     executive_approval = models.BooleanField(default=False)

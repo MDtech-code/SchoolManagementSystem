@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h1>{{ items_in_stock.item.name }}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Quantity:</strong> {{ items_in_stock.quantity }}</p>
+            <p><strong>Reorder Level:</strong> {{ items_in_stock.reorder_level }}</p>
+
+            <a href="{% url 'items-in-stock-update' items_in_stock.pk %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'items-in-stock-list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

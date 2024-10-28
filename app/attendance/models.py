@@ -1,3 +1,4 @@
+
 from django.db import models
 from app.student.models import Student
 from app.common.models import TimeStampedModel
