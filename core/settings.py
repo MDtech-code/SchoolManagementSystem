@@ -60,6 +60,8 @@ INSTALLED_APPS = [
      'app.attendance',
      'app.academic',
      'app.common',
+     'app.account',
+     'django_bootstrap5',
      
 
 ]

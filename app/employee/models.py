@@ -2,6 +2,7 @@ from django.db import models
 from app.common.models import TimeStampedModel
 from django.contrib.auth.models import User
 from django.utils import timezone
+from app.account.models import CustomUser
 
 class EmployeeDesignation(TimeStampedModel):
     department = models.CharField(max_length=255)
