@@ -1,4 +1,61 @@
+
 {% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock title %}</title>
+
+    <!-- Tailwind CSS -->
+    {% tailwind_css %}
+    
+    <!-- Link to local Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <!-- Header Include -->
+    <header>
+        {% include "includes/header.html" %}
+    </header>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                {% include "includes/sidebar.html" %}
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="col-md-9">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Include -->
+    <footer>
+        {% include "includes/footer.html" %}
+    </footer>
+
+    <!-- Link to local Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.navbar-toggler').click(function () {
+                $('.navbar-collapse').toggle();
+            });
+        });
+    </script>
+    
+</body>
+</html>
+
+{% comment %} {% load static tailwind_tags %}
 {% load bootstrap5 %}
 
 <!DOCTYPE html>
@@ -50,4 +107,4 @@
     <!-- Bootstrap JavaScript -->
     {% bootstrap_javascript %}
 </body>
-</html>
+</html> {% endcomment %}
