@@ -33,38 +33,47 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
-INSTALLED_APPS = [
+# Django Default Apps
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #! debug app
+]
+
+# Third-Party Apps
+THIRD_PARTY_APPS = [
     'django_browser_reload',
     'debug_toolbar',
-
-    #! common
-    # 'apps.common',
-     'tailwind',
-     'theme',
-     #! main app
-     'app.student',
-     "app.admission",
-     "app.fee",
-     'app.employee',
-     'app.payroll',
-     'app.inventory',
-     'app.finance',
-     'app.attendance',
-     'app.academic',
-     'app.common',
-     'app.account',
-     'django_bootstrap5',
-     
-
+    'tailwind',
+    
 ]
+
+# Project Theme
+THEME_APPS = [
+    'theme',
+]
+
+# Project-Specific Apps
+PROJECT_APPS = [
+    'app.common',
+    'app.account',
+    'app.student',
+    'app.admission',
+    'app.fee',
+    'app.employee',
+    'app.payroll',
+    'app.inventory',
+    'app.finance',
+    'app.attendance',
+    'app.academic',
+]
+
+# Combine all app lists into INSTALLED_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + THEME_APPS + PROJECT_APPS
+
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
