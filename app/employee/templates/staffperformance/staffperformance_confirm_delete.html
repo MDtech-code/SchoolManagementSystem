@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Delete Performance{% endblock %}
+{% block content %}
+    <div class="card shadow p-4 text-center mx-auto" style="max-width: 500px;">
+        <h2>Delete Performance Evaluation</h2>
+        <p>Are you sure you want to delete the performance evaluation for <strong>{{ object.employee.employee_name }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger mt-3">Confirm Delete</button>
+            <a href="{% url 'staffperformance_list' %}" class="btn btn-outline-secondary mt-3">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

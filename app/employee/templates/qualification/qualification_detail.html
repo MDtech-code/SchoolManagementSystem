@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+        <h2 class="mb-4 text-center">{{ object.name }} Qualification</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Employee:</strong> {{ object.employee.username }}</li>
+            <li class="list-group-item"><strong>Discipline:</strong> {{ object.discipline }}</li>
+            <li class="list-group-item"><strong>Institution:</strong> {{ object.institution }}</li>
+            <li class="list-group-item"><strong>Year Obtained:</strong> {{ object.year_obtained }}</li>
+        </ul>
+        <div class="d-flex justify-content-center mt-4">
+            <a href="{% url 'qualification_update' object.pk %}" class="btn btn-secondary me-2">Edit</a>
+            <a href="{% url 'qualification_delete' object.pk %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'qualification_list' %}" class="btn btn-outline-dark ms-2">Back to List</a>
+        </div>
+    </div>
+{% endblock %}

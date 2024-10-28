@@ -1,0 +1,27 @@
+<!-- templates/employee/employee_designation_form.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if designation %}Edit Employee Designation{% else %}Add Employee Designation{% endif %}{% endblock %}
+
+{% block content %}
+<h2>{% if designation %}Edit Employee Designation{% else %}Add Employee Designation{% endif %}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value|default_if_none:'' }}" required>
+    </div>
+    <div class="form-group">
+        <label for="department">Department:</label>
+        <input type="text" class="form-control" id="department" name="department" value="{{ form.department.value|default_if_none:'' }}" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required>{{ form.description.value|default_if_none:'' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-success">{% if designation %}Update{% else %}Create{% endif %}</button>
+    <a href="{% url 'employee_designation_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

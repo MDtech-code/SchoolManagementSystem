@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Staff Performance List{% endblock %}
+{% block content %}
+    <h2 class="text-center mb-4">Staff Performance List</h2>
+    <a href="{% url 'staffperformance_create' %}" class="btn btn-primary mb-3">Add New Evaluation</a>
+    <div class="row">
+        {% for performance in object_list %}
+            <div class="col-md-4 mb-4">
+                <div class="card p-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ performance.employee.employee_name }}</h5>
+                        <p class="card-text">Rating: <strong>{{ performance.rating }}</strong></p>
+                        <p class="card-text">Date Evaluated: {{ performance.date_evaluated }}</p>
+                        <p class="card-text">{{ performance.comments|truncatewords:10 }}</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'staffperformance_detail' performance.pk %}" class="btn btn-outline-primary btn-sm">View</a>
+                            <a href="{% url 'staffperformance_update' performance.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+                            <a href="{% url 'staffperformance_delete' performance.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

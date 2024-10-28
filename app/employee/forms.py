@@ -42,6 +42,8 @@
 
 from django import forms
 from .models import Employee
+from .models import StaffPerformance, Qualification
+from .models import EmployeeDesignation
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -79,5 +81,23 @@ class EmployeeForm(forms.ModelForm):
             'province': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter province'}),
             'wing': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter wing'}),
         }
+class StaffPerformanceForm(forms.ModelForm):
+    class Meta:
+        model = StaffPerformance
+        fields = ['employee', 'comments', 'rating', 'date_evaluated']
 
+class QualificationForm(forms.ModelForm):
+    class Meta:
+        model = Qualification
+        fields = ['employee', 'discipline', 'institution', 'name', 'year_obtained']
 
+class EmployeeDesignationForm(forms.ModelForm):
+    class Meta:
+        model = EmployeeDesignation
+        fields = ['name', 'department', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter designation name'}),
+            'department': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter department'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter description'}),
+
+        }
