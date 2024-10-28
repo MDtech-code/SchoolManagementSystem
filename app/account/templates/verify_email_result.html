@@ -1,10 +1,10 @@
 {% extends "base/base.html" %}
 {% block content %}
-<div class="container mx-auto mt-10">
-    <div class="bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold mb-4">Verification Result</h2>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-lg border-0 text-center" style="max-width: 400px; width: 100%;">
+        <h2 class="mb-3">Verification Result</h2>
         <p class="mb-4">{{ message }}</p>
-        <a href="{% url 'login' %}" class="text-blue-500 hover:underline">Go to Login</a>
+        <a href="{% url 'login' %}" class="btn btn-primary">Go to Login</a>
     </div>
 </div>
 {% endblock content %}
