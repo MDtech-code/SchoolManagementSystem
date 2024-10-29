@@ -1,0 +1,12 @@
+body {
+    margin: 0; /* Reset body margin to remove any space around the page */
+    padding: 0; /* Reset padding */
+}
+
+.sidebar {
+    width: 250px; /* Set sidebar width, ensuring enough space for the sidebar content */
+}
+
+.content {
+    margin-left: 250px; /* Aligns main content to the right of the sidebar */
+}

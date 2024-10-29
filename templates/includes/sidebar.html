@@ -1,43 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dashboard{% endblock %}</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS (if needed) -->
-    <style>
-        .sidebar {
-            height: 100vh;
-            background-color: #343a40;
-        }
-        .sidebar .nav-link {
-            color: white;
-        }
-        .sidebar .nav-link:hover {
-            background-color: #495057;
-        }
-        .dropdown-content {
-            display: none;
-        }
-        .active .dropdown-content {
-            display: block;
-        }
-    </style>
-</head>
-<body>
+
 
 <div class="d-flex">
     <!-- Sidebar -->
-    <nav class="sidebar p-3">
-        <div class="logo mb-3">
-            <a href="#" class="text-white text-decoration-none fs-4">Army public School</a>
+    {% comment %} <nav class="sidebar bg-dark text-light p-3 vh-100" style="width: 250px;"> {% endcomment %}
+    <nav class="sidebar bg-dark text-light p-3 vh-100 position-fixed" style="width: 250px; left: 0; top: 0;">
+        <div class="logo mb-4">
+            <a href="#" class="text-white text-decoration-none fs-4">Army Public School</a>
         </div>
         <ul class="nav flex-column">
             <!-- Dashboard -->
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center" href="#">
+                <a class="nav-link text-light d-flex align-items-center" href="#">
                     <i class="bi bi-bar-chart-line-fill me-2"></i>
                     <span>Dashboard</span>
                 </a>
@@ -45,382 +18,86 @@
 
             <!-- Accounts -->
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center" onclick="toggleDropdown(this)">
+                <a class="nav-link text-light d-flex justify-content-between align-items-center" href="#accountsDropdown" data-bs-toggle="collapse" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-person-gear me-2"></i>
                         <span>Accounts</span>
                     </div>
-                    <span class="small">&#9660;</span>
+                    <i class="bi bi-chevron-down small"></i>
                 </a>
-                <div class="dropdown-content">
-                    <a class="nav-link ms-3" href="#">Banks</a>
-                    <a class="nav-link ms-3" href="#">Expenses</a>
-                    <a class="nav-link ms-3" href="#">Month Closings</a>
-                    <!-- Add other items as needed -->
+                <div id="accountsDropdown" class="collapse ps-4">
+                    <a class="nav-link text-light" href="#">Banks</a>
+                    <a class="nav-link text-light" href="#">Expenses</a>
+                    <a class="nav-link text-light" href="#">Month Closings</a>
                 </div>
             </li>
 
             <!-- Authentication -->
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center" onclick="toggleDropdown(this)">
+                <a class="nav-link text-light d-flex justify-content-between align-items-center" href="#authDropdown" data-bs-toggle="collapse" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-person-fill-lock me-2"></i>
                         <span>Authentication</span>
                     </div>
-                    <span class="small">&#9660;</span>
+                    <i class="bi bi-chevron-down small"></i>
                 </a>
-                <div class="dropdown-content">
-                    <a class="nav-link ms-3" href="#">Groups</a>
-                    <a class="nav-link ms-3" href="#">Users</a>
+                <div id="authDropdown" class="collapse ps-4">
+                    <a class="nav-link text-light" href="#">Groups</a>
+                    <a class="nav-link text-light" href="#">Users</a>
                 </div>
             </li>
 
             <!-- Config -->
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center" onclick="toggleDropdown(this)">
+                <a class="nav-link text-light d-flex justify-content-between align-items-center" href="#configDropdown" data-bs-toggle="collapse" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-gear-fill me-2"></i>
                         <span>Config</span>
                     </div>
-                    <span class="small">&#9660;</span>
+                    <i class="bi bi-chevron-down small"></i>
                 </a>
-                <div class="dropdown-content">
-                    <a class="nav-link ms-3" href="#">Site Details</a>
+                <div id="configDropdown" class="collapse ps-4">
+                    <a class="nav-link text-light" href="#">Site Details</a>
                 </div>
             </li>
 
             <!-- Employee Management -->
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center" onclick="toggleDropdown(this)">
+                <a class="nav-link text-light d-flex justify-content-between align-items-center" href="#employeeDropdown" data-bs-toggle="collapse" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-person me-2"></i>
                         <span>Employee Management</span>
                     </div>
-                    <span class="small">&#9660;</span>
+                    <i class="bi bi-chevron-down small"></i>
                 </a>
-                <div class="dropdown-content">
-                    <a class="nav-link ms-3" href="{% url 'employee_designation_list' %}">Employee Designation</a>
-                    <a class="nav-link ms-3" href="{% url 'employee_list' %}">Employees</a>
-                    <a class="nav-link ms-3" href="{% url 'qualification_list' %}">qualification</a>
-                    <a class="nav-link ms-3" href="{% url 'staffperformance_list' %}">staffperformance</a>
+                <div id="employeeDropdown" class="collapse ps-4">
+                    <a class="nav-link text-light" href="{% url 'employee_designation_list' %}">Employee Designation</a>
+                    <a class="nav-link text-light" href="{% url 'employee_list' %}">Employees</a>
+                    <a class="nav-link text-light" href="{% url 'qualification_list' %}">Qualification</a>
+                    <a class="nav-link text-light" href="{% url 'staffperformance_list' %}">Staff Performance</a>
                 </div>
             </li>
 
             <!-- Inventory Management -->
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center" onclick="toggleDropdown(this)">
+                <a class="nav-link text-light d-flex justify-content-between align-items-center" href="#inventoryDropdown" data-bs-toggle="collapse" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-building-check me-2"></i>
                         <span>Inventory Management</span>
                     </div>
-                    <span class="small">&#9660;</span>
+                    <i class="bi bi-chevron-down small"></i>
                 </a>
-                <div class="dropdown-content">
-                    {% comment %} <a class="nav-link ms-3" href="{% url 'category-list' %}">Category</a> {% endcomment %}
-                    <a class="nav-link ms-3" href="{% url 'item-list' %}">Items</a>
-                    <a class="nav-link ms-3" href="{% url 'items-in-stock-list' %}">items-in-stock</a>
-                    <a class="nav-link ms-3" href="{% url 'vendor-list' %}">vendors</a>
-                    <a class="nav-link ms-3" href="{% url 'purchase-record-list' %}">purchase-records</a>
-                    <a class="nav-link ms-3" href="{% url 'return-to-vendor-list' %}">returns-to-vendor</a>
-                    <a class="nav-link ms-3" href="{% url 'issuance-list' %}">issuances</a>
-                    <a class="nav-link ms-3" href="{% url 'return-from-department-list' %}">returns-from-department</a>
+                <div id="inventoryDropdown" class="collapse ps-4">
+                    <a class="nav-link text-light" href="{% url 'item-list' %}">Items</a>
+                    <a class="nav-link text-light" href="{% url 'items-in-stock-list' %}">Items in Stock</a>
+                    <a class="nav-link text-light" href="{% url 'vendor-list' %}">Vendors</a>
+                    <a class="nav-link text-light" href="{% url 'purchase-record-list' %}">Purchase Records</a>
+                    <a class="nav-link text-light" href="{% url 'return-to-vendor-list' %}">Returns to Vendor</a>
+                    <a class="nav-link text-light" href="{% url 'issuance-list' %}">Issuances</a>
+                    <a class="nav-link text-light" href="{% url 'return-from-department-list' %}">Returns from Department</a>
                 </div>
             </li>
-            <!-- Add more navigation items as needed -->
         </ul>
     </nav>
-
-    {% comment %} <!-- Main Content Area -->
-    <div class="content p-4 w-100">
-        {% block content %}
-        <!-- Your content goes here -->
-        <h1>Welcome to Dashboard</h1>
-        {% endblock %}
-    </div> {% endcomment %}
 </div>
 
-<!-- Bootstrap 5 JS and dependencies -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    function toggleDropdown(element) {
-        const parentLi = element.parentElement;
-        parentLi.classList.toggle('active');
-    }
-</script>
-
-</body>
-</html>
-
-{% comment %} <div class="sidebar show" id="sidebar">
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="#" class="simple-text logo-normal">shir school</a>
-                
-            </div>
-            <ul class="nav">
-                <li class="nav-links nav-items no-arrow">
-                    <a class="mt-0" href="#">
-                        
-                        <i class="bi bi-bar-chart-line-fill fa-xs"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="nav-links nav-items no-arrow ">
-                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center;">
-                        <i class="bi bi-person-gear"></i>
-                        <p style="margin-left: 18;">Accounts</p>
-                    </div>
-                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
-                </a>
-                    <div class="dropdown-content">
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-bank"></i> Banks
-                        </a>
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-currency-dollar"></i> Expenses
-                        </a>
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-calendar2-check"></i> Month Closings
-                        </a>
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-piggy-bank"></i> Other Deposits
-                        </a>
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-file-earmark-excel"></i> School Leaving Certificates
-                        </a>
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-shield-lock"></i> Security Fees
-                        </a>
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-cash-stack"></i> student_fee
-                        </a>
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-card-checklist"></i> Voucher Generation Rules
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-links nav-items no-arrow">
-                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center;">
-                        <i class="bi bi-person-fill-lock"></i>
-                        <p style="margin-left: 18;">Authentication</p>
-                    </div>
-                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
-                </a>
-                    <div class="dropdown-content">
-                        <a onclick="location.href='#'">
-                            <i class="fas fa-users"></i>Groups
-                        </a>
-                        <a onclick="location.href='#'">
-                            <i class="fas fa-user"></i>User
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-links nav-items no-arrow">
-                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center;">
-                        <i class="bi bi-gear-fill"></i>
-                        <p style="margin-left: 18;">Config</p>
-                    </div>
-                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
-                </a>
-                    <div class="dropdown-content">
-                        <a onclick="location.href=''">
-                            <i class="fas fa-info-circle"></i>Site details
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-links nav-items no-arrow">
-                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center;">
-                        <i class="bi bi-person"></i>
-                        <p style="margin-left: 18;">Employee Management</p>
-                    </div>
-                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
-                </a>
-                    <div class="dropdown-content">
-                        <a onclick="location.href='#'">
-                            <i class="bi bi-briefcase"></i> Employee designation
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-people"></i> Employees
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-arrow-up-right-circle"></i> Increment orders
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-cash"></i> Installment paid
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-calendar-x"></i> Leave types
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-calendar-event"></i> Leaves
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-currency-exchange"></i> Loans
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-cash-stack"></i> Pay Structure
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-cash-coin"></i> Payroll
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-shield-lock"></i> Security deposit paid
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-calendar-check"></i> Staff attendance
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-bar-chart-line"></i> Staff performance
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-links nav-items no-arrow">
-                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center;">
-                        <i class="bi bi-building-check"></i>
-                        <p style="margin-left: 18;">Inventory Management</p>
-                    </div>
-                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
-                </a>
-                    <div class="dropdown-content">
-                        <a onclick="location.href=''">
-                            <i class="bi bi-grid"></i> Category
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-diagram-3"></i> Department
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-graph-up-arrow"></i> Issuances
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-box"></i> Item
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-cart4"></i> Item in stocks
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-journal"></i> Purchase records
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-arrow-counterclockwise"></i> Return from departments
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-arrow-repeat"></i> Return to vendors
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-people"></i> Vendors
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-links nav-items no-arrow ">
-                    <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="display: flex; align-items: center;">
-                            <i class="bi bi-person-up"></i>
-                            <p style="margin-left: 18;">Reporting</p>
-                        </div>
-                        <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
-                    </a>
-                     <div class="dropdown-content">
-                        <a onclick="location.href=''">
-                            <i class="fas fa-chart-bar"></i>Reports
-                        </a>
-                         <a onclick="location.href=''">
-                            <i class="fa fa-book"></i>Student Ledger
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-links nav-items no-arrow ">
-                    <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="display: flex; align-items: center;">
-                            <i class="bi bi-person-up"></i>
-                            <p style="margin-left: 18;">Student Management</p>
-                        </div>
-                        <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
-                    </a>
-                     <div class="dropdown-content">
-                        <a onclick="location.href=''">
-                            <i class="fa fa-university"></i>Admission
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-list"></i>Categories
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-journal"></i>Class
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-cash-stack"></i>Fee Structure
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-flag"></i>Nationalities
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-calendar-event"></i>Provinces
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-flag-fill"></i>Religion
-                        </a>
-                        <a onclick="location.href='">
-                            <i class="bi bi-collection"></i>Sections
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-credit-card"></i>Student Fee Vouchers
-                        </a>
-                        <a onclick="location.href=''">
-                            <i class="bi bi-person-badge"></i>Students
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-links nav-items no-arrow">
-                <a class="mt-0" onclick="toggleDropdown(this)" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center;">
-                        <i class="bi bi-robot"></i>
-                        <p style="margin-left: 18;">AI Features</p>
-                    </div>
-                    <span style="margin-left: auto; margin-right: 10px; font-size: 0.75em;">&#9660;</span>
-                </a>
-                    <div class="dropdown-content">
-                        <a onclick="location.href=''">
-                            <i class="bi bi-bar-chart-line"></i>Admission Prediction
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-links nav-items no-arrow">
-                    <a class="mt-0" href="#">
-                        
-                        <i class="bi bi-globe2"></i>
-                        <p>Teacher Portal</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-<scrip>
-function toggleDropdown(element) {
-    // Get the parent <li> of the clicked <a>
-    const parentLi = element.parentElement;
-
-    // Check if the clicked element is already active
-    const isActive = parentLi.classList.contains('active');
-
-    // Toggle the active state (open/close dropdown)
-    if (isActive) {
-        parentLi.classList.remove('active');
-    } else {
-        parentLi.classList.add('active');
-    }
-}
-
-function handleItemClick(event) {
-    // Prevent the dropdown from closing when clicking on an item
-    event.stopPropagation();
-
-    // You can add any logic you want here, e.g., handling the click
-    console.log("Item clicked:", event.target.innerText);
-}
-
-</sc>
-'''' {% endcomment %}
