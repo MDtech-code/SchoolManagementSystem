@@ -1,4 +1,3 @@
-
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,48 +9,48 @@
     <!-- Tailwind CSS -->
     {% comment %} {% tailwind_css %} {% endcomment %}
     
-    <!-- Link to local Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel='stylesheet' href="{% static 'css/index.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endcomment %}
 </head>
-<body>
-    <!-- Header Include -->
-    <header>
+{% comment %} <body class="d-flex flex-column min-vh-100"> {% endcomment %}
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Header -->
+    <header style="z-index: 1000;">
         {% include "includes/header.html" %}
     </header>
+
     
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3">
-                {% include "includes/sidebar.html" %}
-            </div>
-            
-            <!-- Main Content Area -->
-            <div class="col-md-9">
-                {% block content %}
-                {% endblock content %}
-            </div>
+    {% comment %} <div class="d-flex flex-grow-1" style="padding-top: 56px;">
+        <nav class="sidebar bg-dark text-light vh-100 position-fixed" style="width: 250px; top: 0;">
+            {% include "includes/sidebar.html" %}
+        </nav>
+
+        <div class="content flex-grow-1" style="padding-left: 250px;">
+            {% block content %}{% endblock %}
+        </div>
+    </div> {% endcomment %}
+      <!-- Main Container for Sidebar and Content -->
+      <div class="d-flex flex-grow-1" >
+        <nav class="sidebar bg-dark text-light vh-100 position-fixed" style="width: 250px; top: 56px;">
+            {% include "includes/sidebar.html" %}
+        </nav>
+
+        <div class="content flex-grow-1" style="padding-left: 250px;">
+            {% block content %}{% endblock %}
         </div>
     </div>
 
-    <!-- Footer Include -->
-    <footer>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center mt-auto">
         {% include "includes/footer.html" %}
     </footer>
 
-    <!-- Link to local Bootstrap JS -->
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script>
-        $(document).ready(function () {
-            $('.navbar-toggler').click(function () {
-                $('.navbar-collapse').toggle();
-            });
-        });
-    </script>
-    
 </body>
 </html>
+
