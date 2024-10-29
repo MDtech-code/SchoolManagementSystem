@@ -1,12 +1,37 @@
+/* General Reset */
 body {
-    margin: 0; /* Reset body margin to remove any space around the page */
-    padding: 0; /* Reset padding */
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif; /* Example font */
+    background-color: #f7f9fc; /* Light background color */
 }
 
+/* Header */
+header {
+    background-color: #001f3f;
+    color: #ffffff;
+}
+header a {
+    color: #ffffff;
+}
+header a:hover {
+    color: #ff851b;
+}
+
+/* Sidebar */
 .sidebar {
-    width: 250px; /* Set sidebar width, ensuring enough space for the sidebar content */
+    background-color: #343a40;
+    color: #d3d3d3;
+}
+.sidebar a {
+    color: #d3d3d3;
+}
+.sidebar a:hover, .sidebar a.active {
+    color: #ff851b;
 }
 
-.content {
-    margin-left: 250px; /* Aligns main content to the right of the sidebar */
+/* Footer */
+footer {
+    background-color: #212529;
+    color: #d3d3d3;
 }
