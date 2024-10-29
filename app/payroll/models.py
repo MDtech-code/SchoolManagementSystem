@@ -6,13 +6,14 @@ from app.account.models import CustomUser
 from django.conf import settings
 from django.db.models import UniqueConstraint
 
+#! Represents the pay structure for different employee designations
 class PayStructure(TimeStampedModel):
     employee_designation = models.ForeignKey(
         'employee.EmployeeDesignation', 
         on_delete=models.CASCADE, 
-        related_name="pay_structures", 
-        verbose_name="Employee Designation",
-        help_text="Select the designation related to this pay structure."
+        related_name="pay_structures",  #! This will be used as a reference to access related pay structures from other models.
+        verbose_name="Employee Designation",#!Verbose Names are used for better readbality in the forms and Admin interface.
+        help_text="Select the designation related to this pay structure.",  #! This text provides guidance on what designation to select for the corresponding pay structure.
     )
     annual_increment = models.IntegerField(
         verbose_name="Annual Increment",
@@ -50,6 +51,7 @@ class PayStructure(TimeStampedModel):
     def __str__(self):
         return f"{self.employee_designation.name} - Pay Structure"
     
+#! Represents the pay structure assigned to an employee, including various allowances
 class EmployeePayStructure(TimeStampedModel):
     employee = models.ForeignKey(
         Employee, 
@@ -84,6 +86,8 @@ class EmployeePayStructure(TimeStampedModel):
 
     def __str__(self):
         return f"{self.employee.employee_name} - Pay Structure"
+
+#! Represents the payroll details for each employee, including various allowances and deductions
 class Payroll(TimeStampedModel):
     employee = models.ForeignKey(
         CustomUser, 
@@ -144,6 +148,7 @@ class Payroll(TimeStampedModel):
     def __str__(self):
         return f"Payroll for {self.employee.username} - {self.total_amount}"
 
+#! Represents the annual increments awarded to employees
 class EmployeeAnnualIncrement(TimeStampedModel):
     employee_structure = models.ForeignKey(
         'EmployeePayStructure', 
@@ -165,9 +170,9 @@ class EmployeeAnnualIncrement(TimeStampedModel):
         ]
 
     def __str__(self):
-        return f"Annual Increment #{self.annual_inc_no} for {self.employee_structure} - {self.total_annual_inc}"
+        return f"Annual Increment #!{self.annual_inc_no} for {self.employee_structure} - {self.total_annual_inc}"
 
-    
+#! Represents orders for increments to be processed
 class IncrementOrder(TimeStampedModel):
     created = models.DateTimeField(auto_now_add=True, verbose_name="Order Creation Date")
     note = models.CharField(max_length=255, verbose_name="Order Note")
@@ -181,7 +186,7 @@ class IncrementOrder(TimeStampedModel):
     def __str__(self):
         return f"Increment Order - {self.percentage_increment}%"
 
-
+#! Represents increments awarded to employees based on orders
 class Increment(TimeStampedModel):
     order = models.ForeignKey(
         IncrementOrder, on_delete=models.CASCADE, related_name="increments",
@@ -205,7 +210,7 @@ class Increment(TimeStampedModel):
     def __str__(self):
         return f"Increment for {self.pay_structure} - Amount: {self.amount}"
 
-
+#! Represents different types of leave available to employees
 class LeaveType(TimeStampedModel):
     name = models.CharField(max_length=100, verbose_name="Leave Type Name")
     days_paid = models.PositiveIntegerField(verbose_name="Paid Days Allowed")
@@ -222,6 +227,8 @@ class LeaveType(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+#! Represents leave applications made by employees
 class Leaves(TimeStampedModel):
     deducted_in_payroll = models.ForeignKey(
         Payroll,
