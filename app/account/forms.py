@@ -25,11 +25,23 @@ class LoginForm(forms.Form):
 
 
 class ForgetPasswordForm(forms.Form):
-    email = forms.EmailField()
+    email = forms.EmailField(label="Email Address", required=True, widget=forms.EmailInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter your email'
+        }
+    ))
+
 
 class ResetPasswordForm(forms.Form):
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(
+        label="New Password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter new password'})
+    )
+    confirm_password = forms.CharField(
+        label="Confirm Password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm new password'})
+    )
 
     def clean(self):
         cleaned_data = super().clean()
