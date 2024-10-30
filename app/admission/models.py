@@ -12,47 +12,8 @@ from core.utils.choices import GENDER_CHOICES, BLOOD_GROUP_CHOICES, PICK_N_DROP_
 #! Stores personal information about the student
 
 # Define choices for gender, blood group, health status, immunization, and disabilities
-GENDER_CHOICES = [
-    ('male', 'Male'),
-    ('female', 'Female'),
-    ('other', 'Other'),
-]
 
-BLOOD_GROUP_CHOICES = [
-    ('A+', 'A+'),
-    ('A-', 'A-'),
-    ('B+', 'B+'),
-    ('B-', 'B-'),
-    ('AB+', 'AB+'),
-    ('AB-', 'AB-'),
-    ('O+', 'O+'),
-    ('O-', 'O-'),
-]
-
-HEALTH_CHOICES = [
-    ('healthy', 'Healthy'),
-    ('sick', 'Sick'),
-    ('chronic', 'Chronic Illness'),
-]
-
-IMMUNIZATION_CHOICES = [
-    ('complete', 'Fully Immunized'),
-    ('partially', 'Partially Immunized'),
-    ('none', 'Not Immunized'),
-]
-ADMISSION_TYPE_CHOICES = [
-    ('New', 'New Admission'),
-    ('Transfer', 'Transfer Admission'),
-]
-
-# Choices for enrollment status
-ENROLLMENT_CHOICES = [
-    ('Enrolled', 'Enrolled'),
-    ('Pending', 'Pending'),
-    ('Rejected', 'Rejected'),
-]
-
-# Choices for religion (example)
+# Choices for Religion
 RELIGION_CHOICES = [
     ('Islam', 'Islam'),
     ('Christianity', 'Christianity'),
