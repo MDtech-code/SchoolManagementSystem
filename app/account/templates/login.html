@@ -12,6 +12,11 @@
         .gradient-custom-4 {
             background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
         }
+        .form-control-lg {
+            
+            padding: .5rem 2rem;
+           
+        }
     </style>
 </head>
 <body>
@@ -26,11 +31,12 @@
                             <form method="post" novalidate>
                                 {% csrf_token %}
                                 
-                                <!-- Email Field with Icon -->
+                                <!-- username Field with Icon -->
                                 <div class="form-outline mb-4 position-relative">
-                                    <i class="fas fa-envelope position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                                    {{ form.email }}
+                                    <i class="fas fa-user position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                    {{ form.username }}
                                 </div>
+                                
 
                                 <!-- Password Field with Show/Hide Toggle -->
                                 <div class="form-outline mb-4 position-relative">
