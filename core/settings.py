@@ -89,8 +89,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
     'app.account.middleware.LoginRequiredMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
     
 ]
 

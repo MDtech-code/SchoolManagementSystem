@@ -6,7 +6,7 @@ from app.account.models import CustomUser
 
 class Bank(TimeStampedModel):
     """
-    Model representing bank details, including account information and contact details.
+    !Model representing bank details, including account information and contact details.
     """
     bank_account_no = models.CharField(
         max_length=255,
@@ -63,7 +63,7 @@ class Bank(TimeStampedModel):
 
 class Expense(TimeStampedModel):
     """
-    Model representing an expense entry, including details about the amount and description.
+    !Model representing an expense entry, including details about the amount and description.
     """
     amount = models.DecimalField(
         max_digits=10,
@@ -98,7 +98,7 @@ class Expense(TimeStampedModel):
 
 class Loan(TimeStampedModel):
     """
-    Model representing a loan taken by an employee, tracking amounts and installments.
+    !Model representing a loan taken by an employee, tracking amounts and installments.
     """
     employee = models.ForeignKey(
         Employee,
@@ -131,7 +131,7 @@ class Loan(TimeStampedModel):
 
 class InstallmentPaid(TimeStampedModel):
     """
-    Model representing an installment payment for a loan.
+    !Model representing an installment payment for a loan.
     """
     loan = models.ForeignKey(
         Loan,
@@ -162,7 +162,7 @@ class InstallmentPaid(TimeStampedModel):
 
 class IncomeTaxSession(TimeStampedModel):
     """
-    Model representing an income tax session, defined by starting and ending years.
+    !Model representing an income tax session, defined by starting and ending years.
     """
     starting_year = models.DateField(
         verbose_name="Starting Year",
@@ -192,7 +192,7 @@ class IncomeTaxSession(TimeStampedModel):
 
 class IncomeTaxRates(TimeStampedModel):
     """
-    Model representing income tax rates for a specific session.
+    !Model representing income tax rates for a specific session.
     """
     session = models.ForeignKey(
         IncomeTaxSession,
@@ -227,7 +227,7 @@ class IncomeTaxRates(TimeStampedModel):
 
 class CPFund(TimeStampedModel):
     """
-    Model representing a CP fund associated with an employee.
+    !Model representing a CP fund associated with an employee.
     """
     created_by = models.ForeignKey(
         CustomUser,
@@ -267,7 +267,7 @@ class CPFund(TimeStampedModel):
 
 class EOBIPaid(TimeStampedModel):
     """
-    Model representing EOBI payments made for an employee.
+    !Model representing EOBI payments made for an employee.
     """
     created_by = models.ForeignKey(
         CustomUser,
@@ -312,7 +312,7 @@ class EOBIPaid(TimeStampedModel):
 
 class CPFundDeposits(TimeStampedModel):
     """
-    Model representing deposits made to a CP fund.
+    !Model representing deposits made to a CP fund.
     """
     cp_fund = models.ForeignKey(
         CPFund,
@@ -357,7 +357,7 @@ class CPFundDeposits(TimeStampedModel):
 
 class EmployeeArrears(TimeStampedModel):
     """
-    Model representing arrears for an employee.
+    !Model representing arrears for an employee.
     """
     employee = models.OneToOneField(
         CustomUser,
@@ -387,7 +387,7 @@ class EmployeeArrears(TimeStampedModel):
 
 class Security(TimeStampedModel):
     """
-    Model representing security deposits made for an employee.
+    !Model representing security deposits made for an employee.
     """
     created_by = models.ForeignKey(
         Employee,
@@ -428,7 +428,7 @@ class Security(TimeStampedModel):
     
 class SecurityDeposits(TimeStampedModel):
     """
-    Model representing security deposits made for a security.
+    !Model representing security deposits made for a security.
     """
     created_by = models.ForeignKey(
         Employee,
@@ -472,7 +472,7 @@ class SecurityDeposits(TimeStampedModel):
 
 class OtherDeposits(TimeStampedModel):
     """
-    Model representing other deposits made to a bank.
+    !Model representing other deposits made to a bank.
     """
     bank = models.ForeignKey(
         Bank,
@@ -509,7 +509,7 @@ class OtherDeposits(TimeStampedModel):
 
 class MonthClosing(TimeStampedModel):
     """
-    Model representing the monthly closing for a bank.
+    !Model representing the monthly closing for a bank.
     """
     bank = models.ForeignKey(
         Bank,
