@@ -126,11 +126,6 @@ class Migration(migrations.Migration):
             field=models.OneToOneField(help_text='The employee associated with this CP Fund.', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='cpfund', to=settings.AUTH_USER_MODEL, verbose_name='Employee'),
         ),
         migrations.AlterField(
-            model_name='cpfund',
-            name='last_date_submitted',
-            field=models.DateField(help_text='The last date when the CP Fund was submitted.', verbose_name='Last Date Submitted'),
-        ),
-        migrations.AlterField(
             model_name='cpfunddeposits',
             name='amount',
             field=models.PositiveIntegerField(help_text='The amount deposited to the CP fund.', verbose_name='Amount'),
@@ -144,11 +139,6 @@ class Migration(migrations.Migration):
             model_name='cpfunddeposits',
             name='created_by',
             field=models.ForeignKey(help_text='User who created this deposit entry.', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='cpfund_deposits_created_by', to=settings.AUTH_USER_MODEL, verbose_name='Created By'),
-        ),
-        migrations.AlterField(
-            model_name='cpfunddeposits',
-            name='date_paid',
-            field=models.DateField(help_text='The date when the deposit was made.', verbose_name='Date Paid'),
         ),
         migrations.AlterField(
             model_name='cpfunddeposits',
@@ -182,16 +172,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='eobipaid',
-            name='eobi_date_of_joining',
-            field=models.DateField(help_text='The date when the employee joined.', verbose_name='Date of Joining'),
-        ),
-        migrations.AlterField(
-            model_name='eobipaid',
-            name='month',
-            field=models.DateField(help_text='The month for which the EOBI payment is made.', verbose_name='Month'),
-        ),
-        migrations.AlterField(
-            model_name='eobipaid',
             name='total_deposit',
             field=models.FloatField(help_text='Total amount deposited for EOBI.', verbose_name='Total Deposit'),
         ),
@@ -199,11 +179,6 @@ class Migration(migrations.Migration):
             model_name='expense',
             name='amount',
             field=models.DecimalField(decimal_places=2, help_text='Amount of the expense.', max_digits=10, verbose_name='Expense Amount'),
-        ),
-        migrations.AlterField(
-            model_name='expense',
-            name='date',
-            field=models.DateField(help_text='Date of the expense.', verbose_name='Expense Date'),
         ),
         migrations.AlterField(
             model_name='expense',
@@ -228,229 +203,81 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='incometaxrates',
             name='session',
-            field=models.ForeignKey(help_text='The session to which these tax rates apply.', on_delete=django.db.models.deletion.CASCADE, to='finance.incometaxsession', verbose_name='Income Tax Session'),
-        ),
-        migrations.AlterField(
-            model_name='incometaxrates',
-            name='to_taxable_income',
-            field=models.PositiveIntegerField(help_text='The ending amount of taxable income.', verbose_name='To Taxable Income'),
+            field=models.ForeignKey(help_text='Tax session to which this rate applies.', on_delete=django.db.models.deletion.CASCADE, related_name='income_tax_rates', to='finance.incometaxsession', verbose_name='Tax Session'),
         ),
         migrations.AlterField(
             model_name='incometaxsession',
-            name='ending_year',
-            field=models.DateField(help_text='The year when the income tax session ends.', verbose_name='Ending Year'),
+            name='end_date',
+            field=models.DateField(help_text='End date of the income tax session.', null=True, verbose_name='End Date'),
         ),
         migrations.AlterField(
             model_name='incometaxsession',
-            name='starting_year',
-            field=models.DateField(help_text='The year when the income tax session starts.', verbose_name='Starting Year'),
+            name='start_date',
+            field=models.DateField(help_text='Start date of the income tax session.', null=True, verbose_name='Start Date'),
         ),
         migrations.AlterField(
             model_name='installmentpaid',
             name='amount_paid',
-            field=models.FloatField(help_text='Amount of the installment that has been paid.', verbose_name='Amount Paid'),
-        ),
-        migrations.AlterField(
-            model_name='installmentpaid',
-            name='date_paid',
-            field=models.DateField(help_text='The date when the installment was paid.', verbose_name='Date Paid'),
+            field=models.FloatField(help_text='The amount paid in this installment.', verbose_name='Amount Paid'),
         ),
         migrations.AlterField(
             model_name='installmentpaid',
             name='loan',
-            field=models.ForeignKey(help_text='The loan for which the installment is paid.', on_delete=django.db.models.deletion.CASCADE, to='finance.loan', verbose_name='Loan'),
+            field=models.ForeignKey(help_text='Loan associated with this installment payment.', on_delete=django.db.models.deletion.CASCADE, related_name='installments_paid', to='finance.loan', verbose_name='Loan'),
+        ),
+        migrations.AlterField(
+            model_name='installmentpaid',
+            name='session',
+            field=models.ForeignKey(help_text='Tax session related to this installment.', on_delete=django.db.models.deletion.CASCADE, related_name='installments_paid', to='finance.incometaxsession', verbose_name='Tax Session'),
         ),
         migrations.AlterField(
             model_name='loan',
-            name='employee',
-            field=models.ForeignKey(help_text='The employee who has taken the loan.', on_delete=django.db.models.deletion.CASCADE, to='employee.employee', verbose_name='Employee'),
+            name='created_by',
+            field=models.ForeignKey(help_text='User who created this loan entry.', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='loan_created_by', to=settings.AUTH_USER_MODEL, verbose_name='Created By'),
         ),
         migrations.AlterField(
             model_name='loan',
             name='loan_amount',
-            field=models.FloatField(help_text='Total amount of the loan taken.', verbose_name='Loan Amount'),
-        ),
-        migrations.AlterField(
-            model_name='loan',
-            name='remaining_amount',
-            field=models.FloatField(help_text='Amount still outstanding on the loan.', verbose_name='Remaining Amount'),
-        ),
-        migrations.AlterField(
-            model_name='loan',
-            name='total_installments',
-            field=models.PositiveIntegerField(help_text='Total number of installments for repayment.', verbose_name='Total Installments'),
+            field=models.FloatField(help_text='Total amount of the loan.', verbose_name='Loan Amount'),
         ),
         migrations.AlterField(
             model_name='monthclosing',
-            name='bank',
-            field=models.ForeignKey(help_text='The bank associated with this month closing.', on_delete=django.db.models.deletion.CASCADE, related_name='month_closings', to='finance.bank', verbose_name='Bank'),
+            name='amount',
+            field=models.DecimalField(decimal_places=2, help_text='Closing amount for the month.', max_digits=10, verbose_name='Closing Amount'),
         ),
         migrations.AlterField(
             model_name='monthclosing',
-            name='month',
-            field=models.DateField(help_text='The month for which the closing is calculated.', verbose_name='Closing Month'),
-        ),
-        migrations.AlterField(
-            model_name='monthclosing',
-            name='profit_by_bank',
-            field=models.PositiveIntegerField(help_text='The profit calculated for this month closing.', verbose_name='Profit'),
+            name='closing_month',
+            field=models.ForeignKey(help_text='Month for which this closing is applicable.', on_delete=django.db.models.deletion.CASCADE, related_name='month_closings', to='finance.incometaxsession', verbose_name='Closing Month'),
         ),
         migrations.AlterField(
             model_name='otherdeposits',
             name='amount',
-            field=models.PositiveIntegerField(help_text='The amount deposited to the bank.', verbose_name='Deposit Amount'),
+            field=models.DecimalField(decimal_places=2, help_text='Amount of the other deposit.', max_digits=10, verbose_name='Amount'),
         ),
         migrations.AlterField(
             model_name='otherdeposits',
-            name='bank',
-            field=models.ForeignKey(help_text='The bank where the deposit is made.', on_delete=django.db.models.deletion.CASCADE, related_name='other_deposits', to='finance.bank', verbose_name='Bank'),
-        ),
-        migrations.AlterField(
-            model_name='otherdeposits',
-            name='date',
-            field=models.DateField(help_text='The date when the deposit was made.', verbose_name='Deposit Date'),
-        ),
-        migrations.AlterField(
-            model_name='otherdeposits',
-            name='remarks',
-            field=models.CharField(help_text='Any additional remarks regarding the deposit.', max_length=255, verbose_name='Remarks'),
-        ),
-        migrations.AlterField(
-            model_name='security',
-            name='created_by',
-            field=models.ForeignKey(help_text='Employee who created this security entry.', on_delete=django.db.models.deletion.CASCADE, related_name='created_security', to='employee.employee', verbose_name='Created By'),
-        ),
-        migrations.AlterField(
-            model_name='security',
-            name='deposited_security',
-            field=models.PositiveIntegerField(help_text='Amount deposited as security.', verbose_name='Deposited Security'),
-        ),
-        migrations.AlterField(
-            model_name='security',
-            name='employee',
-            field=models.OneToOneField(help_text='The employee associated with this security deposit.', on_delete=django.db.models.deletion.CASCADE, related_name='employee_security', to='employee.employee', verbose_name='Employee'),
-        ),
-        migrations.AlterField(
-            model_name='security',
-            name='last_date_submitted',
-            field=models.DateField(help_text='The last date when the security deposit was made.', verbose_name='Last Date Submitted'),
-        ),
-        migrations.AlterField(
-            model_name='security',
-            name='total_security',
-            field=models.PositiveIntegerField(help_text='Total security amount deposited.', verbose_name='Total Security'),
-        ),
-        migrations.AlterField(
-            model_name='securitydeposits',
-            name='amount',
-            field=models.PositiveIntegerField(help_text='The amount deposited as security.', verbose_name='Deposit Amount'),
-        ),
-        migrations.AlterField(
-            model_name='securitydeposits',
-            name='created_by',
-            field=models.ForeignKey(help_text='Employee who created this security deposit entry.', on_delete=django.db.models.deletion.CASCADE, related_name='created_security_deposits', to='employee.employee', verbose_name='Created By'),
-        ),
-        migrations.AlterField(
-            model_name='securitydeposits',
-            name='date_paid',
-            field=models.DateField(help_text='The date when the security deposit was made.', verbose_name='Date Paid'),
-        ),
-        migrations.AlterField(
-            model_name='securitydeposits',
             name='note',
-            field=models.CharField(help_text='Any additional notes regarding the security deposit.', max_length=255, verbose_name='Note'),
+            field=models.TextField(help_text='Notes regarding the deposit.', verbose_name='Note'),
+        ),
+        migrations.AlterField(
+            model_name='security',
+            name='created_by',
+            field=models.ForeignKey(help_text='User who created this security entry.', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='security_created_by', to=settings.AUTH_USER_MODEL, verbose_name='Created By'),
+        ),
+        migrations.AlterField(
+            model_name='security',
+            name='note',
+            field=models.TextField(help_text='Notes regarding the security.', verbose_name='Note'),
+        ),
+        migrations.AlterField(
+            model_name='securitydeposits',
+            name='amount',
+            field=models.DecimalField(decimal_places=2, help_text='Amount of the security deposit.', max_digits=10, verbose_name='Amount'),
         ),
         migrations.AlterField(
             model_name='securitydeposits',
             name='security',
-            field=models.ForeignKey(help_text='The security associated with this deposit.', on_delete=django.db.models.deletion.CASCADE, related_name='security_deposits', to='finance.security', verbose_name='Security'),
-        ),
-        migrations.AlterUniqueTogether(
-            name='incometaxrates',
-            unique_together={('session', 'initial_taxable_income', 'to_taxable_income')},
-        ),
-        migrations.AlterUniqueTogether(
-            name='monthclosing',
-            unique_together={('bank', 'month')},
-        ),
-        migrations.AddIndex(
-            model_name='bank',
-            index=models.Index(fields=['bank_name'], name='bank_name_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='cpfund',
-            index=models.Index(fields=['employee'], name='cpf_employee_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='cpfunddeposits',
-            index=models.Index(fields=['cp_fund'], name='cpf_deposit_fund_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='cpfunddeposits',
-            index=models.Index(fields=['date_paid'], name='cpf_deposit_date_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='eobipaid',
-            index=models.Index(fields=['employee'], name='eobi_employee_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='eobipaid',
-            index=models.Index(fields=['month'], name='eobi_month_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='expense',
-            index=models.Index(fields=['date'], name='expense_date_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='incometaxrates',
-            index=models.Index(fields=['session'], name='income_tax_session_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='incometaxsession',
-            index=models.Index(fields=['starting_year'], name='income_tax_start_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='installmentpaid',
-            index=models.Index(fields=['loan'], name='installment_loan_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='installmentpaid',
-            index=models.Index(fields=['date_paid'], name='installment_date_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='loan',
-            index=models.Index(fields=['employee'], name='loan_employee_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='monthclosing',
-            index=models.Index(fields=['bank'], name='month_closing_bank_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='monthclosing',
-            index=models.Index(fields=['month'], name='month_closing_month_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='otherdeposits',
-            index=models.Index(fields=['bank'], name='other_deposit_bank_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='otherdeposits',
-            index=models.Index(fields=['date'], name='other_deposit_date_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='security',
-            index=models.Index(fields=['employee'], name='security_employee_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='securitydeposits',
-            index=models.Index(fields=['security'], name='security_deposit_security_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='securitydeposits',
-            index=models.Index(fields=['date_paid'], name='security_deposit_date_idx'),
-        ),
-        migrations.AddConstraint(
-            model_name='incometaxsession',
-            constraint=models.CheckConstraint(check=models.Q(('starting_year__lt', 'ending_year')), name='starting_year_before_ending_year'),
+            field=models.ForeignKey(help_text='Security associated with this deposit.', on_delete=django.db.models.deletion.CASCADE, related_name='security_deposits', to='finance.security', verbose_name='Security'),
         ),
     ]
