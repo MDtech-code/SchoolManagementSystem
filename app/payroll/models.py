@@ -15,7 +15,7 @@ class PayStructure(TimeStampedModel):
     hra = models.IntegerField()  # House Rent Allowance
     medical_allowance = models.IntegerField()
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.employee_designation.name} - Pay Structure"
     
 class EmployeePayStructure(TimeStampedModel):
@@ -28,7 +28,7 @@ class EmployeePayStructure(TimeStampedModel):
     spec_head_hunting_allowance = models.PositiveIntegerField()
     svc_allowance = models.PositiveIntegerField()
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.employee.employee_name} - Pay Structure"
 
 
