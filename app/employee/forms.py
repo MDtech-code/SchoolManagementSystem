@@ -43,12 +43,24 @@ class StaffPerformanceForm(forms.ModelForm):
     class Meta:
         model = StaffPerformance
         fields = ['employee', 'comments', 'rating', 'date_evaluated']
+        widgets = {
+            'employee': forms.Select(attrs={'class': 'form-control'}),
+            'comments': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'rating': forms.Select(attrs={'class': 'form-control'}),
+            'date_evaluated': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
 
 class QualificationForm(forms.ModelForm):
     class Meta:
         model = Qualification
         fields = ['employee', 'discipline', 'institution', 'name', 'year_obtained']
-
+        widgets = {
+            'employee': forms.Select(attrs={'class': 'form-control'}),
+            'discipline': forms.TextInput(attrs={'class': 'form-control'}),
+            'institution': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'year_obtained': forms.Select(attrs={'class': 'form-control'}),  # Adjust this based on the actual field type
+        }
 class EmployeeDesignationForm(forms.ModelForm):
     class Meta:
         model = EmployeeDesignation
