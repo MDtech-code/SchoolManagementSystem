@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config #! import to hide important detail
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,6 +90,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'app.account.middleware.LoginRequiredMiddleware',
     
 ]
 
@@ -198,6 +200,27 @@ MEDIA_URL= '/media/'
 #! this line of help to configor the console base email request sending 
 FRONTEND_URL=config('FRONTEND_URL','default_user')
 EMAIL_HOST_USER=config('EMAIL_HOST_USER', 'default_email@gmail.com')
+
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST =config('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT =config('EMAIL_PORT', 587)
+EMAIL_USE_TLS =config('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER =config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD =config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 #!! Print emails to the console in debug mode
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Token Settings (Optional Customizations)
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+}

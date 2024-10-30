@@ -1,21 +1,103 @@
-{% extends "base/base.html" %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .gradient-custom-3 {
+            background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+        }
+        .gradient-custom-4 {
+            background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+        }
+        .form-control-lg {
+            
+            padding: .5rem 2rem;
+            
+        }
+    </style>
+</head>
+<body>
+<section class="vh-100 bg-image" style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">Sign Up</h2>
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+                                <!-- Name Field with Icon -->
+                                <div class="form-outline mb-4 position-relative">
+                                    <i class="fas fa-user position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                    {{ form.username }}
+                                </div>
+                                <!-- Email Field with Icon -->
+                                <div class="form-outline mb-4 position-relative">
+                                    <i class="fas fa-envelope position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                    {{ form.email }}
+                                </div>
 
-{% block content %}
-<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg border-0" style="width: 100%; max-width: 500px;">
-        <div class="card-body">
-            <h3 class="card-title text-center mb-4 alert alert-info">Sign Up</h3>
-            <form method="post" novalidate>
-                {% csrf_token %}
-                <div class="mb-3">
-                    {% for fm in form %}
-                    {{fm.label_tag}}{{fm}} <br><br>
-                    {% endfor %}
+                                
+
+                                <!-- Password Field with Show/Hide Toggle -->
+                                <div class="form-outline mb-4 position-relative">
+                                    <i class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                    <input type="password" id="password" class="form-control form-control-lg" name="password" placeholder="Password">
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" onclick="togglePassword()">
+                                        <i id="password-icon" class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+
+                                <!-- Confirm Password Field with Show/Hide Toggle -->
+                                <div class="form-outline mb-4 position-relative">
+                                    <i class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                    <input type="password" id="confirm-password" class="form-control form-control-lg" name="confirm_password" placeholder="Confirm Password">
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" onclick="toggleConfirmPassword()">
+                                        <i id="confirm-password-icon" class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                                
+                                <p class="text-center text-muted mt-5 mb-0">Already have an account? 
+                                    <a href="{% url 'login' %}" class="fw-bold text-body"><u>Login here</u></a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
-{% endblock content %}
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById('password');
+        const passwordIcon = document.getElementById('password-icon');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            passwordIcon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            passwordIcon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+    
+    function toggleConfirmPassword() {
+        const confirmPasswordField = document.getElementById('confirm-password');
+        const confirmPasswordIcon = document.getElementById('confirm-password-icon');
+        if (confirmPasswordField.type === 'password') {
+            confirmPasswordField.type = 'text';
+            confirmPasswordIcon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            confirmPasswordField.type = 'password';
+            confirmPasswordIcon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+</script>
+</body>
+</html>
