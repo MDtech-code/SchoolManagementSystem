@@ -162,6 +162,7 @@ class ForgetPasswordView(FormView):
 
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
+        print("ForgetPasswordView: form_valid called") 
         print(f"Email submitted: {email}")  # Debugging statement
 
         # Fetch the user
