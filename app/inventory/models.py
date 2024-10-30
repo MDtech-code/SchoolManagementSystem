@@ -7,6 +7,8 @@ class Item(TimeStampedModel):
     description = models.TextField()
     name = models.CharField(max_length=255)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    # sku = models.CharField(max_length=100, unique=True)  # Unique Stock Keeping Unit
+    # is_active = models.BooleanField(default=True)  # To indicate if item is active
 
     def __str__(self):
         return f"{self.name} - {self.category.name}"
@@ -15,6 +17,7 @@ class ItemsInStock(TimeStampedModel):
     item = models.OneToOneField(Item, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     reorder_level = models.PositiveIntegerField()
+    # location = models.CharField(max_length=255)  # Storage location
 
     def __str__(self):
         return f"{self.item.name} (Stock: {self.quantity})"
@@ -23,6 +26,7 @@ class Vendor(TimeStampedModel):
     address = models.TextField()
     contact_no = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
+    # email = models.EmailField(null=True, blank=True)  # Optional email field
 
     def __str__(self):
         return f"{self.name} ({self.contact_no})"
@@ -35,6 +39,7 @@ class PurchaseRecord(TimeStampedModel):
     invoice_number = models.CharField(max_length=255)
     purchase_date = models.DateField()
     quantity = models.PositiveIntegerField()
+    # total_cost = models.DecimalField(max_digits=10, decimal_places=2, editable=False)  # Calculated field
 
     # Change to nullable
     
@@ -47,6 +52,7 @@ class ReturnToVendor(TimeStampedModel):
     item = models.ForeignKey(Item, null=True, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     return_date = models.DateField()
+    # reason = models.TextField(null=True, blank=True)  # Reason for return
 
     # Change to nullable
 
@@ -60,6 +66,7 @@ class Issuance(TimeStampedModel):
     issue_date = models.DateField()
     quantity = models.PositiveIntegerField()
     recipient = models.CharField(max_length=255)
+    # notes = models.TextField(null=True, blank=True)  # Optional notes for issuance
 
     # Add ForeignKey to Item
 
@@ -72,6 +79,7 @@ class ReturnFromDepartment(TimeStampedModel):
     stock_item = models.ForeignKey(ItemsInStock, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     return_date = models.DateField()
+    condition = models.CharField(max_length=255, null=True, blank=True)  # Condition of returned item
 
     def __str__(self):
         return f"{self.quantity} of {self.stock_item.item.name} returned from {self.department.name} on {self.return_date}"
