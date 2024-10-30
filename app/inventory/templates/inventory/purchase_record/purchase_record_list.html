@@ -11,9 +11,9 @@
             <ul class="list-group">
                 {% for record in purchase_records %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="{% url 'purchase-record-detail' record.pk %}">{{ record.stock_item.item.name }}</a>
+                        <a href="{% url 'purchase-record-detail' record.pk %}" class='text-black'>{{ record.stock_item.item.name }}</a>
                         <span>
-                            <a href="{% url 'purchase-record-update' record.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{% url 'purchase-record-update' record.pk %}" class="btn btn-secondary btn-sm">Edit</a>
                             <a href="{% url 'purchase-record-delete' record.pk %}" class="btn btn-danger btn-sm">Delete</a>
                         </span>
                     </li>

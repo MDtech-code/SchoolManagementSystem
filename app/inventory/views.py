@@ -7,10 +7,21 @@ class ItemListView(ListView):
     model = Item
     template_name = 'inventory/items/item_list.html'
     context_object_name = 'items'
+
+    def get_queryset(self):
+        return Item.objects.select_related('category').all
+        # return Item.objects.all()
+from django.views.generic import DetailView
+from .models import Item
+
 class ItemDetailView(DetailView):
     model = Item
     template_name = 'inventory/items/item_detail.html'
     context_object_name = 'item'
+
+    def get_object(self, queryset=None):
+        return Item.objects.select_related('category').get(pk=self.kwargs['pk'])
+
 class ItemCreateView(CreateView):
     model = Item
     form_class = ItemForm
@@ -21,6 +32,7 @@ class ItemUpdateView(UpdateView):
     form_class = ItemForm
     template_name = 'inventory/items/item_form.html'
     success_url = reverse_lazy('item-list')
+
 class ItemDeleteView(DeleteView):
     model = Item
     template_name = 'inventory/items/item_confirm_delete.html'
@@ -36,6 +48,9 @@ class ItemsInStockListView(ListView):
     template_name = 'inventory/item_in_stock/items_in_stock_list.html'
     context_object_name = 'items_in_stock'
 
+    def get_queryset(self):
+        return ItemsInStock.objects.select_related('item').all()
+
 class ItemsInStockDetailView(DetailView):
     model = ItemsInStock
     template_name = 'inventory/item_in_stock/items_in_stock_detail.html'
@@ -47,6 +62,7 @@ class ItemsInStockCreateView(CreateView):
     template_name = 'inventory/item_in_stock/items_in_stock_form.html'
     success_url = reverse_lazy('items-in-stock-list')
 
+   
 class ItemsInStockUpdateView(UpdateView):
     model = ItemsInStock
     form_class = ItemsInStockForm
@@ -90,7 +106,9 @@ class PurchaseRecordListView(ListView):
     model = PurchaseRecord
     template_name = 'inventory/purchase_record/purchase_record_list.html'
     context_object_name = 'purchase_records'
-
+    def get_queryset(self):
+        return PurchaseRecord.objects.select_related('stock_item', 'vendor', 'stock_item__item')
+    
 class PurchaseRecordDetailView(DetailView):
     model = PurchaseRecord
     template_name = 'inventory/purchase_record/purchase_record_detail.html'
@@ -117,6 +135,10 @@ class ReturnToVendorListView(ListView):
     model = ReturnToVendor
     template_name = 'inventory/return_to_vendor/return_to_vendor_list.html'
     context_object_name = 'returns_to_vendor'
+
+    def get_queryset(self):
+     return ReturnToVendor.objects.select_related('stock_item', 'vendor', 'stock_item__item').distinct()
+
 
 class ReturnToVendorDetailView(DetailView):
     model = ReturnToVendor
@@ -145,6 +167,9 @@ class IssuanceListView(ListView):
     template_name = 'inventory/issuance/issuance_list.html'
     context_object_name = 'issuances'
 
+    def get_queryset(self):
+        return Issuance.objects.select_related('department', 'stock_item__item')
+
 class IssuanceDetailView(DetailView):
     model = Issuance
     template_name = 'inventory/issuance/issuance_detail.html'
@@ -169,29 +194,32 @@ class IssuanceDeleteView(DeleteView):
 
 class ReturnFromDepartmentListView(ListView):
     model = ReturnFromDepartment
-    template_name = 'inventory/return_form_department/return_from_department_list.html'
+    template_name = 'inventory/return_from_department/return_from_department_list.html'
     context_object_name = 'returns_from_department'
+
+    def get_queryset(self):
+        return ReturnFromDepartment.objects.select_related('department', 'stock_item__item')
 
 class ReturnFromDepartmentDetailView(DetailView):
     model = ReturnFromDepartment
-    template_name = 'inventory/return_form_department/return_from_department_detail.html'
+    template_name = 'inventory/return_from_department/return_from_department_detail.html'
     context_object_name = 'return_from_department'
 
 class ReturnFromDepartmentCreateView(CreateView):
     model = ReturnFromDepartment
     form_class = ReturnFromDepartmentForm
-    template_name = 'inventory/return_form_department/return_from_department_form.html'
+    template_name = 'inventory/return_from_department/return_from_department_form.html'
     success_url = reverse_lazy('return-from-department-list')
 
 class ReturnFromDepartmentUpdateView(UpdateView):
     model = ReturnFromDepartment
     form_class = ReturnFromDepartmentForm
-    template_name = 'inventory/return_form_department/return_from_department_form.html'
+    template_name = 'inventory/return_from_department/return_from_department_form.html'
     success_url = reverse_lazy('return-from-department-list')
 
 class ReturnFromDepartmentDeleteView(DeleteView):
     model = ReturnFromDepartment
-    template_name = 'inventory/return_form_department/return_from_department_confirm_delete.html'
+    template_name = 'inventory/return_from_department/return_from_department_confirm_delete.html'
     success_url = reverse_lazy('return-from-department-list')
 
 class CategoryListView(ListView):
