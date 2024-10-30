@@ -1,16 +1,29 @@
 {% extends "base/base.html" %}
+
 {% block content %}
-<h1>Returns to Vendors</h1>
-<a href="{% url 'return-to-vendor-create' %}">Add New Return</a>
-<ul>
-    {% for return in returns_to_vendor %}
-        <li>
-            <a href="{% url 'return-to-vendor-detail' return.pk %}">{{ return.stock_item.item.name }}</a> - 
-            <a href="{% url 'return-to-vendor-update' return.pk %}">Edit</a> - 
-            <a href="{% url 'return-to-vendor-delete' return.pk %}">Delete</a>
-        </li>
-    {% endfor %}
-</ul>
-
+<div class="container my-4">
+    <h1 class="text-center mb-4 alert alert-secondary">Returns to Vendors</h1>
+    
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="{% url 'return-to-vendor-create' %}" class="btn btn-success">Add New Return</a>
+    </div>
+    
+    <ul class="list-group">
+        {% for return in returns_to_vendor %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="{% url 'return-to-vendor-detail' return.pk %}" class="text-decoration-none fw-bold text-dark">
+                        {{ return.stock_item.item.name }}
+                    </a>
+                </div>
+                <div>
+                    <a href="{% url 'return-to-vendor-update' return.pk %}" class="btn btn-sm btn-secondary me-2">Edit</a>
+                    <a href="{% url 'return-to-vendor-delete' return.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center text-muted">No returns to display.</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock content %}
-

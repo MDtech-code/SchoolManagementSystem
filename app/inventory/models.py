@@ -30,25 +30,25 @@ class Vendor(TimeStampedModel):
 class PurchaseRecord(TimeStampedModel):
     stock_item = models.ForeignKey(ItemsInStock, on_delete=models.CASCADE)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, null=True, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     invoice_number = models.CharField(max_length=255)
     purchase_date = models.DateField()
     quantity = models.PositiveIntegerField()
 
     # Change to nullable
-    item = models.ForeignKey(Item, null=True, on_delete=models.CASCADE)
-
+    
     def __str__(self):
         return f"Purchase of {self.quantity} {self.stock_item.item.name} from {self.vendor.name} for {self.amount} on {self.purchase_date}"
     
 class ReturnToVendor(TimeStampedModel):
     stock_item = models.ForeignKey(ItemsInStock, on_delete=models.CASCADE)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, null=True, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     return_date = models.DateField()
 
     # Change to nullable
-    item = models.ForeignKey(Item, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Return {self.quantity} of {self.stock_item.item.name} to {self.vendor.name}"
@@ -56,12 +56,12 @@ class ReturnToVendor(TimeStampedModel):
 class Issuance(TimeStampedModel):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     stock_item = models.ForeignKey(ItemsInStock, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     issue_date = models.DateField()
     quantity = models.PositiveIntegerField()
     recipient = models.CharField(max_length=255)
 
     # Add ForeignKey to Item
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Issued {self.quantity} of {self.stock_item.item.name} to {self.recipient} from {self.department.name}"

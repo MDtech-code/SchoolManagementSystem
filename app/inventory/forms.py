@@ -21,16 +21,21 @@ class PurchaseRecordForm(forms.ModelForm):
     class Meta:
         model = PurchaseRecord
         fields = '__all__'
+        widgets = {
+            'purchase_date': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class ReturnToVendorForm(forms.ModelForm):
     class Meta:
         model = ReturnToVendor
         fields = '__all__'
+        widgets = {'return_date':forms.DateInput(attrs={'type':'date'})}
 
 class IssuanceForm(forms.ModelForm):
     class Meta:
         model = Issuance
         fields = '__all__'
+        widgets = {'issue_date':forms.DateInput(attrs={'type':'date'})}
 
 class ReturnFromDepartmentForm(forms.ModelForm):
     class Meta:
