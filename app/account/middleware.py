@@ -2,7 +2,7 @@
 
 from django.shortcuts import redirect
 from django.urls import reverse
-
+import re
 class LoginRequiredMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -17,6 +17,10 @@ class LoginRequiredMiddleware:
             reverse('send_email_verification'),
             reverse('verify_email'),
         ]
+
+         # Add the condition to bypass the default admin path
+        if re.match(r'^/admin/', request.path):
+            return self.get_response(request)
 
         # Skip any Django auto-reload paths (such as /__reload__/events/)
         if request.path.startswith('/__reload__/'):
