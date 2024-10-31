@@ -77,5 +77,7 @@ venv.bak/
 # Backup files
 *.bak
 
-*/migrations/*.py
-!*/migrations/__init__.py
+
+# Ignore all migration files
+**/migrations/*.py
+!**/migrations/__init__.py
