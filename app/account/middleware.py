@@ -9,7 +9,7 @@ class LoginRequiredMiddleware:
 
     def __call__(self, request):
         # Define paths that don't require authentication
-        print(f"Middleware path: {request.path}")
+        # print(f"Middleware path: {request.path}")
         allowed_paths = [
             reverse('login'),
             reverse('signup'),
@@ -23,11 +23,7 @@ class LoginRequiredMiddleware:
         if re.match(r'^/admin/', request.path):
             return self.get_response(request)
 
-        # # Skip any Django auto-reload paths (such as /__reload__/events/)
-        # if request.path.startswith('/__reload__/'):
-        #     return self.get_response(request)
-        # if request.path.startswith('/__reload__/') or request.path == reverse('forget_password'):
-        #      return self.get_response(request)
+        
 
         # Check if the user is unauthenticated and not accessing an allowed path
         if not request.user.is_authenticated and request.path not in allowed_paths:
