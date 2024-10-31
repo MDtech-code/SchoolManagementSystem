@@ -1,3 +1,16 @@
+{% comment %} <!-- templates/employee/employee_designation_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}Employee Designation Detail{% endblock %}
+
+{% block content %}
+<h2>Employee Designation: {{ designation.name }}</h2>
+<p><strong>Department:</strong> {{ designation.department }}</p>
+<p><strong>Description:</strong> {{ designation.description }}</p>
+<a href="{% url 'employee_designation_update' designation.pk %}" class="btn btn-warning">Edit</a>
+<a href="{% url 'employee_designation_list' %}" class="btn btn-secondary">Back to List</a>
+{% endblock %} {% endcomment %}
+
 {% extends 'base/base.html' %}
 
 {% load static %}
