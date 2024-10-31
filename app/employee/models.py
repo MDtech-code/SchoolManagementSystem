@@ -41,7 +41,7 @@ class Employee(TimeStampedModel):
     province = models.CharField(max_length=50)
     wing = models.CharField(max_length=50)
 
-    def _str_(self):
+    def __str__(self):
         return self.employee_name
 
 

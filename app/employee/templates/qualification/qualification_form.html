@@ -1,12 +1,15 @@
 {% extends 'base/base.html' %}
 {% block content %}
     <div class="card p-4 shadow mx-auto" style="max-width: 600px;">
-        <h2 class="mb-4 text-center">{% if object %}Edit{% else %}Add{% endif %} Qualification</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary w-100 mt-3">Save</button>
-            <a href="{% url 'qualification_list' %}" class="btn btn-outline-dark w-100 mt-2">Cancel</a>
-        </form>
+        <div class="">
+            <h2 class="mb-4 text-center">{% if object %}Edit{% else %}Add{% endif %} Qualification</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100 mt-3">Save</button>
+                <a href="{% url 'qualification_list' %}" class="btn btn-outline-dark w-100 mt-2">Cancel</a>
+            </form>
+
+        </div>
     </div>
 {% endblock %}
