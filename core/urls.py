@@ -35,7 +35,7 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
-        path('__reload__/', include('django_browser_reload.urls')),
+        # path('__reload__/', include('django_browser_reload.urls')),
     ] + urlpatterns
 # Serve media files during development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -46,7 +46,7 @@ DJANGO_APPS = [
 
 # Third-Party Apps
 THIRD_PARTY_APPS = [
-    'django_browser_reload',
+    # 'django_browser_reload',
     'debug_toolbar',
     'tailwind',
     
@@ -90,7 +90,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'app.account.middleware.LoginRequiredMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
+    # 'django_browser_reload.middleware.BrowserReloadMiddleware',
     
 ]
 
