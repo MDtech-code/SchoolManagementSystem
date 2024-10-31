@@ -8,7 +8,15 @@ from django.db.models import UniqueConstraint
 
 #! Represents the pay structure for different employee designations
 class PayStructure(TimeStampedModel):
-    employee_designation = models.ForeignKey(
+    employee_designation = models.ForeignKey('employee.EmployeeDesignation', on_delete=models.CASCADE)
+    annual_increment = models.IntegerField()
+    basic_pay = models.IntegerField()
+    conveyance_allowance = models.IntegerField()
+    hra = models.IntegerField()  # House Rent Allowance
+    medical_allowance = models.IntegerField()
+
+    def __str__(self):
+        employee_designation = models.ForeignKey(
         'employee.EmployeeDesignation', 
         on_delete=models.CASCADE, 
         related_name="pay_structures",  #! This will be used as a reference to access related pay structures from other models.
@@ -72,6 +80,7 @@ class EmployeePayStructure(TimeStampedModel):
     spec_head_hunting_allowance = models.PositiveIntegerField(verbose_name="Special Head-Hunting Allowance")
     svc_allowance = models.PositiveIntegerField(verbose_name="Service Allowance")
 
+    
     class Meta:
         verbose_name = "Employee Pay Structure"
         verbose_name_plural = "Employee Pay Structures"
