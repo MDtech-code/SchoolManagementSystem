@@ -69,6 +69,10 @@ PROJECT_APPS = [
     'app.finance',
     'app.attendance',
     'app.academic',
+    'app.assignment',
+    'app.grade',
+    'app.resource',
+    'app.communication',
 ]
 
 # Combine all app lists into INSTALLED_APPS

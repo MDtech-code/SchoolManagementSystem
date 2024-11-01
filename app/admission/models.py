@@ -14,20 +14,20 @@ from core.utils.choices import GENDER_CHOICES, BLOOD_GROUP_CHOICES, PICK_N_DROP_
 # Define choices for gender, blood group, health status, immunization, and disabilities
 
 # Choices for Religion
-RELIGION_CHOICES = [
-    ('Islam', 'Islam'),
-    ('Christianity', 'Christianity'),
-    ('Hinduism', 'Hinduism'),
-    # Add more as needed
-]
+# RELIGION_CHOICES = [
+#     ('Islam', 'Islam'),
+#     ('Christianity', 'Christianity'),
+#     ('Hinduism', 'Hinduism'),
+#     # Add more as needed
+# ]
 
-# Choices for nationality (example)
-NATIONALITY_CHOICES = [
-    ('Pakistani', 'Pakistani'),
-    ('Indian', 'Indian'),
-    ('Bangladeshi', 'Bangladeshi'),
-    # Add more as needed
-]
+# # Choices for nationality (example)
+# NATIONALITY_CHOICES = [
+#     ('Pakistani', 'Pakistani'),
+#     ('Indian', 'Indian'),
+#     ('Bangladeshi', 'Bangladeshi'),
+#     # Add more as needed
+# ]
 
 class PersonalInfo(TimeStampedModel):
     full_name = models.CharField(max_length=150, verbose_name="Full Name", help_text="Enter the full name of the individual.")
@@ -150,8 +150,8 @@ class FinancialInfo(TimeStampedModel):
 
 
 class AdditionalInfo(TimeStampedModel):
-    religion = models.CharField(max_length=50, choices=RELIGION_CHOICES, verbose_name="Religion", help_text="Religion of the student")
-    nationality = models.CharField(max_length=50, choices=NATIONALITY_CHOICES, verbose_name="Nationality", help_text="Nationality of the student")
+    nationality = models.ForeignKey(Nationality, on_delete=models.SET_NULL, null=True)
+    religion = models.ForeignKey(Religion, on_delete=models.SET_NULL, null=True)
     extra_act = models.TextField(blank=True, null=True, verbose_name="Extracurricular Activities", help_text="Details of extracurricular activities")
     sibling = models.TextField(blank=True, null=True, verbose_name="Sibling Information", help_text="Information about siblings")
     remarks = models.TextField(blank=True, null=True, verbose_name="Remarks", help_text="Any additional remarks")

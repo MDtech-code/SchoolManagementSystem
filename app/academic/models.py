@@ -1,6 +1,7 @@
 
 from django.db import models
 from app.common.models import TimeStampedModel
+
 import uuid
 
 #! Represents a unique class within the school system
@@ -93,6 +94,51 @@ class Subjects(TimeStampedModel):
         indexes = [
             models.Index(fields=['subject_class', 'subject_type']),
         ]
+
+
+
+
+class Course(TimeStampedModel):
+    name = models.CharField(max_length=100)
+    class_enrolled = models.ForeignKey(Class, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subjects, on_delete=models.CASCADE)
+    schedule = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.name} - {self.class_enrolled}"
+
+class Enrollment(TimeStampedModel):
+    student = models.ForeignKey('student.Student', on_delete=models.CASCADE)  # Assuming you have a Student model
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    date_enrolled = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student} - {self.course}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #! Tracks information related to school leaving certificates.
 class SchoolLeavingCertificate(TimeStampedModel):
    

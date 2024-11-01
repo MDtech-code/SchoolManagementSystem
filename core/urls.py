@@ -30,6 +30,12 @@ urlpatterns = [
     path('inventory/',include('app.inventory.urls')),
     path('finance/',include('app.finance.urls')),
     path('attendance/',include('app.attendance.urls')),
+    path('assignment/',include('app.assignment.urls')),
+    path('grade/',include('app.grade.urls')),
+    path('resource/',include('app.resource.urls')),
+    path('communication/',include('app.communication.urls')),
+
+
 ]
 if settings.DEBUG:
     import debug_toolbar
