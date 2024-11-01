@@ -5,6 +5,14 @@ class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = '__all__'
+        widgets = {'category':forms.Select(attrs={'class':'form-control'})}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        first_item = Item.objects.first()
+        if first_item:
+            self.fields['category'].initial = first_item
+            
     
 
 class ItemsInStockForm(forms.ModelForm):
@@ -24,6 +32,18 @@ class PurchaseRecordForm(forms.ModelForm):
         widgets = {
             'purchase_date': forms.DateInput(attrs={'type': 'date'}),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Set default value for invoice_number
+        self.fields['invoice_number'].initial = "NF!4#1380-7"  # Replace with your desired value
+
+        # Set the first item of stock_item as default
+        first_stock_item = ItemsInStock.objects.first()  # Get the first stock item
+        if first_stock_item:
+            self.fields['stock_item'].initial = first_stock_item
+
 
 class ReturnToVendorForm(forms.ModelForm):
     class Meta:

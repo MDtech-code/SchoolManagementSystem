@@ -1,18 +1,14 @@
 from django.urls import path,include
-
-from .views import (
-    ItemListView, ItemDetailView, ItemCreateView, ItemUpdateView, ItemDeleteView, ItemsInStockListView, ItemsInStockDetailView, ItemsInStockCreateView, ItemsInStockUpdateView, ItemsInStockDeleteView,
-    VendorListView, VendorDetailView, VendorCreateView, VendorUpdateView, VendorDeleteView,
-    PurchaseRecordListView, PurchaseRecordDetailView, PurchaseRecordCreateView, PurchaseRecordUpdateView, PurchaseRecordDeleteView,
-    ReturnToVendorListView, ReturnToVendorDetailView, ReturnToVendorCreateView, ReturnToVendorUpdateView, ReturnToVendorDeleteView,
-    IssuanceListView, IssuanceDetailView, IssuanceCreateView, IssuanceUpdateView, IssuanceDeleteView,
-    ReturnFromDepartmentListView, ReturnFromDepartmentDetailView, ReturnFromDepartmentCreateView, ReturnFromDepartmentUpdateView, ReturnFromDepartmentDeleteView, CategoryListView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView
-)
+from app.inventory.views.items import ItemListView, ItemDetailView, ItemCreateView, ItemUpdateView, ItemDeleteView
+from app.inventory.views.ItemsInStock import ItemsInStockListView,ItemsInStockDetailView, ItemsInStockCreateView, ItemsInStockUpdateView, ItemsInStockDeleteView
+from app.inventory.views.Vendor import VendorListView, VendorDetailView, VendorCreateView, VendorUpdateView, VendorDeleteView
+from app.inventory.views.purchaseRecord import PurchaseRecordListView, PurchaseRecordDetailView, PurchaseRecordCreateView, PurchaseRecordUpdateView, PurchaseRecordDeleteView
+from app.inventory.views.ReturnToVendor import ReturnToVendorListView, ReturnToVendorDetailView, ReturnToVendorCreateView, ReturnToVendorUpdateView, ReturnToVendorDeleteView
+from app.inventory.views.issuance import IssuanceListView, IssuanceDetailView, IssuanceCreateView, IssuanceUpdateView, IssuanceDeleteView
+from app.inventory.views.ReturnFromDepartment import ReturnFromDepartmentListView, ReturnFromDepartmentDetailView, ReturnFromDepartmentCreateView, ReturnFromDepartmentUpdateView, ReturnFromDepartmentDeleteView
 
 urlpatterns = [
     
- 
-    #path('',include('inventory.urls.items')),
     path('items/', ItemListView.as_view(), name='item-list'),
     path('items/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
     path('items/create/', ItemCreateView.as_view(), name='item-create'),
@@ -61,18 +57,4 @@ urlpatterns = [
     path('returns-from-department/<int:pk>/update/', ReturnFromDepartmentUpdateView.as_view(), name='return-from-department-update'),
     path('returns-from-department/<int:pk>/delete/', ReturnFromDepartmentDeleteView.as_view(), name='return-from-department-delete'),
 
-
-    path('category/', CategoryListView.as_view(), name='category-list'),
-    path('category/new/', CategoryCreateView.as_view(), name='category-create'),
-    path('category/<int:pk>/edit/', CategoryUpdateView.as_view(), name='category-update'),
-    path('category/<int:pk>/delete/', CategoryDeleteView.as_view(), name='category-delete'),
-
 ]
-
-
-   # Item URLs
-    # path('items/', ItemListView.as_view(), name='item-list'),
-    # path('items/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
-    # path('items/create/', ItemCreateView.as_view(), name='item-create'),
-    # path('items/<int:pk>/update/', ItemUpdateView.as_view(), name='item-update'),
-    # path('items/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
