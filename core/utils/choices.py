@@ -25,7 +25,7 @@ PICK_N_DROP_CHOICES = [
 ]
 
 # Choices for child status
-CHILD_CHOICES = [
+MARITAL_STATUS_CHOICES = [
     ('SINGLE', 'Single'),
     ('MARRIED', 'Married'),
 ]
