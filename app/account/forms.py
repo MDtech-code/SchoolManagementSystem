@@ -40,15 +40,16 @@ class ForgetPasswordForm(forms.Form):
 
 
 class ResetPasswordForm(forms.Form):
-    password = forms.CharField(
-        label="New Password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter new password'})
-    )
-    confirm_password = forms.CharField(
-        label="Confirm Password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm new password'})
-    )
-
+    # password = forms.CharField(
+    #     label="New Password",
+    #     widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter new password'})
+    # )
+    # confirm_password = forms.CharField(
+    #     label="Confirm Password",
+    #     widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm new password'})
+    # )
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control form-control-lg ','placeholder': 'password'}))
+    confirm_password = forms.CharField(label='Password (again)', widget=forms.PasswordInput(attrs={'class': 'form-control form-control-lg ','placeholder': 'confirm_password'}))
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")

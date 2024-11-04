@@ -19,7 +19,8 @@ from django.views import View
 from app.assignment.models import Assignment,Submission
 from app.academic.models import Course
 from django.contrib import messages
-
+from .mixins import RedirectAuthenticatedUserMixin
+from .decorators import role_required
 
 
 
@@ -37,7 +38,65 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(Profile, user=self.request.user)
-def get_student_data(request):
+# def get_student_data(request):
+#     upcoming_events = [
+#         {'name': 'Assignment 1', 'date': '2024-11-10'},
+#         {'name': 'Exam 1', 'date': '2024-11-15'}
+#     ]
+#     announcements = [
+#         {'message': 'School will be closed on November 5th.'},
+#         {'message': 'New library books are available.'}
+#     ]
+#     # Assuming you have models for grades and assignments
+#     recent_grades = Submission.objects.filter(student=request.user.id)
+#     # ... (fetch other data: my_courses, attendance_summary) ...
+#     context = {
+#         'upcoming_events': upcoming_events,
+#         'announcements': announcements,
+#         'recent_grades': recent_grades,
+#         'my_courses': Course.objects.all(),  # Example: Fetch all courses
+#         'attendance_summary': {'present': 20, 'absent': 2}  # Replace with actual data
+#     }
+#     return context
+# def get_teacher_data(request):
+#     # Assuming you have models for courses and assignments
+#     my_courses = Course.objects.all()  # Example: Fetch all courses
+#     recent_assignments = Assignment.objects.all()  # Example: Fetch all assignments
+#     pending_submissions = Submission.objects.filter(
+#         assignment__course__in=my_courses, status='not_submitted'
+#     )
+#     # ... (fetch other data: announcements) ...
+#     context = {
+#         'my_courses': my_courses,
+#         'recent_assignments': recent_assignments,
+#         'pending_submissions': pending_submissions,
+#         'announcements': [
+#             {'message': 'Staff meeting on November 6th.'},
+#             {'message': 'New curriculum updates available.'}
+#         ]
+#     }
+#     return context
+# def get_staff_data(request):
+#     # ... (fetch data for staff dashboard) ...
+#     context = {
+#         'tasks': [
+#             {'name': 'Process payments', 'status': 'Pending'},
+#             {'name': 'Generate reports', 'status': 'Completed'}
+#         ],
+#         'announcements': [
+#             {'message': 'Payroll processed.'},
+#             {'message': 'Holiday schedule updated.'}
+#         ]
+#     }
+#     return context
+# @role_required('student')
+@login_required
+@role_required(['student'])
+def student_dashboard(request):
+    """
+    Renders the student dashboard with relevant data.
+    """
+    # context = get_student_data(request)
     upcoming_events = [
         {'name': 'Assignment 1', 'date': '2024-11-10'},
         {'name': 'Exam 1', 'date': '2024-11-15'}
@@ -56,25 +115,24 @@ def get_student_data(request):
         'my_courses': Course.objects.all(),  # Example: Fetch all courses
         'attendance_summary': {'present': 20, 'absent': 2}  # Replace with actual data
     }
-    return context
-
-@login_required
-def student_dashboard(request):
-    """
-    Renders the student dashboard with relevant data.
-    """
-    context = get_student_data(request)
     return render(request, 'accounts/dashboards/student_dashboard.html', context)
 
 
-def get_teacher_data(request):
-    # Assuming you have models for courses and assignments
+
+
+# @role_required('teacher')
+@login_required
+@role_required(['teacher'])
+def teacher_dashboard(request):
+    """
+    Renders the teacher dashboard with relevant data.
+    """
     my_courses = Course.objects.all()  # Example: Fetch all courses
     recent_assignments = Assignment.objects.all()  # Example: Fetch all assignments
     pending_submissions = Submission.objects.filter(
         assignment__course__in=my_courses, status='not_submitted'
     )
-    # ... (fetch other data: announcements) ...
+    # context = get_teacher_data(request)
     context = {
         'my_courses': my_courses,
         'recent_assignments': recent_assignments,
@@ -84,19 +142,19 @@ def get_teacher_data(request):
             {'message': 'New curriculum updates available.'}
         ]
     }
-    return context
-
-@login_required
-def teacher_dashboard(request):
-    """
-    Renders the teacher dashboard with relevant data.
-    """
-    context = get_teacher_data(request)
     return render(request, 'accounts/dashboards/teacher_dashboard.html', context)
 
 
-def get_staff_data(request):
-    # ... (fetch data for staff dashboard) ...
+
+
+# @role_required('staff')
+@login_required
+@role_required(['staff'])
+def staff_dashboard(request):
+    """
+    Renders the staff dashboard with relevant data.
+    """
+    # context = get_staff_data(request)
     context = {
         'tasks': [
             {'name': 'Process payments', 'status': 'Pending'},
@@ -107,18 +165,10 @@ def get_staff_data(request):
             {'message': 'Holiday schedule updated.'}
         ]
     }
-    return context
-
-@login_required
-def staff_dashboard(request):
-    """
-    Renders the staff dashboard with relevant data.
-    """
-    context = get_staff_data(request)
     return render(request, 'accounts/dashboards/staff_dashboard.html', context)
 
 
-class SignupView(FormView):
+class SignupView(RedirectAuthenticatedUserMixin,FormView):
     template_name = 'accounts/authentication/signup.html'
     form_class = CustomUserForm
     success_url = reverse_lazy('login')
@@ -171,7 +221,7 @@ class LogoutView(LoginRequiredMixin, TemplateView):
 
 
 # Send Email Verification
-class SendEmailVerificationView(LoginRequiredMixin, TemplateView):
+class SendEmailVerificationView( TemplateView):
     template_name = 'accounts/authentication/verify_email.html'
 
     def post(self, request):
@@ -182,14 +232,14 @@ class SendEmailVerificationView(LoginRequiredMixin, TemplateView):
             user.token_expiry_time = timezone.now() + timezone.timedelta(minutes=30)
             user.save()
             
-            verification_link = f"{settings.FRONTEND_URL}/verify_email/?token={token}"
+            verification_link = f"{settings.FRONTEND_URL}/login/verify_email/?token={token}"
             send_mail(
                 'Email Verification Request',
                 f"Here is your email verification link: {verification_link}",
                 settings.EMAIL_HOST_USER,
                 [user.email]
             )
-            return redirect('email_sent')
+            return redirect('verify_email')
         return redirect('profile')
 
 # Verify Email View
@@ -224,7 +274,7 @@ class ForgetPasswordView(FormView):
         if user:
             print("User found with this email.")  # Debugging statement
             token = generate_verification_token(user.pk)
-            reset_link = f"{settings.FRONTEND_URL}/reset_password/?token={token}"
+            reset_link = f"{settings.FRONTEND_URL}/login/reset_password/?token={token}"
             
             # Send email with reset link
             send_mail(
@@ -233,7 +283,7 @@ class ForgetPasswordView(FormView):
                 settings.EMAIL_HOST_USER,
                 [email],
             )
-            return render(self.request, 'email_sent.html', {'message':messages.success(self.request, 'Password reset link has been sent to your email.')
+            return render(self.request, 'accounts/authentication/forget_password.html', {'message':messages.success(self.request, 'Password reset link has been sent to your email.')
 })
         else:
             print("No user found with this email.")  # Debugging statement
