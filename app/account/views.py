@@ -19,7 +19,7 @@ from django.views import View
 from app.assignment.models import Assignment,Submission
 from app.academic.models import Course
 from django.contrib import messages
-from .mixins import RedirectAuthenticatedUserMixin
+from .mixins import RedirectAuthenticatedUserMixin,NotAuthenticatedMixin
 from .decorators import role_required
 
 
@@ -177,27 +177,40 @@ class SignupView(RedirectAuthenticatedUserMixin,FormView):
         user = form.save()  # Let the form handle the initial save
         default_role = Role.objects.get(name='pending')
         user.role = default_role
-        user.save()  # Save again to update the role
+        user.save()
+        if not user.email_verified:
+            token = generate_verification_token(user.pk)
+            user.token_created_at = timezone.now()
+            user.token_expiry_time = timezone.now() + timezone.timedelta(minutes=30)
+            user.save()
+            
+            verification_link = f"{settings.FRONTEND_URL}/login/verify_email_result/?token={token}"
+            # Try sending the email, handle any potential errors
+            try:
+                send_mail(
+                    'Email Verification Request',
+                    f"Please verify your email by clicking the following link: {verification_link}",
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                # Handle the email sending error
+                messages.error(self.request, "Account created but email could not be sent. Contact support.")
+                # Log the error if needed
+                print(f"Error sending verification email: {e}")
+                return super().form_valid(form)
+             # Save again to update the role
         messages.success(self.request, 'Account created successfully! Please log in.')
         return super().form_valid(form)
-    # def form_valid(self, form):
-    #     try:
-    #         user = form.save(commit=False)
-    #         default_role = Role.objects.get(name='pending') 
-    #         print(default_role) # Get the default role
-    #         user.role = default_role
-    #         user.save()
-    #         messages.success(self.request, 'Account created successfully! Please log in.')
-    #     except Exception as e:
-    #         messages.error(self.request,f'Error creating form {e}')
     
-    #     return super().form_valid(form)
 
 # Login View
-class LoginView(FormView):
+class LoginView(NotAuthenticatedMixin,FormView):
     template_name = 'accounts/authentication/login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('student_dashboard')
+    # success_url = reverse_lazy('student_dashboard')
+    success_url = reverse_lazy('redirect_to_dashboard')
     redirect_authenticated_user = True
 
     def form_valid(self, form):
@@ -207,6 +220,7 @@ class LoginView(FormView):
         if user:
             login(self.request, user)
             messages.success(self.request, f'Welcome, {user.username}!')
+            #return redirect(self.get_success_url())
             return super().form_valid(form)
         else:
             messages.error(self.request, "Invalid username or password.")
@@ -232,18 +246,18 @@ class SendEmailVerificationView( TemplateView):
             user.token_expiry_time = timezone.now() + timezone.timedelta(minutes=30)
             user.save()
             
-            verification_link = f"{settings.FRONTEND_URL}/login/verify_email/?token={token}"
+            verification_link = f"{settings.FRONTEND_URL}/login/verify_email_result/?token={token}"
             send_mail(
                 'Email Verification Request',
                 f"Here is your email verification link: {verification_link}",
                 settings.EMAIL_HOST_USER,
                 [user.email]
             )
-            return redirect('verify_email')
+            return redirect('verify_email_result')
         return redirect('profile')
 
 # Verify Email View
-class EmailVerifyView(TemplateView):
+class EmailVerifyView(RedirectAuthenticatedUserMixin,TemplateView):
     template_name = 'accounts/authentication/verify_email_result.html'
 
     def get(self, request, *args, **kwargs):
