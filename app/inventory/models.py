@@ -2,7 +2,6 @@ from django.db import models
 from app.common.models import TimeStampedModel, Category
 from app.academic.models import Department
 
-
 class Item(TimeStampedModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='items')
     description = models.TextField()
