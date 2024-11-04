@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="jumbotron">
+        <h1>Welcome to the Staff Dashboard!</h1>
+        <p>This is your dashboard to access and manage staff-related information and tasks.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Tasks</div>
+        <div class="card-body">
+          <ul class="list-group">
+            {% for task in tasks %}
+              <li class="list-group-item">{{ task.name }} - {{ task.status }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Announcements</div>
+        <div class="card-body">
+          <ul class="list-group">
+            {% for announcement in announcements %}
+              <li class="list-group-item">{{ announcement.message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

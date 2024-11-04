@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from django.contrib.messages import constants as messages
 from pathlib import Path
 from decouple import config #! import to hide important detail
 import os
@@ -77,7 +77,13 @@ PROJECT_APPS = [
 
 # Combine all app lists into INSTALLED_APPS
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + THEME_APPS + PROJECT_APPS
-
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -92,7 +98,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'app.account.middleware.LoginRequiredMiddleware',
+    # 'app.account.middleware.LoginRequiredMiddleware',
     
 ]
 
@@ -226,3 +232,7 @@ else:
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
 }
+
+
+LOGIN_REDIRECT_URL = 'redirect_to_dashboard'
+LOGIN_URL = 'login'

@@ -1,5 +1,5 @@
 # account/middleware.py
-
+'''
 from django.shortcuts import redirect
 from django.urls import reverse
 import re
@@ -33,3 +33,4 @@ class LoginRequiredMiddleware:
         # Continue processing the response if conditions are met
         response = self.get_response(request)
         return response
+'''

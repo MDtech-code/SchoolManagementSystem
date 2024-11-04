@@ -1,5 +1,5 @@
 # common/admin.py
-
+'''
 from django.contrib import admin
 from .models import Religion, Nationality, Province,Category
 
@@ -25,3 +25,4 @@ admin.site.register(Religion, ReligionAdmin)
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(Province, ProvinceAdmin)
 admin.site.register(Category, CategoryAdmin)
+'''

@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>My Profile</h2>
+  <div class="card">
+    <div class="card-body">
+      {% if profile.profile_picture %}
+        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail rounded-circle" width="150">
+      {% endif %}
+      <p><strong>Username:</strong> {{ profile.user.username }}</p>
+      <p><strong>Email:</strong> {{ profile.user.email }}</p>
+      {% if profile.bio %}
+        <p><strong>Bio:</strong> {{ profile.bio }}</p>
+      {% endif %}
+      {% if profile.contact_number %}
+        <p><strong>Contact Number:</strong> {{ profile.contact_number }}</p>
+      {% endif %}
+      {% if profile.address %}
+        <p><strong>Address:</strong> {{ profile.address }}</p>
+      {% endif %}
+      <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
