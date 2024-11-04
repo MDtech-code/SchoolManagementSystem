@@ -2,17 +2,56 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-secondary text-white">
-            <h1>{% if purchase_record.pk %}Edit Purchase Record{% else %}Create Purchase Record{% endif %}</h1>
-        </div>
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-success">Save</button>
-                <a href="{% url 'purchase-record-list' %}" class="btn btn-secondary">Cancel</a>
-            </form>
+    <div class="row">
+        <div class="col-sm-10 offset-1">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h1>{% if purchase_record.pk %}Edit Purchase Record{% else %}Create Purchase Record{% endif %}</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.stock_item.label_tag}}
+                                    {{form.stock_item}}
+                                </div>
+                                <div class="col">
+                                    {{form.vendor.label_tag}}
+                                    {{form.vendor}}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.item.label_tag}}
+                                    {{form.item}}
+                                </div>
+                                <div class="col">
+                                    {{form.amount.label_tag}}
+                                    {{form.amount}}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.invoice_number.label_tag}}
+                                    {{form.invoice_number}}
+                                </div>
+                                <div class="col">
+                                    {{form.purchase_date.label_tag}}
+                                    {{form.purchase_date}}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.quantity.label_tag}}
+                                    {{form.quantity}}
+                                </div>
+                            </div>
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <a href="{% url 'purchase-record-list' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

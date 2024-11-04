@@ -2,17 +2,36 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-secondary text-white">
-            <h1>{% if items_in_stock.pk %}Edit Items In Stock{% else %}Create Items In Stock{% endif %}</h1>
-        </div>
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-success">Save</button>
-                <a href="{% url 'items-in-stock-list' %}" class="btn btn-secondary">Cancel</a>
-            </form>
+    <div class="row">
+        <div class="col-sm-10 offset-1">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h1>{% if items_in_stock.pk %}Edit Items In Stock{% else %}Create Items In Stock{% endif %}</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.item.label_tag}}
+                                    {{form.item}}
+                                </div>
+                                <div class="col">
+                                    {{form.quantity.label_tag}}
+                                    {{form.quantity}}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.reorder_level.label_tag}}
+                                    {{form.reorder_level}}
+                                </div>
+                            </div>
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <a href="{% url 'items-in-stock-list' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
