@@ -28,39 +28,3 @@ urlpatterns = [
     path('teacher/',teacher_dashboard, name='teacher_dashboard'),
     path('staff/',  staff_dashboard, name='staff_dashboard'),
 ]
-'''
-
-urlpatterns = [
-    path('home/', home, name='home'),
-    path('dashboard/', redirect_to_dashboard, name='redirect_to_dashboard'),
-    path('student/',student_dashboard, name='student_dashboard'),
-    path('teacher/',teacher_dashboard, name='teacher_dashboard'),
-    path('staff/',  staff_dashboard, name='staff_dashboard'),
-   
-
-
-
-    path('', auth_views.LoginView.as_view(template_name='accounts/authentication/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'), 
-    path('signup/', SignupView.as_view(), name='signup'),
-    path('verify_email/', SendEmailVerificationView.as_view(), name='send_email_verification'),
-    path('verify_email_result/', EmailVerifyView.as_view(), name='verify_email'),
-    path('forget_password/', ForgetPasswordView.as_view(), name='forget_password'),
-    path('reset_password/', ResetPasswordView.as_view(), name='reset_password'),
-
-
-    path('profile/', profile, name='profile'),
-    path('profile/edit/', EditProfileView.as_view(), name='edit_profile'),
-   
-]
-'''
-'''
-    path('signup/', SignupView.as_view(), name='signup'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('verify_email/', SendEmailVerificationView.as_view(), name='send_email_verification'),
-    path('verify_email_result/', EmailVerifyView.as_view(), name='verify_email'),
-    path('forget_password/', ForgetPasswordView.as_view(), name='forget_password'),
-    path('reset_password/', ResetPasswordView.as_view(), name='reset_password'),
-    path('dashboard/', DashboardView.as_view(), name='dashboard'),
-'''

@@ -13,15 +13,6 @@ class CustomUserForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'password1', 'password2')
-# forms.py
-
-
-# class LoginForm(forms.Form):
-#     username = forms.CharField(max_length=150)  # Add a username field
-#     password = forms.CharField(widget=forms.PasswordInput)
-
-#     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-#     password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
 
 
 # forms.py
@@ -40,14 +31,7 @@ class ForgetPasswordForm(forms.Form):
 
 
 class ResetPasswordForm(forms.Form):
-    # password = forms.CharField(
-    #     label="New Password",
-    #     widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter new password'})
-    # )
-    # confirm_password = forms.CharField(
-    #     label="Confirm Password",
-    #     widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm new password'})
-    # )
+
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control form-control-lg ','placeholder': 'password'}))
     confirm_password = forms.CharField(label='Password (again)', widget=forms.PasswordInput(attrs={'class': 'form-control form-control-lg ','placeholder': 'confirm_password'}))
     def clean(self):
