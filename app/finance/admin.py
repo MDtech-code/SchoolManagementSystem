@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Bank, Expense, Loan, InstallmentPaid, IncomeTaxSession, IncomeTaxRates, CPFund, EOBIPaid, CPFundDeposits, EmployeeArrears, Security, SecurityDeposits, OtherDeposits, MonthClosing
+from .models import Bank, Expense, Loan, InstallmentPaid, IncomeTaxRates, CPFund, EOBIPaid, CPFundDeposits, EmployeeArrears, Security, SecurityDeposits, OtherDeposits, MonthClosing
 
 @admin.register(Bank)
 class BankAdmin(admin.ModelAdmin):
@@ -31,11 +31,11 @@ class InstallmentPaidAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_paid'
     ordering = ('-date_paid',)
 
-@admin.register(IncomeTaxSession)
-class IncomeTaxSessionAdmin(admin.ModelAdmin):
-    list_display = ('starting_year', 'ending_year')
-    search_fields = ('starting_year', 'ending_year')
-    ordering = ('-starting_year',)
+# @admin.register(IncomeTaxSession)
+# class IncomeTaxSessionAdmin(admin.ModelAdmin):
+#     list_display = ('starting_year', 'ending_year')
+#     search_fields = ('starting_year', 'ending_year')
+#     ordering = ('-starting_year',)
 
 @admin.register(IncomeTaxRates)
 class IncomeTaxRatesAdmin(admin.ModelAdmin):

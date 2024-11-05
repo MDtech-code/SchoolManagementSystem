@@ -48,6 +48,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'debug_toolbar',
     'tailwind',
+    'django_countries',
     
 ]
 
@@ -77,7 +78,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + THEME_APPS + PROJECT_APPS
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
-]
+]   
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

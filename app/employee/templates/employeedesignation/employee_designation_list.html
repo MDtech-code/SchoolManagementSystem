@@ -1,14 +1,53 @@
-{% extends 'base/base.html' %}
-{% block title %}Employee Designations{% endblock %}
+{% extends "base/base.html" %}
+
 {% block content %}
-    <h2 class="text-center mb-4">Employee Designations</h2>
-    <a href="{% url 'employee_designation_create' %}" class="btn btn-primary mb-3">Add New Designation</a>
-    <div class="list-group">
-        {% for designation in object_list %}
-            <a href="{% url 'employee_designation_detail' designation.pk %}" class="list-group-item list-group-item-action">
-                <h5>{{ designation.name }} - {{ designation.department }}</h5>
-                <p>{{ designation.description|truncatewords:20 }}</p>
-            </a>
-        {% endfor %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h2>Employee Designation List</h2>
+        <a href="{% url 'employee_designation_create' %}" class="btn btn-primary">Add New Designation</a>
     </div>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{% url 'employee_designation_list' %}" class="mt-3">
+        <div class="input-group mb-3">
+            <input type="text" name="search" class="form-control" placeholder="Search by name or department" value="{{ request.GET.search }}">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <!-- Designations Table -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if object_list %}
+                {% for designation in object_list %}
+                <tr>
+                    <td>{{ designation.name }}</td>
+                    <td>{{ designation.department }}</td>
+                    <td>{{ designation.description }}</td>
+                    <td>
+                        <!-- Align buttons in a row -->
+                        <div class="d-flex">
+                            <a href="{% url 'employee_designation_detail' designation.pk %}" class="btn btn-info btn-sm me-1">View</a>
+                            <a href="{% url 'employee_designation_update' designation.pk %}" class="btn btn-warning btn-sm me-1">Edit</a>
+                            <a href="{% url 'employee_designation_delete' designation.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No designations found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

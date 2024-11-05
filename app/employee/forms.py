@@ -1,3 +1,4 @@
+
 from django import forms
 from .models import Employee
 from .models import StaffPerformance, Qualification
@@ -6,12 +7,15 @@ from .models import EmployeeDesignation
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
+        
         fields = [
-            'employee_name', 'employee_id', 'designation', 'employee_pay_structure', 'account_no',
-            'address', 'bank', 'city', 'cnic', 'contact_no', 'country', 'covid_vaccinated',
-            'date_of_birth', 'date_of_joining', 'email', 'employee_status', 'father_cnic', 'father_name',
-            'gender', 'is_verified', 'martial_status', 'province', 'wing'
-        ]
+             'employee_name', 'employee_id', 'designation', 'employee_pay_structure', 'account_no',
+             'address', 'bank', 'city', 'cnic', 'contact_no', 'country', 'covid_vaccinated',
+             'date_of_birth', 'date_of_joining', 'email', 'employee_status', 'father_cnic', 'father_name',
+             'gender', 'is_verified', 'martial_status', 'province', 'wing',
+             
+         ]
+        
         widgets = {
             'employee_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter employee name'}),
             'employee_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter employee ID'}),
@@ -69,5 +73,11 @@ class EmployeeDesignationForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter designation name'}),
             'department': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter department'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter description'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter description', 'rows': 4}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].label = "Designation Name"
+        self.fields['department'].label = "Department"
+        self.fields['description'].label = "Description"
