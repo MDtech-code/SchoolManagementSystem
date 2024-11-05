@@ -1,56 +1,109 @@
-
 from django.db import models
+from django.conf import settings
 from app.admission.models import Admission
 from app.common.models import TimeStampedModel
+from core.utils.choices import STUDENT_STATUS_CHOICES
 
-#!The main model that links to the admission data and tracks additional student-specific fields like roll number, status, and verification details.
+
+
 class Student(TimeStampedModel):
     """
-    The main model that links to the admission data and tracks additional
-    student-specific fields like roll number, status, and verification details.
+    Stores comprehensive information about a student, linked to their 
+    admission record. Includes an auto-generated, semantic roll number, 
+    verification status, academic history, and contact details.
     """
 
-    #! A one-to-one relationship with the Admission model
     admission = models.OneToOneField(
         Admission,
         on_delete=models.CASCADE,
-        null=True,
+        null=True,  # Allow null initially, but validate later
         verbose_name="Admission Record",
-        help_text="The admission record associated with this student."
-    )  
-    
-    #! Roll number for the student, must be unique
+        help_text="The related admission record."
+    )
+    user = models.ForeignKey( 
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='students', 
+        verbose_name="Linked User Account",
+        help_text="The user account associated with this student (parent/guardian)."
+    )
     roll_no = models.CharField(
         max_length=50,
-        unique=True,  #! Ensures that each roll number is unique
+        unique=True,
+        editable=False,
+        null=True,  # Prevent manual editing
         verbose_name="Roll Number",
-        help_text="Unique roll number assigned to the student."
-    )  
-    
-    #! Boolean field to check if the student is verified
+        help_text="Auto-generated semantic roll number."
+    )
     is_verified = models.BooleanField(
         default=False,
         verbose_name="Verification Status",
+        null=True,
         help_text="Indicates whether the student has been verified."
     )
-    
-    #! Notes related to the student, optional
+    student_status = models.CharField(
+        max_length=20,
+        choices=STUDENT_STATUS_CHOICES,
+        default='enrolled',
+        verbose_name="Student Status",
+        null=True,
+        help_text="Current status of the student."
+    )
+    # ... (Add fields for current class, section, contact info, etc.)
     note = models.TextField(
         blank=True,
         null=True,
         verbose_name="Additional Notes",
         help_text="Any additional notes regarding the student."
-    )  
+    )
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['roll_no'], name='unique_roll_no')  #! Unique constraint on roll number
+            models.UniqueConstraint(fields=['roll_no'], name='unique_roll_no')
         ]
         indexes = [
-            models.Index(fields=['roll_no'], name='roll_no_idx')  #! Index for faster lookups on roll number
+            models.Index(fields=['roll_no'], name='roll_no_idx')
         ]
         verbose_name = "Student"
         verbose_name_plural = "Students"
 
     def __str__(self):
-        return self.admission.personal_info.full_name
+        return self.admission.full_name 
+
+    def save(self, *args, **kwargs):
+        if not self.roll_no:  # Generate roll number only if it's not set
+            self.roll_no = self.generate_roll_no()
+        super().save(*args, **kwargs)
+
+    def generate_roll_no(self):
+        """Generates a semantic roll number based on class and sequence."""
+        last_student = Student.objects.filter(
+            admission__admission_class=self.admission.admission_class  # Accessing related fields
+        ).order_by('-roll_no').first()
+
+        if last_student:
+            last_roll_no = last_student.roll_no
+            try:
+                prefix, sequence = last_roll_no.split('-')  # Assuming format "CLASS-SEQ"
+                sequence = int(sequence) + 1
+            except ValueError:
+                sequence = 1  # Start with 1 if no previous roll number
+        else:
+            prefix = self.admission.admission_class.class_name[:3].upper()  # Get class name prefix
+            sequence = 1
+
+        return f"{prefix}-{sequence:03d}"  # Format with leading zeros
+
+
+
+
+
+
+
+
+
+
+
+

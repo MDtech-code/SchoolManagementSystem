@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>My Profile</h2>
+  <div class="card">
+    <div class="card-body">
+
+      {% if messages %} 
+        <div class="messages">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+              {{ message }} 
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %} 
+
+      {% if profile.profile_picture %}
+        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail rounded-circle" width="150">
+      {% endif %}
+      <p><strong>Username:</strong> {{ profile.user.username }}</p>
+      <p>
+        <strong>Email:</strong> {{ profile.user.email }} 
+        {% if not request.user.email_verified %}
+          <span class="text-danger small"><i class="bi bi-patch-exclamation"></span> 
+          <form method="post" action="{% url 'send_email_verification' %}" class="d-inline"> 
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-primary">Verify Now</button>
+          </form>
+          {% else %}
+          <span class='text-slate-800 small'><i class="bi bi-patch-check"></i></span>
+        {% endif %}
+      </p>
+      {% if profile.bio %}
+        <p><strong>Bio:</strong> {{ profile.bio }}</p>
+      {% endif %}
+      {% if profile.contact_number %}
+        <p><strong>Contact Number:</strong> {{ profile.contact_number }}</p>
+      {% endif %}
+      {% if profile.address %}
+        <p><strong>Address:</strong> {{ profile.address }}</p>
+      {% endif %}
+      <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

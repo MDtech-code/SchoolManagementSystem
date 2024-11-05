@@ -1,3 +1,6 @@
 from django.contrib import admin
-
-# Register your models here.
+from .models  import Assignment,Submission,GradingRubric
+#Register your mo dels here.
+admin.site.register(Assignment)
+admin.site.register(Submission)
+admin.site.register(GradingRubric)
