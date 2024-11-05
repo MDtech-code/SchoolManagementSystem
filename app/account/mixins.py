@@ -13,14 +13,23 @@ class RedirectAuthenticatedUserMixin:
 
 
 
+
+
 class NotAuthenticatedMixin(UserPassesTestMixin):
+    """
+    Mixin to prevent logged-in users from accessing a view.
+    Redirects to the 'redirect_to_dashboard' URL if the user is authenticated.
+    """
     redirect_field_name = None
 
     def test_func(self):
         return not self.request.user.is_authenticated
 
     def handle_no_permission(self):
-        return redirect('redirect_to_dashboard')  # Or your desired redirect URL
+        return redirect('redirect_to_dashboard')
+
+
+    # ... your existing LoginView code ...
 
 # from django.shortcuts import redirect
 

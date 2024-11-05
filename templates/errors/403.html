@@ -36,6 +36,7 @@
       animation: dip 1s;
       animation-delay: 1.5s;
       position: relative;
+      left:13rem;
     }
 
     .lock::before,
@@ -45,7 +46,8 @@
       border-left: 5px solid #333;
       height: 20px;
       width: 15px;
-      left: calc(50% - 12.5px);
+      {% comment %} left: calc(50% - 12.5px); {% endcomment %}
+      left:1.2rem;
     }
 
     .lock::before {
@@ -53,7 +55,7 @@
       border: 5px solid #333;
       border-bottom-color: transparent;
       border-radius: 15px 15px 0 0;
-      height: 30px;
+      height: 35px;
       animation: lock 2s, spin 2s;
     }
 

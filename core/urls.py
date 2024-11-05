@@ -19,7 +19,11 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
+from django.conf.urls import handler404
+
 # from app.account.views import LoginView
+handler404 = 'app.account.views.handler404'  
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='login/', permanent=False)), 

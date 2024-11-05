@@ -22,11 +22,14 @@ from django.contrib import messages
 from .mixins import RedirectAuthenticatedUserMixin,NotAuthenticatedMixin
 from .decorators import role_required
 
-
+def handler404(request, exception):
+    return render(request, 'errors/404.html', status=404)
 
 @login_required
 def profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
+    if not request.user.email_verified:
+        messages.info(request, 'Your email address is not verified. Please verify to access all features.')
     context = {'profile': profile}
     return render(request, 'accounts/profiles/profile.html', context)
 
@@ -253,11 +256,11 @@ class SendEmailVerificationView( TemplateView):
                 settings.EMAIL_HOST_USER,
                 [user.email]
             )
-            return redirect('verify_email_result')
+            return redirect('home')
         return redirect('profile')
 
 # Verify Email View
-class EmailVerifyView(RedirectAuthenticatedUserMixin,TemplateView):
+class EmailVerifyView(TemplateView):
     template_name = 'accounts/authentication/verify_email_result.html'
 
     def get(self, request, *args, **kwargs):
@@ -273,7 +276,7 @@ class EmailVerifyView(RedirectAuthenticatedUserMixin,TemplateView):
         except (jwt.ExpiredSignatureError, jwt.DecodeError, CustomUser.DoesNotExist):
             return render(request, self.template_name, {'message': "Invalid token"})
         
-class ForgetPasswordView(FormView):
+class ForgetPasswordView(NotAuthenticatedMixin,FormView):
     template_name = 'accounts/authentication/forget_password.html'
     form_class = ForgetPasswordForm  # Use custom form
     success_url = reverse_lazy('login')

@@ -1,12 +1,16 @@
 {% extends 'base/restricted_base.html' %}
-{% comment %} {% extends "base/base.html" %} {% endcomment %}
+
 
 {% block content %}
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="card p-4 shadow-lg border-0 text-center" style="max-width: 400px; width: 100%;">
         <h2 class="mb-3">Verification Result</h2>
         <p class="mb-4">{{ message }}</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="btn btn-primary">Go Home</a> 
+        {% else %}
         <a href="{% url 'login' %}" class="btn btn-primary">Go to Login</a>
+        {% endif %}
     </div>
 </div>
 {% endblock content %}
