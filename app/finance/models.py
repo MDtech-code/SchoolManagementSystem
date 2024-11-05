@@ -161,27 +161,33 @@ class InstallmentPaid(TimeStampedModel):
 
 
 class IncomeTaxSession(TimeStampedModel):
-      """
-      !Model representing an income tax session, defined by starting and ending years.
-      """
-      starting_year = models.DateField(
-          verbose_name="Starting Year",
-          help_text="The year when the income tax session starts."
-      )
-      ending_year = models.DateField(
-          verbose_name="Ending Year",
-          help_text="The year when the income tax session ends."
-      )
-      
-      class Meta:
-         verbose_name = "Income Tax Session"
-         verbose_name_plural = "Income Tax Sessions"
-         
-         indexes = [
-             models.Index(fields=['starting_year'], name='income_tax_start_idx'),  # Index for faster lookups on starting year
-         ]
-      def __str__(self):
-         return f"Income Tax Session {self.starting_year} - {self.ending_year}"
+    """
+    !Model representing an income tax session, defined by starting and ending years.
+    """
+    starting_year = models.DateField(
+        verbose_name="Starting Year",
+        help_text="The year when the income tax session starts."
+    )
+    ending_year = models.DateField(
+        verbose_name="Ending Year",
+        help_text="The year when the income tax session ends."
+    )
+
+    class Meta:
+        verbose_name = "Income Tax Session"
+        verbose_name_plural = "Income Tax Sessions"
+        # constraints = [
+        #     models.CheckConstraint(
+        #         check=models.Q(starting_year__lt='ending_year'),
+        #         name='starting_year_before_ending_year'  # Ensure starting year is before ending year
+        #     )
+        # ]
+        indexes = [
+            models.Index(fields=['starting_year'], name='income_tax_start_idx'),  # Index for faster lookups on starting year
+        ]
+
+    def __str__(self):
+        return f"Income Tax Session {self.starting_year} - {self.ending_year}"
 
 
 class IncomeTaxRates(TimeStampedModel):

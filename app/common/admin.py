@@ -5,16 +5,16 @@ from .models import Religion, Nationality, Province,Category
 
 # Admin classes for Religion, Nationality, and Province
 class ReligionAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name','description')
     search_fields = ('name',)
 
 class NationalityAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
+    list_display = ('name',)
+    search_fields = ('name',)
 
 class ProvinceAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
+    list_display = ('name',)
+    search_fields = ('name',)
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display=('name',)

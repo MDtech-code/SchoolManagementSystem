@@ -25,7 +25,7 @@ PICK_N_DROP_CHOICES = [
 ]
 
 # Choices for child status
-CHILD_CHOICES = [
+MARITAL_STATUS_CHOICES = [
     ('SINGLE', 'Single'),
     ('MARRIED', 'Married'),
 ]
@@ -61,11 +61,11 @@ ENROLLMENT_CHOICES = [
 
 # Choices for student status
 STUDENT_STATUS_CHOICES = [
-    ('ACTIVE', 'Active'),
-    ('INACTIVE', 'Inactive'),
-    ('GRADUATED', 'Graduated'),
-]
-
+            ('enrolled', 'Enrolled'),
+            ('graduated', 'Graduated'),
+            ('inactive', 'Inactive'),
+            ('suspended', 'Suspended'),
+        ]
 # Choices for admission type
 ADMISSION_TYPE_CHOICES = [
     ('REGULAR', 'Regular'),
@@ -88,3 +88,9 @@ SUBJECT_CHOICE = [
     ('HISTORY', 'History'),
     ('GEOGRAPHY', 'Geography'),
 ]
+
+ADMISSION_STATUS=[
+            ('pending', 'Pending'),
+            ('approved', 'Approved'),
+            ('rejected', 'Rejected'),
+        ]

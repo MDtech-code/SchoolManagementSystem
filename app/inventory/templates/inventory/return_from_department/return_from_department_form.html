@@ -2,19 +2,46 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-secondary text-white">
-            <h1>{% if return_from_department.pk %}Edit Return from Department{% else %}Create Return from Department{% endif %}</h1>
-        </div>
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-                <div class="mb-3">
-                    {{ form.as_p }}
+    <div class="row">
+        <div class="col-sm-10 offset-1">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h1>{% if return_from_department.pk %}Edit Return from Department{% else %}Create Return Department{% endif %}</h1>
                 </div>
-                <button type="submit" class="btn btn-success">Save</button>
-                <a href="{% url 'return-from-department-list' %}" class="btn btn-secondary">Cancel</a>
-            </form>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.department.label_tag}}
+                                    {{form.department}}
+                                </div>
+                                <div class="col">
+                                    {{form.stock_item.label_tag}}
+                                    {{form.stock_item}}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.quantity.label_tag}}
+                                    {{form.quantity}}
+                                </div>
+                                <div class="col">
+                                    {{form.return_date.label_tag}}
+                                    {{form.return_date}}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    {{form.condition.label_tag}}
+                                    {{form.condition}}
+                                </div>
+                            </div>
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <a href="{% url 'return-from-department-list' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

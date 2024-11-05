@@ -18,10 +18,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from app.account.views import LoginView
+from django.views.generic import RedirectView
+from django.conf.urls import handler404
+
+# from app.account.views import LoginView
+handler404 = 'app.account.views.handler404'  
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('app.account.urls')),
+    path('', RedirectView.as_view(url='login/', permanent=False)), 
+    path('login/',include('app.account.urls')),
     path('student/',include('app.student.urls')),
     path('admission/',include('app.admission.urls')),
     path('fee/',include('app.fee.urls')),
@@ -30,6 +36,12 @@ urlpatterns = [
     path('inventory/',include('app.inventory.urls')),
     path('finance/',include('app.finance.urls')),
     path('attendance/',include('app.attendance.urls')),
+    path('assignment/',include('app.assignment.urls')),
+    path('grade/',include('app.grade.urls')),
+    path('resource/',include('app.resource.urls')),
+    path('communication/',include('app.communication.urls')),
+
+
 ]
 if settings.DEBUG:
     import debug_toolbar
