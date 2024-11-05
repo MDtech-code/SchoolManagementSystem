@@ -1,56 +1,64 @@
-# admission/admin.py
-
 from django.contrib import admin
 from .models import (
     PersonalInfo,
+    Occupation,
     ParentInfo,
+    GuardianInfo,
     AcademicInfo,
     FinancialInfo,
-    AdditionalInfo,
-    Admission,Occupation
-    
+    AdditionalInfo
 )
 
-# Admin classes for better presentation and functionality
+
+@admin.register(PersonalInfo)
 class PersonalInfoAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'date_of_birth', 'gender', 'mobile_number', 'email')
-    search_fields = ('full_name', 'email')
-    list_filter = ('gender', 'blood_group')
+    list_display = ("full_name", "date_of_birth", "gender", "blood_group", "mobile_number")
+    search_fields = ("full_name", "mobile_number")
+    list_filter = ("gender", "blood_group")
+    readonly_fields = ("created_at", "updated_at")
 
-class ParentInfoAdmin(admin.ModelAdmin):
-    list_display = ('father_full_name', 'mother_full_name', 'guardian_full_name', 'father_cnic')
-    search_fields = ('father_full_name', 'mother_full_name', 'guardian_full_name')
-    list_filter = ('father_occupation', 'mother_occupation')
 
-class AcademicInfoAdmin(admin.ModelAdmin):
-    list_display = ('admission_no', 'admission_class', 'admission_section', 'marks_in_previous_school')
-    search_fields = ('admission_no',)
-    list_filter = ('admission_class', 'admission_section', 'test_passed')
-
-class FinancialInfoAdmin(admin.ModelAdmin):
-    list_display = ('category', 'fee_remaining_for_months', 'monthly_income')
-    search_fields = ('category__name',)  # Assuming Category has a name field
-
-class AdditionalInfoAdmin(admin.ModelAdmin):
-    list_display = ('religion', 'nationality', 'is_alive')
-    search_fields = ('sibling', 'other_information')
-
-class AdmissionAdmin(admin.ModelAdmin):
-    list_display = ( 'personal_info', )
-    search_fields = ( 'personal_info__full_name',)
-
+@admin.register(Occupation)
 class OccupationAdmin(admin.ModelAdmin):
-    list_display=('name',)
-    search_fields=('name',)
-    list_filter=('name',)
+    list_display = ("name",)
+    search_fields = ("name",)
 
-# Registering the models with the admin site
-admin.site.register(PersonalInfo, PersonalInfoAdmin)
-admin.site.register(ParentInfo, ParentInfoAdmin)
-admin.site.register(AcademicInfo, AcademicInfoAdmin)
-admin.site.register(FinancialInfo, FinancialInfoAdmin)
-admin.site.register(AdditionalInfo, AdditionalInfoAdmin)
-admin.site.register(Admission, AdmissionAdmin)
-admin.site.register(Occupation,OccupationAdmin)
+
+@admin.register(ParentInfo)
+class ParentInfoAdmin(admin.ModelAdmin):
+    list_display = ("father_full_name", "father_cnic", "mother_full_name", "mother_cnic")
+    search_fields = ("father_full_name", "mother_full_name")
+    readonly_fields = ("created_at", "updated_at")
+
+
+@admin.register(GuardianInfo)
+class GuardianInfoAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "cnic", "relation_to_child", "mobile_number")
+    search_fields = ("full_name", "cnic")
+    list_filter = ("relation_to_child",)
+    readonly_fields = ("created_at", "updated_at")
+
+
+@admin.register(AcademicInfo)
+class AcademicInfoAdmin(admin.ModelAdmin):
+    list_display = ("admission_class", "admission_section", "admission_no", "admission_type", "enrollment_status")
+    search_fields = ("admission_no",)
+    list_filter = ("admission_type", "enrollment_status")
+    readonly_fields = ("created_at", "updated_at")
+    # Prevent editing admission_no directly
+    exclude = ("admission_no",)
+
+
+@admin.register(FinancialInfo)
+class FinancialInfoAdmin(admin.ModelAdmin):
+    list_display = ("category", "fee_remaining_for_months", "monthly_income", "paid_dues_upto_slc")
+    search_fields = ("category__name",)
+    readonly_fields = ("created_at", "updated_at")
+
+
+@admin.register(AdditionalInfo)
+class AdditionalInfoAdmin(admin.ModelAdmin):
+    list_display = ("nationality", "religion")
+    readonly_fields = ("created_at", "updated_at")
 
 

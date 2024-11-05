@@ -34,8 +34,9 @@
                                 <!-- username Field with Icon -->
                                 <div class="form-outline mb-4 position-relative">
                                     <i class="fas fa-user position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                                    {{ form.username }}
-                                </div>
+                                         {% comment %} {{ form.username }}   {% endcomment %}
+                                    <input type="text" id="username" class="form-control form-control-lg ps-4.7" name="username" placeholder="Username">
+                                </div>  
                                 
 
                                 <!-- Password Field with Show/Hide Toggle -->

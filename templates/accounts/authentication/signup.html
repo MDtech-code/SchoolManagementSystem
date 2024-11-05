@@ -13,9 +13,7 @@
             background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
         }
         .form-control-lg {
-            
             padding: .5rem 2rem;
-            
         }
     </style>
 </head>
@@ -30,23 +28,23 @@
                             <h2 class="text-uppercase text-center mb-5">Sign Up</h2>
                             <form method="post" novalidate>
                                 {% csrf_token %}
-                                <!-- Name Field with Icon -->
+
+                                <!-- Username Field -->
+                                
                                 <div class="form-outline mb-4 position-relative">
                                     <i class="fas fa-user position-absolute top-50 start-0 translate-middle-y ms-3"></i>
                                     {{ form.username }}
-                                </div>
-                                <!-- Email Field with Icon -->
+                                </div> 
+                                <!-- Email Field -->
                                 <div class="form-outline mb-4 position-relative">
                                     <i class="fas fa-envelope position-absolute top-50 start-0 translate-middle-y ms-3"></i>
                                     {{ form.email }}
                                 </div>
 
-                                
-
                                 <!-- Password Field with Show/Hide Toggle -->
                                 <div class="form-outline mb-4 position-relative">
                                     <i class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                                    <input type="password" id="password" class="form-control form-control-lg" name="password" placeholder="Password">
+                                    {{ form.password1 }}
                                     <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" onclick="togglePassword()">
                                         <i id="password-icon" class="fas fa-eye"></i>
                                     </span>
@@ -55,17 +53,24 @@
                                 <!-- Confirm Password Field with Show/Hide Toggle -->
                                 <div class="form-outline mb-4 position-relative">
                                     <i class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                                    <input type="password" id="confirm-password" class="form-control form-control-lg" name="confirm_password" placeholder="Confirm Password">
+                                    {{ form.password2 }}
                                     <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" onclick="toggleConfirmPassword()">
                                         <i id="confirm-password-icon" class="fas fa-eye"></i>
                                     </span>
                                 </div>
+
+                                <!-- Submit Button -->
                                 <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Signup</button>
                                 </div>
-                                <p class="text-center text-muted mt-5 mb-0">Already have an account? 
-                                    <a href="{% url 'login' %}" class="fw-bold text-body"><u>Login here</u></a>
+
+                                <!-- Already have an account -->
+                                <p class="text-center text-muted mt-5 mb-0">
+                                    Already have an account? <a href="{% url 'login' %}" class="fw-bold text-body"><u>Login here</u></a>
                                 </p>
+
+                                <!-- Display form errors -->
+                                <p>{{ form.errors }}</p>
                             </form>
                         </div>
                     </div>
@@ -74,11 +79,12 @@
         </div>
     </div>
 </section>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 <script>
     function togglePassword() {
-        const passwordField = document.getElementById('password');
+        const passwordField = document.getElementById('id_password1');  // Update to use Django-generated id
         const passwordIcon = document.getElementById('password-icon');
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
@@ -90,7 +96,7 @@
     }
     
     function toggleConfirmPassword() {
-        const confirmPasswordField = document.getElementById('confirm-password');
+        const confirmPasswordField = document.getElementById('id_password2');  // Update to use Django-generated id
         const confirmPasswordIcon = document.getElementById('confirm-password-icon');
         if (confirmPasswordField.type === 'password') {
             confirmPasswordField.type = 'text';
@@ -103,3 +109,17 @@
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

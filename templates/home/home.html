@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Welcome to {{ school_name }}{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="jumbotron">
+        <h1 class="display-4">{{ school_name }}</h1>
+        <p class="lead">{{ about_school }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2>Admissions</h2>
+        </div>
+        <div class="card-body">
+          {% if admission_info.open %}
+            <p>Admissions are open for the academic year 2024-2025!</p>
+            <p><strong>Last Date to Apply:</strong> {{ admission_info.last_date }}</p>
+            <p><strong>Classes:</strong> {{ admission_info.classes }}</p>
+            <p><strong>Admission Process:</strong> {{ admission_info.process }}</p>
+            <p><strong>Contact:</strong> {{ admission_info.contact }}</p>
+          {% else %}
+            <p>Admissions are currently closed. Please check back later for updates.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2>Upcoming Events</h2>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            {% for event in upcoming_events %}
+              <li class="list-group-item">{{ event.name }} - {{ event.date }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h2>Testimonials</h2>
+        </div>
+        <div class="card-body">
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              {% for testimonial in testimonials %}
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+              {% endfor %}
+            </div>
+            <div class="carousel-inner">
+              {% for testimonial in testimonials %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                  <div class="card">
+                    <div class="card-body">
+                      <p class="card-text">{{ testimonial.quote }}</p>
+                      <p class="card-text"><small class="text-muted">- {{ testimonial.author }}</small></p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

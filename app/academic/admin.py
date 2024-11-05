@@ -1,5 +1,5 @@
 # academic/admin.py
-
+'''
 from django.contrib import admin
 from .models import Class, Section, Subjects,Department,SchoolLeavingCertificate
 
@@ -50,3 +50,4 @@ admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Section, SectionAdmin)
 admin.site.register(Subjects, SubjectAdmin)
 
+'''

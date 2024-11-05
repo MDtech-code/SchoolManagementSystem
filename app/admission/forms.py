@@ -1,3 +1,4 @@
+'''
 from django import forms
 from .models import PersonalInfo, ParentInfo, AcademicInfo, FinancialInfo, AdditionalInfo
 
@@ -40,3 +41,4 @@ class AdditionalInfoForm(forms.ModelForm):
 
 
 
+'''
