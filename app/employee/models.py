@@ -73,9 +73,7 @@
 
 #     def __str__(self):
 #          return f"{self.name} - {self.employee.username} ({self.year_obtained})"
-    
-
-
+'''    
 import uuid
 from django.db import models
 from app.common.models import TimeStampedModel
@@ -167,3 +165,4 @@ class Qualification(TimeStampedModel):
 
      def __str__(self):
           return f"{self.name} - {self.employee.username} ({self.year_obtained})"
+'''

@@ -48,7 +48,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'debug_toolbar',
     'tailwind',
-    'django_countries',
+    # 'django_countries',
     
 ]
 
@@ -59,7 +59,7 @@ THEME_APPS = [
 
 # Project-Specific Apps
 PROJECT_APPS = [
-    'app.common',
+    #'app.common',
     'app.account',
     'app.student',
     'app.admission',
@@ -182,7 +182,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-AUTH_USER_MODEL = 'account.CustomUser'
+#AUTH_USER_MODEL = 'account.CustomUser'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[

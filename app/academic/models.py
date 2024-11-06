@@ -1,4 +1,5 @@
 
+'''
 from django.db import models
 from app.common.models import TimeStampedModel
 import uuid
@@ -192,6 +193,7 @@ class SchoolLeavingCertificate(TimeStampedModel):
             models.Index(fields=['admission_date', 'is_refunded']),
             models.Index(fields=['paid_to', 'received_by']),
         ]
+ '''       
 '''
 from django.db import models
 from app.common.models import TimeStampedModel

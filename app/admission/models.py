@@ -1,3 +1,4 @@
+'''
 from django.db import models
 from django.conf import settings
 from app.common.models import TimeStampedModel,Category,Nationality,Religion
@@ -642,7 +643,7 @@ class Admission(TimeStampedModel):
 
 
 
-
+'''
 
 
 

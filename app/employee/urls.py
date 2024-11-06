@@ -27,14 +27,21 @@
 #
 
 from django.urls import path
+'''
 from .views import (
     EmployeeList, EmployeeCreate, EmployeeDetail, EmployeeUpdate, EmployeeDelete,
     StaffPerformanceList, StaffPerformanceDetail, StaffPerformanceCreate, StaffPerformanceUpdate, StaffPerformanceDelete,
     QualificationList, QualificationDetail, QualificationCreate, QualificationUpdate, QualificationDelete,EmployeeDesignationList, EmployeeDesignationDetail, 
     EmployeeDesignationCreate, EmployeeDesignationUpdate, EmployeeDesignationDelete
 )
-
+'''
 urlpatterns = [
+
+]
+
+
+
+'''
     # Employee URLs 
     path('employee_list/', EmployeeList.as_view(), name='employee_list'),  # List view
     path('create/', EmployeeCreate.as_view(), name='employee_create'),  # Create view
@@ -62,4 +69,4 @@ urlpatterns = [
     path('employee-designation/create/', EmployeeDesignationCreate.as_view(), name='employee_designation_create'),
     path('employee-designation/<int:pk>/update/', EmployeeDesignationUpdate.as_view(), name='employee_designation_update'),
     path('employee-designation/<int:pk>/delete/', EmployeeDesignationDelete.as_view(), name='employee_designation_delete'),
-]
+    '''

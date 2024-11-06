@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Payrll
+# from .views import Payrll
 urlpatterns = [
-    path('pay/', Payrll.as_view(), name='pay'),
 ]
+    #path('pay/', Payrll.as_view(), name='pay'),

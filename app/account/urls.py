@@ -6,6 +6,11 @@ from .views import *
 
 
 urlpatterns = [
+ 
+]
+
+
+'''
     path('', include([  # Use include to nest URLs
         path('', views.LoginView.as_view(), name='login'),
         path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
@@ -27,4 +32,4 @@ urlpatterns = [
     path('student/',student_dashboard, name='student_dashboard'),
     path('teacher/',teacher_dashboard, name='teacher_dashboard'),
     path('staff/',  staff_dashboard, name='staff_dashboard'),
-]
+    '''
