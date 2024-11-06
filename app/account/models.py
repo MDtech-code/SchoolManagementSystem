@@ -21,8 +21,8 @@ class CustomUser(AbstractUser):
     """
     role = models.ForeignKey('Role', on_delete=models.SET_NULL,null=True)
     email_verified = models.BooleanField(default=False)
-    token_created_at = models.DateTimeField()
-    token_expiry_time = models.DateTimeField()
+    token_created_at = models.DateTimeField(null=True)
+    token_expiry_time = models.DateTimeField(null=True)
 
     def is_token_valid(self):
         if self.token_created_at and self.token_expiry_time:
