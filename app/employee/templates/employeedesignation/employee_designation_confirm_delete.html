@@ -1,5 +1,19 @@
-<!-- templates/employee/employee_designation_confirm_delete.html -->
-{% extends 'base/base.html' %}
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Delete Employee Designation</h2>
+    <p>Are you sure you want to delete "{{ object.name }}"?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <a href="{% url 'employee_designation_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
+{% comment %} {% extends 'base/base.html' %}
 {% load static%}
 
 {% block title %}Delete Employee Designation{% endblock %}
@@ -12,4 +26,4 @@
     <button type="submit" class="btn btn-danger">Delete</button>
     <a href="{% url 'employee_designation_list' %}" class="btn btn-secondary">Cancel</a>
 </form>
-{% endblock %}
+{% endblock %} {% endcomment %}
