@@ -1,7 +1,7 @@
 # academic/admin.py
-'''
+
 from django.contrib import admin
-from .models import Class, Section, Subjects,Department,SchoolLeavingCertificate
+from .models import Class, Section, Subject,Department,SchoolLeavingCertificate
 
 @admin.register(SchoolLeavingCertificate)
 class SchoolLeavingCertificateAdmin(admin.ModelAdmin):
@@ -48,6 +48,5 @@ class SubjectAdmin(admin.ModelAdmin):
 admin.site.register(Class, ClassAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Section, SectionAdmin)
-admin.site.register(Subjects, SubjectAdmin)
+admin.site.register(Subject, SubjectAdmin)
 
-'''

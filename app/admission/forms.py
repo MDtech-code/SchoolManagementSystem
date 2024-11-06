@@ -1,4 +1,4 @@
-'''
+
 from django import forms
 from .models import PersonalInfo, ParentInfo, AcademicInfo, FinancialInfo, AdditionalInfo, GuardianInfo
 
@@ -31,7 +31,7 @@ class GuardianInfoForm(forms.ModelForm):
     class Meta:
         model = GuardianInfo
         fields = '__all__'  # Or specify the fields
-'''
+
 '''
 from django import forms
 from .models import PersonalInfo, ParentInfo, AcademicInfo, FinancialInfo, AdditionalInfo
