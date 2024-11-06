@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import BadHeaderError,send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
@@ -21,6 +21,7 @@ from app.academic.models import Course
 from django.contrib import messages
 from .mixins import RedirectAuthenticatedUserMixin,NotAuthenticatedMixin
 from .decorators import role_required
+from django.http import HttpResponseRedirect
 
 def handler404(request, exception):
     return render(request, 'errors/404.html', status=404)
@@ -199,13 +200,21 @@ class SendEmailVerificationView( TemplateView):
             user.save()
             
             verification_link = f"{settings.FRONTEND_URL}/login/verify_email_result/?token={token}"
-            send_mail(
-                'Email Verification Request',
-                f"Here is your email verification link: {verification_link}",
-                settings.EMAIL_HOST_USER,
-                [user.email]
-            )
-            return redirect('home')
+            try:
+                send_mail(
+                    'Email Verification Request',
+                    f"Here is your email verification link: {verification_link}",
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=False,  # Raise exceptions for email errors
+                )
+                messages.success(self.request, 'Password reset link has been sent to your email.')
+                #return HttpResponseRedirect(self.get_success_url())  # Redirect after successful email
+                return redirect('profile')
+            except BadHeaderError:
+                  messages.error(self.request, 'Invalid header found.')
+            except Exception as e:  # Catch other email sending errors
+                  messages.error(self.request, f'Error sending email: {e}')
         return redirect('profile')
 
 # Verify Email View
@@ -224,7 +233,7 @@ class EmailVerifyView(TemplateView):
             return render(request, self.template_name, {'message': "Token has expired"})
         except (jwt.ExpiredSignatureError, jwt.DecodeError, CustomUser.DoesNotExist):
             return render(request, self.template_name, {'message': "Invalid token"})
-        
+'''
 class ForgetPasswordView(NotAuthenticatedMixin,FormView):
     template_name = 'accounts/authentication/forget_password.html'
     form_class = ForgetPasswordForm  # Use custom form
@@ -254,7 +263,7 @@ class ForgetPasswordView(NotAuthenticatedMixin,FormView):
         else:
             print("No user found with this email.")  # Debugging statement
             return render(self.request, 'accounts/authentication/forget_password.html', {'error': messages.error(self.request, 'User with this email does not exist.')})
-
+'''
 class ResetPasswordView(View):
     template_name = 'accounts/authentication/reset_password.html'
 
@@ -323,3 +332,62 @@ def home(request):
         ]
     }
     return render(request, 'home/home.html',context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class ForgetPasswordView(NotAuthenticatedMixin,FormView):
+    template_name = 'accounts/authentication/forget_password.html'
+    form_class = ForgetPasswordForm  # Use custom form
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get('email')
+        try:
+            user = CustomUser.objects.get(email=email)  # Use get() to raise an exception if not found
+        except CustomUser.DoesNotExist:
+            messages.error(self.request, 'User with this email does not exist.')
+            return self.form_invalid(form)  # Or render an error page
+
+        token = generate_verification_token(user.pk)
+        reset_link = f"{settings.FRONTEND_URL}/login/reset_password/?token={token}"
+
+        try:
+            send_mail(
+                'Password Reset Request',
+                f"Here is your password reset link: {reset_link}",
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,  # Raise exceptions for email errors
+            )
+            messages.success(self.request, 'Password reset link has been sent to your email.')
+            return HttpResponseRedirect(self.get_success_url())  # Redirect after successful email
+        except BadHeaderError:
+            messages.error(self.request, 'Invalid header found.')
+            return self.form_invalid(form)
+        except Exception as e:  # Catch other email sending errors
+            messages.error(self.request, f'Error sending email: {e}')
+            return self.form_invalid(form)

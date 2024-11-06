@@ -30,7 +30,7 @@ SECRET_KEY =config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.100.5']
 
 
 # Application definition
@@ -208,12 +208,7 @@ MEDIA_URL= '/media/'
 
 #! this line of help to configor the console base email request sending 
 FRONTEND_URL=config('FRONTEND_URL','default_user')
-EMAIL_HOST_USER=config('EMAIL_HOST_USER', 'default_email@gmail.com')
-
-
-
-
-
+# EMAIL_HOST_USER=config('EMAIL_HOST_USER', 'default_email@gmail.com')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST =config('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT =config('EMAIL_PORT', 587)
@@ -224,10 +219,10 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 #!! Print emails to the console in debug mode
 
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# if DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# else:
+#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Token Settings (Optional Customizations)
 SIMPLE_JWT = {
@@ -237,3 +232,10 @@ SIMPLE_JWT = {
 
 LOGIN_REDIRECT_URL = 'redirect_to_dashboard'
 LOGIN_URL = 'login'
+
+
+
+AUTHENTICATION_BACKENDS = [
+    'app.account.backends.EmailOrUsernameBackend',  # Replace 'app.account' with your app name
+    'django.contrib.auth.backends.ModelBackend',  # Keep the default backend
+]
