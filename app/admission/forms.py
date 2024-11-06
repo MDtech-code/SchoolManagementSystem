@@ -1,3 +1,36 @@
+from django import forms
+from .models import PersonalInfo, ParentInfo, AcademicInfo, FinancialInfo, AdditionalInfo, GuardianInfo
+
+class PersonalInfoForm(forms.ModelForm):
+    class Meta:
+        model = PersonalInfo
+        fields = '__all__'  # Or specify the fields you want in the form
+
+class ParentInfoForm(forms.ModelForm):
+    class Meta:
+        model = ParentInfo
+        fields = '__all__'  # Or specify the fields
+
+class AcademicInfoForm(forms.ModelForm):
+    class Meta:
+        model = AcademicInfo
+        fields = '__all__'  # Or specify the fields
+
+class FinancialInfoForm(forms.ModelForm):
+    class Meta:
+        model = FinancialInfo
+        fields = '__all__'  # Or specify the fields
+
+class AdditionalInfoForm(forms.ModelForm):
+    class Meta:
+        model = AdditionalInfo
+        fields = '__all__'  # Or specify the fields
+
+class GuardianInfoForm(forms.ModelForm):
+    class Meta:
+        model = GuardianInfo
+        fields = '__all__'  # Or specify the fields
+
 '''
 from django import forms
 from .models import PersonalInfo, ParentInfo, AcademicInfo, FinancialInfo, AdditionalInfo

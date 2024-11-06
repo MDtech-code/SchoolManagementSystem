@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from app.common.models import TimeStampedModel,Category,Nationality,Religion
 from core.utils.choices import (
     GENDER_CHOICES, 
@@ -553,15 +554,10 @@ class AdditionalInfo(TimeStampedModel):
         verbose_name="Security Voucher Generated", 
         help_text="Indicates if a security voucher has been generated"
     )
-    is_voucher_generated = models.BooleanField(
-        default=False, 
-        verbose_name="Voucher Generated", 
-        help_text="Indicates if a voucher has been generated"
-    )
+    is_voucher_generated = models.BooleanField(default=False, verbose_name="Voucher Generated", help_text="Indicates if a voucher has been generated")
     # Added missing fields from the original model
     admission_by = models.CharField(
-        max_length=100, 
-        verbose_name="Admitted By"
+        max_length=100, verbose_name="Admitted By"
     )
     other_information = models.TextField(
         blank=True, 
@@ -594,6 +590,13 @@ class Admission(TimeStampedModel):
     various related models: PersonalInfo, ParentInfo, AcademicInfo, 
     FinancialInfo, and AdditionalInfo.
     """
+    applicant = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,  # Allow null initially
+        blank=True,
+        verbose_name="Applicant"
+    )
     personal_info = models.OneToOneField(
         PersonalInfo, 
         on_delete=models.CASCADE, 
