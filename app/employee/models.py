@@ -74,19 +74,17 @@
 #     def __str__(self):
 #          return f"{self.name} - {self.employee.username} ({self.year_obtained})"
 
-'''    
-import uuid
+
+
 from django.db import models
 from app.common.models import TimeStampedModel
-from django.contrib.auth.models import User
-from django.utils import timezone
-from app.account.models import CustomUser
+
 
 
 
 class EmployeeDesignation(TimeStampedModel):
     #  department = models.CharField(max_length=255)
-     department=models.ForeignKey(Departmant,on_delete=models.CASCADE,related_name='departments')
+     department=models.ForeignKey('academic.Department',on_delete=models.CASCADE,related_name='departments')
      description = models.TextField()
      name = models.CharField(max_length=255)
 
@@ -95,7 +93,7 @@ class EmployeeDesignation(TimeStampedModel):
 
 
 class Employee(TimeStampedModel):
-     designation = models.ForeignKey(EmployeeDesignation, on_delete=models.CASCADE)
+     designation = models.ForeignKey('EmployeeDesignation', on_delete=models.CASCADE)
      employee_pay_structure = models.ForeignKey('payroll.PayStructure', on_delete=models.CASCADE)
      account_no = models.CharField(max_length=20)
      address = models.TextField()
@@ -149,7 +147,7 @@ class Employee(TimeStampedModel):
 
     
 
-class StaffPerformance(models.Model):
+class StaffPerformance(TimeStampedModel):
      employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
      comments = models.TextField()
      rating = models.PositiveSmallIntegerField()
@@ -159,7 +157,7 @@ class StaffPerformance(models.Model):
          return f"Performance Evaluation for {self.employee.employee_name} on {self.date_evaluated}"
     
 class Qualification(TimeStampedModel):
-     employee = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="qualifications")
+     employee = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name="qualifications")
      discipline = models.CharField(max_length=100)
      institution = models.CharField(max_length=100)
      name = models.CharField(max_length=100)
@@ -167,4 +165,3 @@ class Qualification(TimeStampedModel):
 
      def __str__(self):
           return f"{self.name} - {self.employee.username} ({self.year_obtained})"
-'''

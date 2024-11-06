@@ -1,5 +1,5 @@
 
-'''
+
 from django.db import models
 from app.common.models import TimeStampedModel
 import uuid
@@ -58,7 +58,7 @@ class Section(TimeStampedModel):
         max_length=50, blank=True, db_index=True,null=True
     )  # Removed null=True for better performance
     section_of_class = models.ForeignKey(
-        Class, on_delete=models.CASCADE, db_index=True
+        'Class', on_delete=models.CASCADE, db_index=True
     )
     uuid = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True, db_index=True
@@ -73,12 +73,12 @@ class Section(TimeStampedModel):
         ]
 
 
-class Subjects(TimeStampedModel):
+class Subject(TimeStampedModel):
     """
     Represents subjects taught in a specific class.
     """
     subject_class = models.ForeignKey(
-        Class, on_delete=models.CASCADE, db_index=True
+        'Class', on_delete=models.CASCADE, db_index=True
     )
     subject_type = models.CharField(max_length=64, db_index=True)
     name = models.CharField(max_length=264, unique=True, db_index=True)  # Added db_index to name
@@ -101,10 +101,10 @@ class Course(TimeStampedModel):
     """
     name = models.CharField(max_length=100, db_index=True,null=True)  # Added db_index to name
     class_enrolled = models.ForeignKey(
-        Class, on_delete=models.CASCADE, db_index=True
+        'Class', on_delete=models.CASCADE, db_index=True
     )  # Added db_index
     subject = models.ForeignKey(
-        Subjects, on_delete=models.CASCADE, db_index=True
+        'Subject', on_delete=models.CASCADE, db_index=True
     )  # Added db_index
     schedule = models.DateTimeField(db_index=True)  # Added db_index
 
@@ -129,7 +129,7 @@ class Enrollment(TimeStampedModel):
         'student.Student', on_delete=models.CASCADE, db_index=True
     )  # Added db_index
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, db_index=True
+        'Course', on_delete=models.CASCADE, db_index=True
     )  # Added db_index
     date_enrolled = models.DateField(auto_now_add=True, db_index=True)  # Added db_index
 
@@ -155,13 +155,13 @@ class SchoolLeavingCertificate(TimeStampedModel):
     Tracks information related to school leaving certificates.
     """
     admission_class = models.ForeignKey(
-        Class, 
+        'Class', 
         on_delete=models.CASCADE, 
         related_name='slc_admission_class', 
         db_index=True
     )
     last_class = models.ForeignKey(
-        Class, 
+        'Class', 
         on_delete=models.CASCADE, 
         related_name='slc_last_class', 
         db_index=True
@@ -193,7 +193,7 @@ class SchoolLeavingCertificate(TimeStampedModel):
             models.Index(fields=['admission_date', 'is_refunded']),
             models.Index(fields=['paid_to', 'received_by']),
         ]
- '''       
+
 '''
 from django.db import models
 from app.common.models import TimeStampedModel

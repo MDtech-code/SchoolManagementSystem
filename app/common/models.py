@@ -1,4 +1,4 @@
-
+from core.utils.choices import GENDER_CHOICES,MARITAL_STATUS_CHOICES
 from django.db import models
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -7,16 +7,9 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
         ordering = ['-created_at']
-'''
-# common/models.py
-from core.utils.choices import GENDER_CHOICES,MARITAL_STATUS_CHOICES
-class TimeStampedModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        abstract = True
-        ordering = ['-created_at']
+# common/models.py
+
 
 class Religion(TimeStampedModel):
     """
@@ -46,7 +39,7 @@ class Province(TimeStampedModel):
 
     
 
-class Nationality(models.Model):
+class Nationality(TimeStampedModel):
     name = models.CharField(max_length=128,null=True,unique=True,db_index=True)
 
     class Meta:
@@ -64,4 +57,3 @@ class Category(TimeStampedModel):
 
     def __str__(self):
         return self.name
-'''

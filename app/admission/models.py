@@ -1,7 +1,7 @@
-'''
+
 from django.db import models
 from django.conf import settings
-from app.common.models import TimeStampedModel,Category,Nationality,Religion
+from app.common.models import TimeStampedModel
 from core.utils.choices import (
     GENDER_CHOICES, 
     BLOOD_GROUP_CHOICES, 
@@ -16,7 +16,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import transaction  # For transaction management
 
-from app.academic.models import Class, Section
+# from app.academic.models import Class, Section
 
 
 class PersonalInfo(TimeStampedModel):
@@ -186,7 +186,7 @@ class ParentInfo(TimeStampedModel):
         help_text="Enter the father's CNIC.",
     )
     father_occupation = models.ForeignKey(
-        Occupation,
+        'Occupation',
         related_name="parentinfo_father_occupation",
         on_delete=models.CASCADE,
         verbose_name="Father's Occupation",
@@ -204,7 +204,7 @@ class ParentInfo(TimeStampedModel):
         help_text="Enter the mother's CNIC.",
     )
     mother_occupation = models.ForeignKey(
-        Occupation,
+        'Occupation',
         related_name="parentinfo_mother_occupation",
         on_delete=models.CASCADE,
         verbose_name="Mother's Occupation",
@@ -263,7 +263,7 @@ class GuardianInfo(TimeStampedModel):
         help_text="Enter the guardian's CNIC.",
     )
     occupation = models.ForeignKey(
-        Occupation,
+        'Occupation',
         on_delete=models.SET_NULL,  # Changed to SET_NULL to handle occupation deletion
         null=True,
         blank=True,
@@ -356,13 +356,13 @@ class AcademicInfo(TimeStampedModel):
     status.
     """
     admission_class = models.ForeignKey(
-        Class, 
+        'academic.Class', 
         on_delete=models.CASCADE, 
         related_name='admitted_class', 
         verbose_name="Admission Class"
     )
     admission_section = models.ForeignKey(
-        Section, 
+        'academic.Section', 
         on_delete=models.CASCADE, 
         verbose_name="Admission Section"
     )
@@ -412,7 +412,7 @@ class AcademicInfo(TimeStampedModel):
     )
     # Added missing field from the original model
     class_required = models.ForeignKey(
-        Class, 
+        'academic.Class', 
         on_delete=models.CASCADE, 
         related_name='required_class', 
         verbose_name="Class Required"
@@ -457,7 +457,7 @@ class FinancialInfo(TimeStampedModel):
     fee details, payment schedules, and any outstanding dues.
     """
     category = models.ForeignKey(
-        Category, 
+        'common.Category', 
         on_delete=models.PROTECT, 
         verbose_name="Category"
     )
@@ -518,12 +518,12 @@ class AdditionalInfo(TimeStampedModel):
     remarks.
     """
     nationality = models.ForeignKey(
-        Nationality, 
+        'common.Nationality', 
         on_delete=models.SET_NULL, 
         null=True
     )
     religion = models.ForeignKey(
-        Religion, 
+        'common.Religion', 
         on_delete=models.SET_NULL, 
         null=True
     )
@@ -599,32 +599,32 @@ class Admission(TimeStampedModel):
         verbose_name="Applicant"
     )
     personal_info = models.OneToOneField(
-        PersonalInfo, 
+        'PersonalInfo', 
         on_delete=models.CASCADE, 
         verbose_name="Personal Information"
     )
     parent_info = models.OneToOneField(
-        ParentInfo, 
+        'ParentInfo', 
         on_delete=models.CASCADE, 
         verbose_name="Parent Information"
     )
     academic_info = models.OneToOneField(
-        AcademicInfo, 
+        'AcademicInfo', 
         on_delete=models.CASCADE, 
         verbose_name="Academic Information"
     )
     financial_info = models.OneToOneField(
-        FinancialInfo, 
+        'FinancialInfo', 
         on_delete=models.CASCADE, 
         verbose_name="Financial Information"
     )
     additional_info = models.OneToOneField(
-        AdditionalInfo, 
+        'AdditionalInfo', 
         on_delete=models.CASCADE, 
         verbose_name="Additional Information"
     )
     guardian_info = models.OneToOneField(
-        GuardianInfo, 
+        'GuardianInfo', 
         on_delete=models.CASCADE, 
         null=True,  # Make it optional if a guardian is not always required
         blank=True,
@@ -643,7 +643,7 @@ class Admission(TimeStampedModel):
 
 
 
-'''
+
 
 
 
