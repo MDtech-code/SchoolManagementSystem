@@ -73,6 +73,7 @@
 
 #     def __str__(self):
 #          return f"{self.name} - {self.employee.username} ({self.year_obtained})"
+
 '''    
 import uuid
 from django.db import models
@@ -84,7 +85,8 @@ from app.account.models import CustomUser
 
 
 class EmployeeDesignation(TimeStampedModel):
-     department = models.CharField(max_length=255)
+    #  department = models.CharField(max_length=255)
+     department=models.ForeignKey(Departmant,on_delete=models.CASCADE,related_name='departments')
      description = models.TextField()
      name = models.CharField(max_length=255)
 

@@ -59,7 +59,7 @@ THEME_APPS = [
 
 # Project-Specific Apps
 PROJECT_APPS = [
-    #'app.common',
+    'app.common',
     'app.account',
     'app.student',
     'app.admission',

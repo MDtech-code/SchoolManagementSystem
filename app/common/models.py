@@ -1,6 +1,14 @@
+
+from django.db import models
+class TimeStampedModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+        ordering = ['-created_at']
 '''
 # common/models.py
-from django.db import models
 from core.utils.choices import GENDER_CHOICES,MARITAL_STATUS_CHOICES
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
