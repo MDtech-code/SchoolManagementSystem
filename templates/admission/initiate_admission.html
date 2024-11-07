@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+{% if request.user.email_verified %}
 <div class="container">
   <h2>Initiate Admission</h2>
 
@@ -29,4 +30,7 @@
     <button type="submit" name="personal_info_submit" class="btn btn-primary">Next</button>
   </form>
 </div>
+{% else %}
+<div class="alert alert-warning">your email is not verified you dont have access to this resourse</div>
+{% endif %}
 {% endblock %}
