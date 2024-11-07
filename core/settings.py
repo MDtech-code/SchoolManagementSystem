@@ -30,7 +30,7 @@ SECRET_KEY =config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-ALLOWED_HOSTS = ['192.168.100.5']
+ALLOWED_HOSTS = ['192.168.100.5','192.168.8.106']
 
 
 # Application definition
