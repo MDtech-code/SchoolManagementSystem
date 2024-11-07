@@ -233,37 +233,7 @@ class EmailVerifyView(TemplateView):
             return render(request, self.template_name, {'message': "Token has expired"})
         except (jwt.ExpiredSignatureError, jwt.DecodeError, CustomUser.DoesNotExist):
             return render(request, self.template_name, {'message': "Invalid token"})
-'''
-class ForgetPasswordView(NotAuthenticatedMixin,FormView):
-    template_name = 'accounts/authentication/forget_password.html'
-    form_class = ForgetPasswordForm  # Use custom form
-    success_url = reverse_lazy('login')
 
-    def form_valid(self, form):
-        email = form.cleaned_data.get('email')
-        print("ForgetPasswordView: form_valid called") 
-        print(f"Email submitted: {email}")  # Debugging statement
-
-        # Fetch the user
-        user = CustomUser.objects.filter(email=email).first()
-        if user:
-            print("User found with this email.")  # Debugging statement
-            token = generate_verification_token(user.pk)
-            reset_link = f"{settings.FRONTEND_URL}/login/reset_password/?token={token}"
-            
-            # Send email with reset link
-            send_mail(
-                'Password Reset Request',
-                f"Here is your password reset link: {reset_link}",
-                settings.EMAIL_HOST_USER,
-                [email],
-            )
-            return render(self.request, 'accounts/authentication/forget_password.html', {'message':messages.success(self.request, 'Password reset link has been sent to your email.')
-})
-        else:
-            print("No user found with this email.")  # Debugging statement
-            return render(self.request, 'accounts/authentication/forget_password.html', {'error': messages.error(self.request, 'User with this email does not exist.')})
-'''
 class ResetPasswordView(View):
     template_name = 'accounts/authentication/reset_password.html'
 

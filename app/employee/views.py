@@ -9,8 +9,11 @@ from django.core.paginator import Paginator
 from .models import StaffPerformance, Qualification
 from .forms import StaffPerformanceForm, QualificationForm
 from .models import EmployeeDesignation
+from app.account.decorators import role_required
+from django.utils.decorators import method_decorator
 
 # List all employees
+@method_decorator(role_required(['staff']), name='dispatch')
 class EmployeeList(ListView):
     
     model = Employee

@@ -23,13 +23,13 @@
       <p>
         <strong>Email:</strong> {{ profile.user.email }} 
         {% if not request.user.email_verified %}
-          <span class="text-danger small"><i class="bi bi-patch-exclamation"></span> 
+          <span class="text-danger small"><i class="bi bi-patch-exclamation-fill"></i></span> 
           <form method="post" action="{% url 'send_email_verification' %}" class="d-inline"> 
             {% csrf_token %}
             <button type="submit" class="btn btn-sm btn-primary">Verify Now</button>
           </form>
           {% else %}
-          <span class='text-slate-800 small'><i class="bi bi-patch-check"></i></span>
+          <span class='text-slate-800 small'><i class="bi bi-patch-check-fill"></i></span>
         {% endif %}
       </p>
       {% if profile.bio %}
