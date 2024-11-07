@@ -11,8 +11,11 @@ from .forms import (
     AdditionalInfoForm,
     GuardianInfoForm,
 )
+from app.account.decorators import role_required
+
 
 @login_required
+@role_required(['student'])
 def initiate_admission(request):
     """
     View to handle the multi-step admission process.
