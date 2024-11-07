@@ -76,8 +76,9 @@
 
 
 
-from django.db import models
+from django.db import models,transaction
 from app.common.models import TimeStampedModel
+
 
 
 
@@ -123,28 +124,33 @@ class Employee(TimeStampedModel):
       
      def save(self, *args, **kwargs):
         if not self.employee_id:
-            # Retrieve the last employee with a valid `employee_id` format
-            last_employee = (
-                Employee.objects.filter(employee_id__regex=r'^EMP\d{4}$')
-                .order_by('id')
-                .last()
-            )
-            
-            if last_employee and last_employee.employee_id:
-                # Extract the numeric part and increment it
-                last_id = int(last_employee.employee_id[-4:])
-                new_id = f"EMP-{last_id + 1:04}"  # Pads to 4 digits, e.g., EMP0001
-            else:
-                # Start with EMP0001 if no records exist or if none match the format
-                new_id = "EMP-0001"
+            with transaction.atomic():
+                # Retrieve the last employee with a valid `employee_id` format
+                last_employee = (
+                    Employee.objects.filter(employee_id__regex=r'^EMP\d{4}$')
+                    .order_by('id')
+                    .last()
+                )
+                
+                if last_employee and last_employee.employee_id:
+                    # Extract the numeric part and increment it
+                    last_id = int(last_employee.employee_id[-4:])
+                    new_id = f"EMP{last_id + 1:04}"  # Pads to 4 digits, e.g., EMP0001
+                else:
+                    # Start with EMP0001 if no records exist or if none match the format
+                    new_id = "EMP0001"
 
-            self.employee_id = new_id
+                # Check if generated `new_id` already exists
+                if Employee.objects.filter(employee_id=new_id).exists():
+                    # If `new_id` already exists (very unlikely, but possible in some cases), try again
+                    return self.save(*args, **kwargs)  # Retry generating a unique `employee_id`
+
+                self.employee_id = new_id
         
         super().save(*args, **kwargs)
 
      def __str__(self):
         return f"{self.employee_name} ({self.employee_id})"
-
     
 
 class StaffPerformance(TimeStampedModel):

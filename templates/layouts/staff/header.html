@@ -11,6 +11,23 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Tasks</a>
         </li>
+        <!-- Staff Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="staffDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Staff
+          </a>
+          <div class="dropdown-menu" aria-labelledby="staffDropdown">
+            <a class="dropdown-item" href="{% url 'employee_list' %}">Employees</a>
+            <a class="dropdown-item" href="{% url 'employee_designation_list' %}">Employee Designations</a>
+            <a class="dropdown-item" href="{% url 'qualification_list' %}">Qualifications</a>
+            <a class="dropdown-item" href="{% url 'staffperformance_list' %}">Staff Performance</a>
+          </div>
+        </li>
+          
+           <li class="nav-item">
+          <a class="nav-link" href="#">Tasks</a>
+        </li>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Announcements</a>
         </li>
