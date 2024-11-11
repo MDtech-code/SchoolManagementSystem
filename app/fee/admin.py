@@ -42,7 +42,7 @@ class StudentFeeVoucherAdmin(admin.ModelAdmin):
             'fields': ('is_security_voucher', 'is_admission_voucher', 'is_extras_voucher', 'voucher_type', 'is_advance_voucher', 'total_months_advance', 'advance_start_month', 'advance_end_month')
         }),
         ('Additional Information', {
-            'fields': ('admission', 'form_b_no', 'previous_voucher')
+            'fields': ('admission', 'previous_voucher')
         }),
     )
 

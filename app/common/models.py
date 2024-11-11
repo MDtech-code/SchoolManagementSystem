@@ -46,7 +46,7 @@ class Nationality(TimeStampedModel):
         verbose_name_plural = "Nationality"  # Set the plural name
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.name}"
     
 
 

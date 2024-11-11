@@ -23,8 +23,8 @@
             {% include "layouts/teacher/header.html" %}
           {% elif user.role.name == 'staff' %}
             {% include "layouts/staff/header.html" %}
-          {% elif user.role.name == 'admin' %}
-            {% include "includes/header_admin.html" %} 
+          {% elif user.role.name == 'applicant' %}
+            {% include "layouts/common/header.html" %} 
           {% else %}
             {% include "layouts/common/header.html" %}  
           {% endif %}
@@ -44,8 +44,8 @@
                     {% include "layouts/teacher/sidebar.html" %}
                 {% elif user.role.name == 'staff' %}
                     {% include "layouts/staff/sidebar.html" %}
-                {% elif user.role.name == 'admin' %}
-                    {% include "includes/sidebar_admin.html" %} 
+                {% elif user.role.name == 'applicant' %}
+                    {% include "layouts/common/sidebar.html" %} 
                 {% else %}
                     {% include "layouts/common/sidebar.html" %} 
                 {% endif %}

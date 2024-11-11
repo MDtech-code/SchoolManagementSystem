@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+{% if request.user.email_verified %}
+<div class="container mt-5">
+  <div class="card shadow-lg" style="border-radius: 15px;">
+    <div class="card-body p-5">
+      <h2 class="text-center mb-4">Admission Application</h2>
+
+      <form method="post">
+        {% csrf_token %}
+        
+        <!-- Non-field form errors at the top -->
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <div class="row">
+          {% for field in form %}
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                
+                <!-- Help text and errors -->
+                {% if field.help_text %}
+                  <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+                
+                {% if field.errors %}
+                  <div class="text-danger">
+                    {{ field.errors|join:", " }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="alert alert-warning mt-4 text-center">
+  Your email is not verified. You don't have access to this resource.
+</div>
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'base/base.html' %}
+
+{% block content %}
+{% if request.user.email_verified %}
+<div class="container mt-5">
+  <h2>Admission Application</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit Application</button>
+  </form>
+</div>
+{% else %}
+<div class="alert alert-warning">
+  Your email is not verified. You don't have access to this resource.
+</div>
+{% endif %}
+{% endblock %} {% endcomment %}

@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm position-fixed w-100" style="background-color: #001f3f; color: #ffffff;">
     <a class="navbar-brand" href="{% url 'home' %}">Army Public School</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -11,21 +12,18 @@
         <li class="nav-item">
           <a class="nav-link" href="#">About Us</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url "apply_for_admission" %}">Admissions</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="#">Programs</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Fee Structure</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
       </ul>
-      
-       <!-- Right-aligned login/signup links -->
+         <!-- Right-aligned login/signup links -->
     <ul class="navbar-nav ms-auto">
         {% if user.is_authenticated %}
           <li class="nav-item dropdown">

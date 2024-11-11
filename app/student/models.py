@@ -90,7 +90,7 @@ class Student(TimeStampedModel):
             except ValueError:
                 sequence = 1  # Start with 1 if no previous roll number
         else:
-            prefix = self.admission.admission_class.class_name[:3].upper()  # Get class name prefix
+            prefix = self.admission.admission_class.name[:3].upper()  # Get class name prefix
             sequence = 1
 
         return f"{prefix}-{sequence:03d}"  # Format with leading zeros

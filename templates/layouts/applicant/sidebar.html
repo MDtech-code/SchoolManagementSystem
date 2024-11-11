@@ -1,27 +1,19 @@
 <div class="d-flex">
     <nav class="sidebar bg-dark text-light p-3 vh-100 position-fixed" style="width: 250px; left: 0; top: 64; background-color: #343a40; color: #d3d3d3;">
       <ul class="nav flex-column">
-        {% if user.is_authenticated %}
-        
         <li class="nav-item">
-          <a class="nav-link text-light d-flex align-items-center" href="{% url 'applicant_dashboard' %}">
+          <a class="nav-link text-light d-flex align-items-center" href="{% url 'home' %}">
             <i class="bi bi-house-door-fill me-2"></i>
-            <span>Dashboard</span>
+            <span>Home</span>
           </a>
         </li>
-        {% endif %}
         <li class="nav-item">
           <a class="nav-link text-light d-flex align-items-center" href="#">
             <i class="bi bi-info-circle-fill me-2"></i>
             <span>About Us</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-light d-flex align-items-center" href="{% url "apply_for_admission" %}">
-            <i class="bi bi-person-plus-fill me-2"></i>
-            <span>Admissions</span>
-          </a>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link text-light d-flex align-items-center" href="#">
             <i class="bi bi-telephone-fill me-2"></i>

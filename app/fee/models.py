@@ -3,14 +3,14 @@ from django.db import models
 from app.common.models import TimeStampedModel
 from django.utils import timezone
 from django.utils.html import format_html
-
+from core.utils.choices import (ADMISSION_TYPE_CHOICES,CHILD_CHOICES)
 
 
 class FeeStructure(TimeStampedModel):
     category = models.ForeignKey('common.Category', on_delete=models.CASCADE,null=True)
     class_s = models.ForeignKey('academic.Class', on_delete=models.CASCADE, verbose_name="Class" ,null=True)
-    child_status = models.CharField(max_length=64)#choices=CHILD_CHOICES
-    admission_type = models.CharField(max_length=64 )#choices=ADMISSION_TYPE_CHOICES
+    child_status = models.CharField(max_length=64,choices=CHILD_CHOICES)#choices=CHILD_CHOICES
+    admission_type = models.CharField(max_length=64,choices=ADMISSION_TYPE_CHOICES )#choices=ADMISSION_TYPE_CHOICES
     tuition_fee = models.PositiveIntegerField(default=0)
     development_fund = models.PositiveIntegerField(default=0)
     misc = models.PositiveIntegerField(default=0)
@@ -23,8 +23,28 @@ class FeeStructure(TimeStampedModel):
     prospectus = models.PositiveIntegerField(default=0)
     trip = models.PositiveIntegerField(default=0)
     others_note = models.CharField(max_length=64, null=True, blank=True)
-    others = models.PositiveIntegerField(default=0)
+    others = models.PositiveIntegerField(default=0,null=True,blank=True)
     total = models.PositiveIntegerField(default=0)
+
+
+    def save(self, *args, **kwargs):
+        # Calculate the total by summing up all fee components
+        self.total = (
+            self.tuition_fee +
+            self.development_fund +
+            self.misc +
+            self.admission +
+            self.security +
+            self.building +
+            self.id_card_fee +
+            self.examination +
+            self.fine +
+            self.prospectus +
+            self.trip +
+            self.others
+        )
+        super(FeeStructure, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return f"{self.total} | {self.category.name} - {self.child_status} - {self.admission_type} - {self.class_s}"
@@ -50,7 +70,7 @@ def get_due_date():
     return timezone.now().date() + timezone.timedelta(days=10)
 class StudentFeeVoucher(TimeStampedModel):
     voucher_number = models.CharField(max_length=12)
-    student = models.ForeignKey('student.Student', on_delete=models.PROTECT)
+    student = models.ForeignKey('student.Student', on_delete=models.PROTECT, null=True, blank=True)
     class_section = models.CharField(max_length=12, null=True, blank=True)
     time_generated = models.DateTimeField(auto_now_add=True)
     issue_date = models.DateField(default=timezone.now)
@@ -89,7 +109,7 @@ class StudentFeeVoucher(TimeStampedModel):
     advance_end_month = models.DateField(null=True, blank=True)
 
     admission = models.ForeignKey('admission.Admission', null=True, blank=True, on_delete=models.PROTECT)
-    form_b_no = models.CharField(max_length=15, null=True, blank=True)
+    #form_b_no = models.CharField(max_length=15, null=True, blank=True)
 
     previous_voucher = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
@@ -120,7 +140,8 @@ class StudentFeeVoucher(TimeStampedModel):
         return self.fee_structure.misc + self.arrears_misc
 
     def __str__(self):
-        return f'{self.voucher_number} | {self.total_fee} | {self.student.student_name} | {self.student.father_name} | {self.student.student_section}'
+        #return f'{self.voucher_number} | {self.total_fee} | {self.student.student_name} | {self.student.father_name} | {self.student.student_section}'
+        return f'{self.voucher_number} | {self.total_fee} '
 
     class Meta:
         ordering = ['-issue_date']

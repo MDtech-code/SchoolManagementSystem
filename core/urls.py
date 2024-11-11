@@ -26,8 +26,8 @@ from django.conf.urls import handler404
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='login/', permanent=False)), 
-    path('login/',include('app.account.urls')),
+    path('', RedirectView.as_view(url='home/', permanent=False)), 
+    path('home/',include('app.account.urls')),
     path('student/',include('app.student.urls')),
     path('admission/',include('app.admission.urls')),
     path('fee/',include('app.fee.urls')),

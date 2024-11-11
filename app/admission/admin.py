@@ -1,64 +1,61 @@
 from django.contrib import admin
-from .models import (
-    PersonalInfo,
-    Occupation,
-    ParentInfo,
-    GuardianInfo,
-    AcademicInfo,
-    FinancialInfo,
-    AdditionalInfo
-)
+from django.core.mail import send_mail
+from .models import Occupation,Admission
+from app.student.models import Student
+from django.conf import settings
+from app.fee.models import StudentFeeVoucher
+admin.site.register(Occupation)
 
 
-@admin.register(PersonalInfo)
-class PersonalInfoAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "date_of_birth", "gender", "blood_group", "mobile_number")
-    search_fields = ("full_name", "mobile_number")
-    list_filter = ("gender", "blood_group")
-    readonly_fields = ("created_at", "updated_at")
+class AdmissionAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'admission_class', 'admission_status', 'created_at')  # Display relevant fields
+    list_filter = ('admission_status', 'admission_class')  # Add filters
+    search_fields = ('full_name', 'admission_no')  # Add search functionality
+    readonly_fields = ('admission_no',)  # Make admission_no read-only
+    actions = ['approve_application', 'reject_application']  # Add custom actions
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)  # Save the Admission userect first
+
+        if obj.admission_status == 'approved':
+            # Create Student userect
+            student = Student.objects.create(
+                admission=obj,
+                user=obj.applicant,
+                is_verified=False,
+                student_status='enrolled',
+            )
+            
+            # Send confirmation email
+            send_mail(
+                'Admission Confirmed!',
+                f'Congratulations! Your admission to army public school has been confirmed. Your roll number is {student.roll_no}.',
+                settings.EMAIL_HOST_USER,  # Replace with your email
+                [obj.email],
+                fail_silently=False,
+            )
+        elif obj.admission_status == 'rejected':
+            # Send rejection email
+            send_mail(
+                'Admission Rejected',
+                f'Dear {obj.full_name},\n\nWe regret to inform you that your admission to [School Name] has been rejected.\n\n'
+                'Please contact the school for more information.\n\n'
+                'Thank you,\n[School Name]',
+                settings.EMAIL_HOST_USER,
+                [obj.email],
+                fail_silently=False,
+            )
+        # # Update the voucher with the student object
+        # try:
+        #     voucher = StudentFeeVoucher.objects.get(admission=obj)
+        #     voucher.student = student
+        #     voucher.save()
+        # except StudentFeeVoucher.DoesNotExist:
+        #     pass
+
+        
+            
 
 
-@admin.register(Occupation)
-class OccupationAdmin(admin.ModelAdmin):
-    list_display = ("name",)
-    search_fields = ("name",)
 
 
-@admin.register(ParentInfo)
-class ParentInfoAdmin(admin.ModelAdmin):
-    list_display = ("father_full_name", "father_cnic", "mother_full_name", "mother_cnic")
-    search_fields = ("father_full_name", "mother_full_name")
-    readonly_fields = ("created_at", "updated_at")
-
-
-@admin.register(GuardianInfo)
-class GuardianInfoAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "cnic", "relation_to_child", "mobile_number")
-    search_fields = ("full_name", "cnic")
-    list_filter = ("relation_to_child",)
-    readonly_fields = ("created_at", "updated_at")
-
-
-@admin.register(AcademicInfo)
-class AcademicInfoAdmin(admin.ModelAdmin):
-    list_display = ("admission_class", "admission_section", "admission_no", "admission_type", "enrollment_status")
-    search_fields = ("admission_no",)
-    list_filter = ("admission_type", "enrollment_status")
-    readonly_fields = ("created_at", "updated_at")
-    # Prevent editing admission_no directly
-    exclude = ("admission_no",)
-
-
-@admin.register(FinancialInfo)
-class FinancialInfoAdmin(admin.ModelAdmin):
-    list_display = ("category", "fee_remaining_for_months", "monthly_income", "paid_dues_upto_slc")
-    search_fields = ("category__name",)
-    readonly_fields = ("created_at", "updated_at")
-
-
-@admin.register(AdditionalInfo)
-class AdditionalInfoAdmin(admin.ModelAdmin):
-    list_display = ("nationality", "religion")
-    readonly_fields = ("created_at", "updated_at")
-
-
+admin.site.register(Admission, AdmissionAdmin)

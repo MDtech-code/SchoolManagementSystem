@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fee Voucher</title>
+</head>
+<body>
+  <h1>Fee Voucher</h1>
+  <p><strong>Student Name:</strong> {{ voucher.admission.full_name }}</p>
+  <p><strong>Class:</strong> {{ voucher.admission.admission_class }}</p>
+  <p><strong>Voucher Number:</strong> {{ voucher.voucher_number }}</p>
+  <p><strong>Issue Date:</strong> {{ voucher.issue_date }}</p>
+  <p><strong>Due Date:</strong> {{ voucher.due_date }}</p>
+
+  <h2>Fee Breakdown</h2>
+  <p>Tuition Fee: {{ voucher.fee_structure.tuition_fee }}</p> 
+  <p>Admission Fee: {{ voucher.fee_structure.admission }}</p> 
+  <p>Security Fee: {{ voucher.fee_structure.security }}</p> 
+  <hr>
+  <p><strong>Total Fee:</strong> {{ voucher.total_fee }}</p>
+  <p><strong>Status:</strong> Pending</p>  
+</body>
+</html>

@@ -94,3 +94,11 @@ ADMISSION_STATUS=[
             ('approved', 'Approved'),
             ('rejected', 'Rejected'),
         ]
+
+
+CHILD_CHOICES = [
+    ('new_admission', 'New Admission'),
+    ('sibling', 'Sibling'),
+    ('scholarship', 'Scholarship'),
+    ('regular', 'Regular'),
+]

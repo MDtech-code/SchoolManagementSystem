@@ -22,7 +22,7 @@ from django.contrib import messages
 from .mixins import RedirectAuthenticatedUserMixin,NotAuthenticatedMixin
 from .decorators import role_required
 from django.http import HttpResponseRedirect
-
+from app.admission.models import Admission 
 def handler404(request, exception):
     return render(request, 'errors/404.html', status=404)
 
@@ -128,7 +128,7 @@ class SignupView(RedirectAuthenticatedUserMixin,FormView):
 
     def form_valid(self, form):
         user = form.save()  # Let the form handle the initial save
-        default_role = Role.objects.get(name='pending')
+        default_role = Role.objects.get(name='applicant')
         user.role = default_role
         user.save()
         if not user.email_verified:
@@ -137,7 +137,7 @@ class SignupView(RedirectAuthenticatedUserMixin,FormView):
             user.token_expiry_time = timezone.now() + timezone.timedelta(minutes=30)
             user.save()
             
-            verification_link = f"{settings.FRONTEND_URL}/login/verify_email_result/?token={token}"
+            verification_link = f"{settings.FRONTEND_URL}/home/verify_email_result/?token={token}"
             # Try sending the email, handle any potential errors
             try:
                 send_mail(
@@ -172,6 +172,8 @@ class LoginView(NotAuthenticatedMixin,FormView):
         user = authenticate(self.request, username=username, password=password)
         if user:
             login(self.request, user)
+            if user.is_staff:
+                return redirect('/admin/') 
             messages.success(self.request, f'Welcome, {user.username}!')
             #return redirect(self.get_success_url())
             return super().form_valid(form)
@@ -199,7 +201,7 @@ class SendEmailVerificationView( TemplateView):
             user.token_expiry_time = timezone.now() + timezone.timedelta(minutes=30)
             user.save()
             
-            verification_link = f"{settings.FRONTEND_URL}/login/verify_email_result/?token={token}"
+            verification_link = f"{settings.FRONTEND_URL}/home/verify_email_result/?token={token}"
             try:
                 send_mail(
                     'Email Verification Request',
@@ -267,18 +269,42 @@ class ResetPasswordView(View):
             return redirect(reverse_lazy('login'))
         else:
             return render(request, self.template_name, {'form': form})
+        
+
+# @login_required
+# def redirect_to_dashboard(request):
+#     if request.user.role.name == 'student':
+#         return redirect('student_dashboard')
+#     elif request.user.role.name == 'teacher':
+#         return redirect('teacher_dashboard')
+#     elif request.user.role.name == 'staff':
+#         return redirect('staff_dashboard')
+#     elif request.user.role.name == 'applicant':
+#         return redirect('applicant_dashboard')
+#     # ... handle other roles ...
+#     else:
+#         return redirect('home')  # Or some other default page
 
 @login_required
 def redirect_to_dashboard(request):
-    if request.user.role.name == 'student':
-        return redirect('student_dashboard')
-    elif request.user.role.name == 'teacher':
-        return redirect('teacher_dashboard')
-    elif request.user.role.name == 'staff':
-        return redirect('staff_dashboard')
-    # ... handle other roles ...
-    else:
-        return redirect('home')  # Or some other default page
+    # Check if the user has a role and role has a name
+    if hasattr(request.user, 'role') and hasattr(request.user.role, 'name'):
+        # Role to dashboard mapping
+        role_to_dashboard = {
+            'student': 'student_dashboard',
+            'teacher': 'teacher_dashboard',
+            'staff': 'staff_dashboard',
+            'applicant': 'applicant_dashboard',
+            # ... add other roles as needed ...
+        }
+
+        # Get the dashboard URL based on role
+        dashboard_url = role_to_dashboard.get(request.user.role.name)
+        if dashboard_url:
+            return redirect(dashboard_url)
+
+    # Default redirect if no role or no matching role
+    return redirect('home')
 
 
 def home(request):
@@ -305,6 +331,16 @@ def home(request):
 
 
 
+@login_required
+@role_required(['applicant'])
+def applicant_dashboard(request):
+    try:
+        admission = Admission.objects.get(applicant=request.user)
+    except Admission.DoesNotExist:
+        admission = None
+
+    context = {'admission': admission}
+    return render(request, 'admission/applicant_dashboard.html', context)
 
 
 

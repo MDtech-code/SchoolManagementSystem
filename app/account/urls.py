@@ -7,7 +7,8 @@ from .views import *
 
 urlpatterns = [
  path('', include([  # Use include to nest URLs
-        path('', views.LoginView.as_view(), name='login'),
+        path('', views.home, name='home'),
+        path('login/', views.LoginView.as_view(), name='login'),
         path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
         path('signup/', views.SignupView.as_view(), name='signup'),
         
@@ -23,10 +24,10 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('profile/edit/', EditProfileView.as_view(), name='edit_profile'),
     path('dashboard/', redirect_to_dashboard, name='redirect_to_dashboard'),
-    path('home/', views.home, name='home'),
     path('student/',student_dashboard, name='student_dashboard'),
     path('teacher/',teacher_dashboard, name='teacher_dashboard'),
     path('staff/',  staff_dashboard, name='staff_dashboard'),
+    path('applicant/',applicant_dashboard,name='applicant_dashboard')
 ]
 
 
