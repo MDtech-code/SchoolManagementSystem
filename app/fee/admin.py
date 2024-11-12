@@ -1,7 +1,9 @@
 
 from django.contrib import admin
 from .models import FeeStructure, VoucherGenerationRule, StudentFeeVoucher, StudentFee, SecurityFee
-
+from app.student.models import Student
+from django.conf import settings
+from django.core.mail import send_mail
 @admin.register(FeeStructure)
 class FeeStructureAdmin(admin.ModelAdmin):
     list_display = ('category', 'class_s', 'child_status', 'admission_type', 'total')
@@ -22,6 +24,7 @@ class StudentFeeVoucherAdmin(admin.ModelAdmin):
     list_display = ('voucher_number', 'student', 'issue_date', 'due_date', 'total_fee', 'voucher_status')
     search_fields = ('voucher_number', 'student__student_name', 'student__father_name')
     list_filter = ('issue_date', 'due_date', 'is_paid', 'partial_paid')
+    #list_editable = ('is_paid', 'amount_paid', 'date_paid')
     date_hierarchy = 'issue_date'
     ordering = ('-issue_date',)
 
@@ -45,6 +48,31 @@ class StudentFeeVoucherAdmin(admin.ModelAdmin):
             'fields': ('admission', 'previous_voucher')
         }),
     )
+    def save_model(self, request, obj, form, change):
+     super().save_model(request, obj, form, change)
+     if obj.is_paid and obj.student:  # Check if is_paid is True and student object EXISTS
+        student = obj.student  # Get the existing student object
+        student.is_verified = True
+        student.student_status = 'enrolled'  # Set the student status
+        student.save()  # This will trigger roll_no generation in Student.save()
+
+        # ... (your existing code to send confirmation email) ...
+        # if obj.is_paid and  obj.student:
+        #         student=obj.status='enrolled',
+        #         student = obj.admission.student
+        #         student.is_verified = True
+        #         obj.student = student  # Link the voucher to the student
+        #         obj.save()
+        # Send confirmation email
+        #send_mail(
+        #        'Enrollment Confirmed!',
+        #        f'Dear {student.admission.full_name},\n\nYour payment has been received, and your enrollment at [School Name] is confirmed.\n\n'
+        #        f'You can now log in to the student dashboard using your roll number ({student.roll_no}) and the password you set during registration.\n\n'
+        #        'Thank you,\n[School Name]',
+        #        settings.EMAIL_HOST_USER,
+        #        [student.admission.email],
+        #        fail_silently=False,
+        #)
 
 @admin.register(StudentFee)
 class StudentFeeAdmin(admin.ModelAdmin):

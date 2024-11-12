@@ -59,6 +59,8 @@ class Bank(TimeStampedModel):
         return self.bank_name
 
 
+
+
 class Expense(TimeStampedModel):
     """
     !Model representing an expense entry, including details about the amount and description.

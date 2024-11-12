@@ -17,22 +17,22 @@ class AdmissionAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)  # Save the Admission userect first
 
         if obj.admission_status == 'approved':
-            # Create Student userect
+            
+            # Create Student object with only admission and user fields
             student = Student.objects.create(
                 admission=obj,
-                user=obj.applicant,
-                is_verified=False,
-                student_status='enrolled',
+                user=obj.applicant,  # Assuming obj has a user attribute
             )
-            
+            obj.student = student  # Link the admission object to the student
+            obj.save()  # Save the admission object to persist the changes
             # Send confirmation email
-            send_mail(
-                'Admission Confirmed!',
-                f'Congratulations! Your admission to army public school has been confirmed. Your roll number is {student.roll_no}.',
-                settings.EMAIL_HOST_USER,  # Replace with your email
-                [obj.email],
-                fail_silently=False,
-            )
+            #send_mail(
+            #    'Admission Confirmed!',
+            #    f'Congratulations! Your admission to army public school has been confirmed.',
+            #    settings.EMAIL_HOST_USER,  # Replace with your email
+            #    [obj.email],
+            #    fail_silently=False,
+            #)
         elif obj.admission_status == 'rejected':
             # Send rejection email
             send_mail(

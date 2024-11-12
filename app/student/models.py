@@ -72,34 +72,31 @@ class Student(TimeStampedModel):
         return self.admission.full_name 
 
     def save(self, *args, **kwargs):
-        if not self.roll_no:  # Generate roll number only if it's not set
+        if self.is_verified and not self.roll_no:  # Generate roll number only if it's not set
             self.roll_no = self.generate_roll_no()
         super().save(*args, **kwargs)
 
     def generate_roll_no(self):
-        """Generates a semantic roll number based on class and sequence."""
-        last_student = Student.objects.filter(
-            admission__admission_class=self.admission.admission_class  # Accessing related fields
-        ).order_by('-roll_no').first()
-
-        if last_student:
-            last_roll_no = last_student.roll_no
-            try:
-                prefix, sequence = last_roll_no.split('-')  # Assuming format "CLASS-SEQ"
-                sequence = int(sequence) + 1
-            except ValueError:
-                sequence = 1  # Start with 1 if no previous roll number
-        else:
-            prefix = self.admission.admission_class.name[:3].upper()  # Get class name prefix
-            sequence = 1
-
-        return f"{prefix}-{sequence:03d}"  # Format with leading zeros
-
-
-
-
-
-
+     """Generates a semantic roll number based on class and sequence."""
+     last_student = Student.objects.filter(
+         admission__admission_class=self.admission.admission_class
+     ).exclude(roll_no__isnull=True).order_by('-roll_no').first()  # Exclude students with no roll number
+ 
+     if last_student and last_student.roll_no:  # Check if last_student and roll_no exist
+         last_roll_no = last_student.roll_no
+         try:
+             prefix, sequence = last_roll_no.split('-')  # Assuming format "CLASS-SEQ"
+             sequence = int(sequence) + 1
+         except ValueError:
+             # Handle the case where the roll number format is unexpected
+             print(f"Error: Unexpected roll number format: {last_roll_no}")
+             prefix = self.admission.admission_class.name[:3].upper()  # Use the class name as a prefix
+             sequence = 1  # Start with 1 if no previous roll number or invalid format
+     else:
+         prefix = self.admission.admission_class.name[:3].upper()  # Get class name prefix
+         sequence = 1
+ 
+     return f"{prefix}-{sequence:03d}"  # Format with leading zeros
 
 
 

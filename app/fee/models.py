@@ -3,7 +3,7 @@ from django.db import models
 from app.common.models import TimeStampedModel
 from django.utils import timezone
 from django.utils.html import format_html
-from core.utils.choices import (ADMISSION_TYPE_CHOICES,CHILD_CHOICES)
+from core.utils.choices import (ADMISSION_TYPE_CHOICES,CHILD_CHOICES,VOUCHER_TYPE_CHOICES)
 
 
 class FeeStructure(TimeStampedModel):
@@ -69,7 +69,7 @@ class VoucherGenerationRule(TimeStampedModel):
 def get_due_date():
     return timezone.now().date() + timezone.timedelta(days=10)
 class StudentFeeVoucher(TimeStampedModel):
-    voucher_number = models.CharField(max_length=12)
+    voucher_number = models.CharField(max_length=50)
     student = models.ForeignKey('student.Student', on_delete=models.PROTECT, null=True, blank=True)
     class_section = models.CharField(max_length=12, null=True, blank=True)
     time_generated = models.DateTimeField(auto_now_add=True)
@@ -102,7 +102,7 @@ class StudentFeeVoucher(TimeStampedModel):
     is_security_voucher = models.BooleanField(default=False)
     is_admission_voucher = models.BooleanField(default=False)
     is_extras_voucher = models.BooleanField(default=False)
-    voucher_type = models.CharField(max_length=64) #choices=VOUCHER_TYPE_CHOICES default=VOUCHER_TYPE_CHOICES[0][0]
+    voucher_type = models.CharField(max_length=64,choices=VOUCHER_TYPE_CHOICES) #choices=VOUCHER_TYPE_CHOICES default=VOUCHER_TYPE_CHOICES[0][0]
     is_advance_voucher = models.BooleanField(default=False)
     total_months_advance = models.PositiveIntegerField(default=0, blank=True, null=True)
     advance_start_month = models.DateField(null=True, blank=True)
