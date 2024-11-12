@@ -19,10 +19,14 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
-from django.conf.urls import handler404
+from django.conf.urls import handler404,handler403,handler400,handler500
+from core.utils.errors import handler404 as custom_handler404, handler403 as custom_handler403, handler400 as custom_handler400, handler500 as custom_handler500
 
-# from app.account.views import LoginView
-# handler404 = 'app.account.views.handler404'  
+# Reassigning default handlers to custom handlers
+handler404 = custom_handler404
+handler403 = custom_handler403
+handler400 = custom_handler400
+handler500 = custom_handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),

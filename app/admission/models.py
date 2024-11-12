@@ -24,7 +24,7 @@ class Occupation(TimeStampedModel):
     """
     name = models.CharField(
         max_length=100,
-        verbose_name="Occupation",
+        verbose_name="Occupations",
         help_text="Enter the occupation (e.g., Doctor, Engineer).",
     )
 
@@ -89,19 +89,19 @@ class Admission(TimeStampedModel):
     # Parent Information
     father_full_name = models.CharField(max_length=100)
     father_cnic = models.CharField(max_length=15)
-    father_occupation = models.CharField(max_length=100)  # Changed to CharField
+    father_occupation = models.ForeignKey('Occupation',on_delete=models.SET_NULL,null=True,blank=True,related_name='father_occupations')  # Changed to CharField
     mother_full_name = models.CharField(max_length=100)
     mother_cnic = models.CharField(max_length=15)
-    mother_occupation = models.CharField(max_length=100)  # Changed to CharField
+    mother_occupation =models.ForeignKey('Occupation',on_delete=models.SET_NULL,null=True,blank=True,related_name='mother_occupations')
     mother_mobile_number = models.CharField(max_length=11)
     mother_email = models.EmailField()
-    mother_office_address = models.CharField(max_length=255)
+    #mother_office_address = models.CharField(max_length=255)
     mother_is_alive = models.BooleanField(default=True)
 
     # Guardian Information
     guardian_full_name = models.CharField(max_length=100, blank=True, null=True)
     guardian_cnic = models.CharField(max_length=15, blank=True, null=True)
-    guardian_occupation = models.CharField(max_length=100, blank=True, null=True)  # Changed to CharField
+    guardian_occupation =models.ForeignKey('Occupation',on_delete=models.SET_NULL,null=True,blank=True,related_name='guardian_occupations') # Changed to CharField
     guardian_mobile_number = models.CharField(max_length=11, blank=True, null=True)
     guardian_email = models.EmailField(blank=True, null=True)
     guardian_home_address = models.CharField(max_length=255, blank=True, null=True)
@@ -116,8 +116,8 @@ class Admission(TimeStampedModel):
     admission_section = models.ForeignKey('academic.Section', on_delete=models.CASCADE)
     admission_no = models.CharField(max_length=12, unique=True, blank=True, null=True)
     admission_type = models.CharField(max_length=50, choices=ADMISSION_TYPE_CHOICES)
-    marks_in_previous_school = models.PositiveIntegerField(null=True, blank=True)
-    previous_school_roll_no = models.CharField(max_length=20, blank=True, null=True)
+    #marks_in_previous_school = models.PositiveIntegerField(null=True, blank=True)
+    #previous_school_roll_no = models.CharField(max_length=20, blank=True, null=True)
     #enrollment_status = models.CharField(max_length=50, choices=ENROLLMENT_CHOICES)
     test_passed = models.BooleanField(default=False)
     class_required = models.ForeignKey(
@@ -153,8 +153,7 @@ class Admission(TimeStampedModel):
         default='pending'
     )
 
-    def __str__(self):
-        return self.full_name
+   
 
     def save(self, *args, **kwargs):
         if not self.admission_no:
@@ -168,6 +167,8 @@ class Admission(TimeStampedModel):
             if last_admission:
                 return f"ADM{int(last_admission.admission_no[3:]) + 1:04d}"
             return "ADM0001"
+    def __str__(self):
+        return self.full_name
 
 
 # class PersonalInfo(TimeStampedModel):

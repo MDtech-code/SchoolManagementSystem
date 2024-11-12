@@ -1,3 +1,9 @@
+
+#! forms
+from .forms import CustomUserForm, LoginForm, ResetPasswordForm,ForgetPasswordForm ,ProfileForm
+#! models 
+from .models import CustomUser,Role,Profile
+#! django 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, FormView
@@ -10,21 +16,27 @@ from django.core.mail import BadHeaderError,send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
-from .models import CustomUser,Role,Profile
-from .forms import CustomUserForm, LoginForm, ResetPasswordForm,ForgetPasswordForm ,ProfileForm
+from django.views import View
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+#! app
 from app.account.utils.generate_Token import generate_verification_token
 from app.account.utils.decodeVerficationToken import decode_verification_token
-import jwt
-from django.views import View
+from app.admission.models import Admission 
 from app.assignment.models import Assignment,Submission
 from app.academic.models import Course
-from django.contrib import messages
+
+#! third party
+import jwt
+
+#! mixins
 from .mixins import RedirectAuthenticatedUserMixin,NotAuthenticatedMixin
+#! decorator 
 from .decorators import role_required
-from django.http import HttpResponseRedirect
-from app.admission.models import Admission 
-def handler404(request, exception):
-    return render(request, 'errors/404.html', status=404)
+
+
+
+
 
 @login_required
 def profile(request):
@@ -42,34 +54,6 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(Profile, user=self.request.user)
-
-@login_required
-@role_required(['student'])
-def student_dashboard(request):
-    """
-    Renders the student dashboard with relevant data.
-    """
-    # context = get_student_data(request)
-    upcoming_events = [
-        {'name': 'Assignment 1', 'date': '2024-11-10'},
-        {'name': 'Exam 1', 'date': '2024-11-15'}
-    ]
-    announcements = [
-        {'message': 'School will be closed on November 5th.'},
-        {'message': 'New library books are available.'}
-    ]
-    # Assuming you have models for grades and assignments
-    recent_grades = Submission.objects.filter(student=request.user.id)
-    # ... (fetch other data: my_courses, attendance_summary) ...
-    context = {
-        'upcoming_events': upcoming_events,
-        'announcements': announcements,
-        'recent_grades': recent_grades,
-        'my_courses': Course.objects.all(),  # Example: Fetch all courses
-        'attendance_summary': {'present': 20, 'absent': 2}  # Replace with actual data
-    }
-    return render(request, 'accounts/dashboards/student_dashboard.html', context)
-
 
 
 
@@ -271,19 +255,7 @@ class ResetPasswordView(View):
             return render(request, self.template_name, {'form': form})
         
 
-# @login_required
-# def redirect_to_dashboard(request):
-#     if request.user.role.name == 'student':
-#         return redirect('student_dashboard')
-#     elif request.user.role.name == 'teacher':
-#         return redirect('teacher_dashboard')
-#     elif request.user.role.name == 'staff':
-#         return redirect('staff_dashboard')
-#     elif request.user.role.name == 'applicant':
-#         return redirect('applicant_dashboard')
-#     # ... handle other roles ...
-#     else:
-#         return redirect('home')  # Or some other default page
+
 
 @login_required
 def redirect_to_dashboard(request):
@@ -379,7 +351,7 @@ class ForgetPasswordView(NotAuthenticatedMixin,FormView):
             return self.form_invalid(form)  # Or render an error page
 
         token = generate_verification_token(user.pk)
-        reset_link = f"{settings.FRONTEND_URL}/login/reset_password/?token={token}"
+        reset_link = f"{settings.FRONTEND_URL}/home/reset_password/?token={token}"
 
         try:
             send_mail(

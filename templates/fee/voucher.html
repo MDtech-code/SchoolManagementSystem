@@ -2,21 +2,70 @@
 <html>
 <head>
   <title>Fee Voucher</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    .container {
+      width: 800px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .school-info {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .student-info {
+      margin-bottom: 20px;
+    }
+    .fee-breakdown {
+      margin-bottom: 20px;
+    }
+    .bank-details {
+      margin-top: 30px;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Fee Voucher</h1>
-  <p><strong>Student Name:</strong> {{ voucher.admission.full_name }}</p>
-  <p><strong>Class:</strong> {{ voucher.admission.admission_class }}</p>
-  <p><strong>Voucher Number:</strong> {{ voucher.voucher_number }}</p>
-  <p><strong>Issue Date:</strong> {{ voucher.issue_date }}</p>
-  <p><strong>Due Date:</strong> {{ voucher.due_date }}</p>
+  <div class="container">
+    <h1>Fee Voucher</h1>
+    <div class="school-info">
+      <h3>[School Name]</h3>
+      <p>[School Address]</p>
+    </div>
 
-  <h2>Fee Breakdown</h2>
-  <p>Tuition Fee: {{ voucher.fee_structure.tuition_fee }}</p> 
-  <p>Admission Fee: {{ voucher.fee_structure.admission }}</p> 
-  <p>Security Fee: {{ voucher.fee_structure.security }}</p> 
-  <hr>
-  <p><strong>Total Fee:</strong> {{ voucher.total_fee }}</p>
-  <p><strong>Status:</strong> Pending</p>  
+    <div class="student-info">
+      <p><strong>Student Name:</strong> {{ voucher.admission.full_name }}</p>
+      <p><strong>Class:</strong> {{ voucher.admission.admission_class }}</p>
+      <p><strong>Voucher Number:</strong> {{ voucher.voucher_number }}</p>
+      <p><strong>Issue Date:</strong> {{ voucher.issue_date }}</p>
+      <p><strong>Due Date:</strong> {{ voucher.due_date }}</p>
+    </div>
+
+    <div class="fee-breakdown">
+      <h2>Fee Breakdown</h2>
+      <p>Tuition Fee: {{ voucher.fee_structure.tuition_fee }}</p>
+      <p>Admission Fee: {{ voucher.fee_structure.admission }}</p>
+      <p>Security Fee: {{ voucher.fee_structure.security }}</p>
+      <hr>
+      <p><strong>Total Fee:</strong> {{ voucher.total_fee }}</p>
+      <p><strong>Status:</strong> Pending</p>
+    </div>
+
+    {% if bank %}
+    <div class="bank-details">
+      <h2>Bank Details</h2>
+      <p><strong>Bank Name:</strong> {{ bank.bank_name }}</p>
+      <p><strong>Account Number:</strong> {{ bank.bank_account_no }}</p>
+      <p><strong>Branch Code:</strong> {{ bank.bank_code }}</p>
+    </div>
+    {% endif %}
+  </div>
 </body>
 </html>

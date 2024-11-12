@@ -13,6 +13,7 @@ import uuid
 from django.http import HttpResponse
 from django.template.loader import get_template
 from weasyprint import HTML
+from app.finance.models import Bank
 
 @login_required
 def generate_voucher(request, admission_id):
@@ -20,7 +21,11 @@ def generate_voucher(request, admission_id):
 
 
     
-
+    # Get bank details (replace with your logic to get the relevant bank)
+    try:
+        bank = Bank.objects.get(show_on_voucher=True)  # Get the bank to show on the voucher
+    except Bank.DoesNotExist:
+        bank = None
     # Check if a voucher already exists
     existing_voucher = StudentFeeVoucher.objects.filter(admission=admission).first()
     if existing_voucher:
@@ -72,9 +77,14 @@ def generate_voucher(request, admission_id):
 
 @login_required
 def view_voucher(request, admission_id):
+    # Get bank details (replace with your logic to get the relevant bank)
+    try:
+        bank = Bank.objects.get(show_on_voucher=True)
+    except Bank.DoesNotExist:
+        bank = None
     admission = get_object_or_404(Admission, id=admission_id)
     voucher = get_object_or_404(StudentFeeVoucher, admission=admission)
-    context = {'voucher': voucher}
+    context = {'voucher': voucher,'bank':bank}
     return render(request, 'fee/voucher.html', context)
 
 

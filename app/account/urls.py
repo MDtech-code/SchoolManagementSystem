@@ -24,7 +24,7 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('profile/edit/', EditProfileView.as_view(), name='edit_profile'),
     path('dashboard/', redirect_to_dashboard, name='redirect_to_dashboard'),
-    path('student/',student_dashboard, name='student_dashboard'),
+   
     path('teacher/',teacher_dashboard, name='teacher_dashboard'),
     path('staff/',  staff_dashboard, name='staff_dashboard'),
     path('applicant/',applicant_dashboard,name='applicant_dashboard')
