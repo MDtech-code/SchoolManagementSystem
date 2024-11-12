@@ -13,8 +13,13 @@
     {% if not admission.is_voucher_generated %}
       <a href="{% url 'generate_voucher' admission.id %}" class="btn btn-primary">Generate Voucher</a>
     {% else %}
-      <a href="{% url 'view_voucher' admission.id %}" class="btn btn-secondary">View Voucher</a>
-      <a href="{% url 'download_voucher' admission.id %}" class="btn btn-success">Download Voucher</a>  
+        {% if admission.student.is_verified %}
+           <p>You are now enrolled! You can access the <a href="{% url 'student_dashboard' %}">student dashboard</a> using your roll number and password.</p> 
+        {% else %}
+        <p>Your payment is pending verification. Please check back later.</p>
+        {% endif %}
+        <a href="{% url 'view_voucher' admission.id %}" class="btn btn-secondary">View Voucher</a>
+        <a href="{% url 'download_voucher' admission.id %}" class="btn btn-success">Download Voucher</a>  
       
     {% endif %}
   {% elif admission.admission_status == 'rejected' %}

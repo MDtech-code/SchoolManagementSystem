@@ -60,16 +60,16 @@ def generate_voucher(request, admission_id):
     admission.save()
 
     # Send email notification
-    send_mail(
-        'Voucher Generated',
-        f'Dear {admission.full_name},\n\nYour fee voucher has been generated. '
-        f'Please visit the applicant dashboard to view and download your voucher.\n\n'
-        f'Voucher Number: {voucher.voucher_number}\n\n'
-        f'Thank you,\n[army public school]',
-        settings.EMAIL_HOST_USER,
-        [admission.email],
-        fail_silently=False,
-    )
+    # send_mail(
+    #     'Voucher Generated',
+    #     f'Dear {admission.full_name},\n\nYour fee voucher has been generated. '
+    #     f'Please visit the applicant dashboard to view and download your voucher.\n\n'
+    #     f'Voucher Number: {voucher.voucher_number}\n\n'
+    #     f'Thank you,\n[army public school]',
+    #     settings.EMAIL_HOST_USER,
+    #     [admission.email],
+    #     fail_silently=False,
+    # )
 
     messages.success(request, f'Voucher generated successfully! Voucher number: {voucher.voucher_number}')
     return redirect('applicant_dashboard')
