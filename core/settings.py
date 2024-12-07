@@ -103,6 +103,8 @@ MIDDLEWARE = [
     # 'app.account.middleware.LoginRequiredMiddleware',
     
 ]
+#Debug Toolbar configuration for development 
+INTERNAL_IPS = ['127.0.0.1']
 
 ROOT_URLCONF = 'core.urls'
 

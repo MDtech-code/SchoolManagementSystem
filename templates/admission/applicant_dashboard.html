@@ -1,6 +1,4 @@
-{% extends 'base/base.html' %}
-
-{% block content %}
+{% extends 'base/base.html' %} {% block content %}
 <div class="container mt-5">
   <h2>Applicant Dashboard</h2>
   {% if admission %}
@@ -9,73 +7,38 @@
   <p><strong>Class:</strong> {{ admission.admission_class }}</p>
   <p><strong>Admission No:</strong> {{ admission.admission_no }}</p>
 
-  {% if admission.admission_status == 'approved' %}
-    {% if not admission.is_voucher_generated %}
-      <a href="{% url 'generate_voucher' admission.id %}" class="btn btn-primary">Generate Voucher</a>
-    {% else %}
-        {% if admission.student.is_verified %}
-           <p>You are now enrolled! You can access the <a href="{% url 'student_dashboard' %}">student dashboard</a> using your roll number and password.</p> 
-        {% else %}
-        <p>Your payment is pending verification. Please check back later.</p>
-        {% endif %}
-        <a href="{% url 'view_voucher' admission.id %}" class="btn btn-secondary">View Voucher</a>
-        <a href="{% url 'download_voucher' admission.id %}" class="btn btn-success">Download Voucher</a>  
-      
-    {% endif %}
-  {% elif admission.admission_status == 'rejected' %}
-  <p>Your application has been rejected. Please contact the school for more information.</p>
+  {% if admission.admission_status == 'approved' %} {% if not
+  admission.is_voucher_generated %}
+  <a href="{% url 'generate_voucher' admission.id %}" class="btn btn-primary"
+    >Generate Voucher</a
+  >
+  {% else %} {% if admission.student.is_verified %}
+  <p>
+    You are now enrolled! You can access the
+    <a href="{% url 'student_dashboard' %}">student dashboard</a> using your
+    roll number and password.
+  </p>
+  {% else %}
+
+  <a href="{% url 'download_voucher' admission.id %}" class="btn btn-success"
+    >Download Voucher</a
+  >
+  <a href="{% url 'view_voucher' admission.id %}" class="btn btn-secondary"
+    >View Voucher</a
+  >
+  <p>Your payment is pending verification. Please check back later.</p>
+  {% endif %} {% endif %} {% elif admission.admission_status == 'rejected' %}
+  <p>
+    Your application has been rejected. Please contact the school for more
+    information.
+  </p>
   {% else %}
   <p>Your application is currently under review.</p>
-  {% endif %}
-
-  {% else %}
+  {% endif %} {% else %}
   <p>You haven't applied for admission yet.</p>
-  <a href="{% url 'apply_for_admission' %}" class="btn btn-primary">Apply Now</a>
+  <a href="{% url 'apply_for_admission' %}" class="btn btn-primary"
+    >Apply Now</a
+  >
   {% endif %}
 </div>
 {% endblock %}
-
-{% comment %} {% extends 'base/base.html' %}
-
-{% block content %}
-<div class="container mt-5">
-  <h2>Applicant Dashboard</h2>
-  {% if admission %}
-    <p>Admission details for {{ admission.full_name }}:</p>
-    <p><strong>Status:</strong> {{ admission.admission_status }}</p>
-    <p><strong>Class:</strong> {{ admission.admission_class }}</p>
-    <p><strong>Admission No:</strong> {{ admission.admission_no }}</p>
-
-    {% if admission.admission_status == 'approved' %}
-      <a href="{% url 'view_voucher' admission.id %}" class="btn btn-secondary">View Voucher</a> 
-      <a href="{% url 'generate_voucher' admission.id %}" class="btn btn-primary">Generate Voucher</a>
-
-    {% elif admission.admission_status == 'rejected' %}
-      <p>Your application has been rejected. Please contact the school for more information.</p>
-    {% else %}
-      <p>Your application is currently under review.</p>
-    {% endif %}
-
-  {% else %}
-    <p>You haven't applied for admission yet.</p>
-    <a href="{% url 'apply_for_admission' %}" class="btn btn-primary">Apply Now</a>
-  {% endif %}
-</div>
-
-{% endblock %} {% endcomment %}
-{% comment %} <div class="container mt-5">
-  <h2>Applicant Dashboard</h2>
-  {% if admission %}
-  <p>Admission details for {{ admission.full_name }}:</p>
-  <p><strong>Status:</strong> {{ admission.admission_status }}</p>
-  <p><strong>Class:</strong> {{ admission.admission_class }}</p>
-  <p><strong>Admission No:</strong> {{ admission.admission_no }}</p>
-  {% if admission.admission_status == 'approved' %}
-  <a href="{% url 'generate_voucher' admission.id %}" class="btn btn-primary">Generate Voucher</a>
-  {% endif %}
-
-  {% else %}
-  <p>You haven't applied for admission yet.</p>
-  <a href="{% url 'apply_for_admission' %}" class="btn btn-primary">Apply Now</a>
-  {% endif %}
-</div> {% endcomment %}

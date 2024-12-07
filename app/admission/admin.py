@@ -5,7 +5,7 @@ from app.student.models import Student
 from django.conf import settings
 from app.fee.models import StudentFeeVoucher
 admin.site.register(Occupation)
-
+from app.account.models import Role
 
 class AdmissionAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'admission_class', 'admission_status', 'created_at')  # Display relevant fields
@@ -25,14 +25,15 @@ class AdmissionAdmin(admin.ModelAdmin):
             )
             obj.student = student  # Link the admission object to the student
             obj.save()  # Save the admission object to persist the changes
+           
             # Send confirmation email
-            #send_mail(
-            #    'Admission Confirmed!',
-            #    f'Congratulations! Your admission to army public school has been confirmed.',
-            #    settings.EMAIL_HOST_USER,  # Replace with your email
-            #    [obj.email],
-            #    fail_silently=False,
-            #)
+            send_mail(
+                'Admission Confirmed!',
+                f'Congratulations! Your admission to army public school has been confirmed.',
+                settings.EMAIL_HOST_USER,  # Replace with your email
+                [obj.email],
+                fail_silently=False,
+            )
         elif obj.admission_status == 'rejected':
             # Send rejection email
             send_mail(

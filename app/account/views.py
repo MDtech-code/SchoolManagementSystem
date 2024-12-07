@@ -173,7 +173,7 @@ class LogoutView(LoginRequiredMixin, TemplateView):
         return redirect('login')
 
 
-# Send Email Verification
+# Send Email Ve rification
 class SendEmailVerificationView( TemplateView):
     template_name = 'accounts/authentication/verify_email.html'
 

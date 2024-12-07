@@ -4,6 +4,7 @@ from .models import FeeStructure, VoucherGenerationRule, StudentFeeVoucher, Stud
 from app.student.models import Student
 from django.conf import settings
 from django.core.mail import send_mail
+from app.account.models import Role
 @admin.register(FeeStructure)
 class FeeStructureAdmin(admin.ModelAdmin):
     list_display = ('category', 'class_s', 'child_status', 'admission_type', 'total')
@@ -55,6 +56,10 @@ class StudentFeeVoucherAdmin(admin.ModelAdmin):
         student.is_verified = True
         student.student_status = 'enrolled'  # Set the student status
         student.save()  # This will trigger roll_no generation in Student.save()
+        # Update role to 'student' if available, or create it if it does not exist
+        student_role, created = Role.objects.get_or_create(name='student')
+        obj.role = student_role  # Assign the student role
+        obj.save()  # Save to apply the role update
 
         # ... (your existing code to send confirmation email) ...
         # if obj.is_paid and  obj.student:

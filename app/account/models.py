@@ -20,6 +20,9 @@ class CustomUser(AbstractUser):
     and functionalities.
     """
     role = models.ForeignKey('Role', on_delete=models.SET_NULL,null=True)
+    # Add fields for social logins
+    google_id = models.CharField(max_length=255, blank=True, null=True)
+    facebook_id = models.CharField(max_length=255, blank=True, null=True)
     email_verified = models.BooleanField(default=False)
     token_created_at = models.DateTimeField(null=True,blank=True)
     token_expiry_time = models.DateTimeField(null=True,blank=True)
